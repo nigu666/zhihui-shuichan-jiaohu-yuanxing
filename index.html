@@ -3,216 +3,903 @@
 <head>
   <meta charset="utf-8">
   <meta name="viewport" content="width=device-width, initial-scale=1">
-  <meta name="description" content="雷雨天的 AI 产品、AI 应用与交互原型作品集，展示智慧水产移动端、AI 助手、Web 管理端和数字孪生原型实践。">
-  <title>雷雨天｜AI产品与交互原型作品集</title>
+  <meta name="description" content="雷雨天的智慧水产交互原型作品集，涵盖移动端、AI 助手、Web 管理端与数字孪生可视化。">
+  <title>雷雨天｜智慧水产交互原型作品集</title>
   <style>
     :root {
-      --navy: #12345b;
-      --blue: #176fd1;
-      --blue-dark: #0e5db2;
-      --blue-soft: #edf6ff;
-      --ink: #19283b;
-      --muted: #607087;
-      --line: #dce7f2;
-      --surface: #f7faff;
+      --blue-700: #1558d6;
+      --blue-600: #2563eb;
+      --blue-100: #dbeafe;
+      --blue-50: #eff6ff;
+      --ink-900: #172033;
+      --ink-700: #445069;
+      --ink-500: #69758c;
+      --line: #e3e8f0;
+      --surface: #f6f8fb;
       --white: #ffffff;
-      --shadow: 0 20px 55px rgba(18, 52, 91, 0.08);
+      --radius-lg: 18px;
+      --radius-md: 12px;
+      --page-width: 1180px;
     }
 
-    * { box-sizing: border-box; }
-    html { scroll-behavior: smooth; }
+    * {
+      box-sizing: border-box;
+    }
+
+    html {
+      scroll-behavior: smooth;
+    }
+
     body {
       margin: 0;
-      min-width: 320px;
-      color: var(--ink);
+      color: var(--ink-900);
       background: var(--white);
-      font-family: "Microsoft YaHei UI", "PingFang SC", "Noto Sans CJK SC", sans-serif;
+      font-family: "Microsoft YaHei", "PingFang SC", "Noto Sans CJK SC", system-ui, -apple-system, sans-serif;
       -webkit-font-smoothing: antialiased;
     }
-    a { color: inherit; }
-    .shell { width: min(1180px, calc(100% - 64px)); margin: 0 auto; }
-    .topbar { border-bottom: 1px solid var(--line); background: rgba(255, 255, 255, 0.96); }
-    .topbar-inner { display: flex; min-height: 68px; align-items: center; justify-content: space-between; gap: 24px; }
-    .brand { color: var(--navy); font-size: 16px; font-weight: 800; letter-spacing: 0.04em; }
-    .nav { display: flex; align-items: center; gap: 26px; }
-    .nav a { color: var(--muted); font-size: 14px; font-weight: 600; text-decoration: none; }
-    .nav a:hover { color: var(--blue); }
-    .nav a:focus-visible, .button:focus-visible { outline: 3px solid rgba(23, 111, 209, 0.25); outline-offset: 4px; }
 
-    .hero { position: relative; overflow: hidden; padding: 96px 0 86px; border-bottom: 1px solid var(--line); }
-    .hero::after {
-      content: "";
-      position: absolute;
-      right: -130px;
-      bottom: -195px;
-      width: 630px;
-      height: 380px;
-      border: 1px solid rgba(23, 111, 209, 0.2);
-      border-radius: 50%;
-      box-shadow: 0 -46px 0 -45px rgba(23, 111, 209, 0.14), 0 -92px 0 -91px rgba(23, 111, 209, 0.09);
-      pointer-events: none;
+    a {
+      color: inherit;
+      text-decoration: none;
     }
-    .hero-grid { position: relative; z-index: 1; display: grid; grid-template-columns: minmax(0, 1.45fr) minmax(290px, 0.55fr); gap: clamp(48px, 8vw, 110px); align-items: end; }
-    .eyebrow { display: flex; align-items: center; gap: 12px; margin: 0 0 22px; color: var(--blue); font-family: Arial, sans-serif; font-size: 13px; font-weight: 700; letter-spacing: 0.16em; }
-    .eyebrow::before { content: ""; width: 36px; height: 2px; background: var(--blue); }
-    h1 { margin: 0; color: var(--navy); font-family: "HarmonyOS Sans SC", "Microsoft YaHei UI", sans-serif; font-size: clamp(54px, 8vw, 92px); font-weight: 800; line-height: 1; letter-spacing: -0.07em; }
-    .role { margin: 24px 0 0; color: var(--ink); font-size: clamp(20px, 2.4vw, 28px); font-weight: 700; line-height: 1.45; }
-    .intro { max-width: 760px; margin: 24px 0 0; color: var(--muted); font-size: 16px; line-height: 1.95; }
-    .hero-note { padding: 26px 0 4px 28px; border-left: 2px solid var(--blue); }
-    .hero-note-label { margin: 0 0 12px; color: var(--blue); font-size: 13px; font-weight: 700; letter-spacing: 0.1em; }
-    .hero-note p:last-child { margin: 0; color: var(--navy); font-size: 17px; font-weight: 700; line-height: 1.8; }
 
-    main { display: block; }
-    .section { padding: 86px 0; }
-    .section-alt { border-top: 1px solid var(--line); border-bottom: 1px solid var(--line); background: var(--surface); }
-    .section-heading { display: grid; grid-template-columns: minmax(220px, 0.4fr) minmax(0, 0.6fr); gap: 48px; align-items: end; margin-bottom: 42px; }
-    .section-kicker { margin: 0 0 12px; color: var(--blue); font-size: 13px; font-weight: 700; letter-spacing: 0.12em; }
-    h2 { margin: 0; color: var(--navy); font-size: clamp(30px, 4vw, 44px); line-height: 1.24; letter-spacing: -0.035em; }
-    .section-summary { max-width: 620px; margin: 0; color: var(--muted); font-size: 15px; line-height: 1.85; }
-
-    .capability-grid { display: grid; grid-template-columns: repeat(4, minmax(0, 1fr)); border-top: 1px solid var(--line); border-bottom: 1px solid var(--line); }
-    .capability { position: relative; min-height: 220px; padding: 32px 26px 30px; border-right: 1px solid var(--line); }
-    .capability:last-child { border-right: 0; }
-    .capability::before { content: ""; position: absolute; top: -4px; left: 26px; width: 42px; height: 7px; border-radius: 6px; background: var(--blue); }
-    .capability h3 { margin: 0 0 16px; color: var(--navy); font-size: 20px; line-height: 1.4; }
-    .capability p { margin: 0; color: var(--muted); font-size: 14px; line-height: 1.8; }
-
-    .project-list { display: grid; gap: 28px; }
-    .project-card { overflow: hidden; border: 1px solid var(--line); border-radius: 18px; background: var(--white); box-shadow: 0 1px 0 rgba(18, 52, 91, 0.02); transition: border-color 160ms ease, box-shadow 160ms ease; }
-    .project-card:hover { border-color: #b8d2ec; box-shadow: var(--shadow); }
-    .project-header { display: grid; grid-template-columns: minmax(240px, 0.42fr) minmax(0, 0.58fr); gap: 48px; padding: 36px 40px 32px; border-bottom: 1px solid var(--line); }
-    .project-type { margin: 0 0 12px; color: var(--blue); font-family: Arial, sans-serif; font-size: 12px; font-weight: 700; letter-spacing: 0.12em; }
-    .project-card h3 { margin: 0; color: var(--navy); font-size: clamp(22px, 2.6vw, 30px); line-height: 1.4; }
-    .project-intro { margin: 3px 0 0; color: var(--muted); font-size: 15px; line-height: 1.85; }
-    .project-body { display: grid; grid-template-columns: minmax(0, 1.15fr) minmax(0, 0.85fr); }
-    .project-block { padding: 32px 40px 36px; }
-    .project-block + .project-block { border-left: 1px solid var(--line); background: var(--blue-soft); }
-    .block-label { margin: 0 0 16px; color: var(--blue); font-size: 13px; font-weight: 800; letter-spacing: 0.08em; }
-    .project-block ul { display: grid; gap: 10px; margin: 0; padding: 0; list-style: none; }
-    .project-block li { position: relative; padding-left: 18px; color: var(--ink); font-size: 14px; line-height: 1.72; }
-    .project-block li::before { content: ""; position: absolute; top: 0.72em; left: 0; width: 5px; height: 5px; border-radius: 50%; background: var(--blue); }
-    .value-text { margin: 0 0 24px; color: var(--ink); font-size: 14px; line-height: 1.82; }
-    .button { display: inline-flex; align-items: center; gap: 10px; padding: 12px 17px; border-radius: 9px; color: var(--white); background: var(--navy); font-size: 14px; font-weight: 700; text-decoration: none; transition: background 160ms ease, transform 160ms ease; }
-    .button::after { content: "→"; font-size: 17px; line-height: 1; }
-    .button:hover { background: var(--blue-dark); transform: translateX(2px); }
-
-    footer { padding: 28px 0 38px; color: var(--muted); font-size: 13px; }
-    .footer-inner { display: flex; align-items: center; justify-content: space-between; gap: 20px; }
-
-    @media (max-width: 900px) {
-      .hero-grid, .section-heading, .project-header { grid-template-columns: 1fr; gap: 28px; }
-      .hero-note { max-width: 580px; }
-      .capability-grid { grid-template-columns: repeat(2, minmax(0, 1fr)); }
-      .capability:nth-child(2) { border-right: 0; }
-      .capability:nth-child(-n + 2) { border-bottom: 1px solid var(--line); }
+    svg {
+      display: block;
     }
-    @media (max-width: 680px) {
-      .shell { width: min(100% - 36px, 560px); }
-      .nav { gap: 14px; }
-      .nav a:first-child { display: none; }
-      .hero { padding: 68px 0 62px; }
-      .hero::after { right: -330px; }
-      h1 { font-size: clamp(50px, 18vw, 72px); letter-spacing: -0.055em; }
-      .section { padding: 62px 0; }
-      .capability-grid, .project-body { grid-template-columns: 1fr; }
-      .capability, .capability:nth-child(2) { min-height: 0; border-right: 0; border-bottom: 1px solid var(--line); }
-      .capability:last-child { border-bottom: 0; }
-      .project-header, .project-block { padding: 28px 24px; }
-      .project-block + .project-block { border-top: 1px solid var(--line); border-left: 0; }
-      .footer-inner { display: block; }
-      .footer-inner span:last-child { display: block; margin-top: 8px; }
+
+    .page-shell {
+      width: min(calc(100% - 48px), var(--page-width));
+      margin: 0 auto;
     }
+
+    .site-header {
+      border-bottom: 1px solid var(--line);
+      background: var(--white);
+    }
+
+    .nav {
+      min-height: 68px;
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      gap: 24px;
+    }
+
+    .brand {
+      display: inline-flex;
+      align-items: center;
+      gap: 11px;
+      font-size: 15px;
+      font-weight: 700;
+      letter-spacing: .01em;
+    }
+
+    .brand-mark {
+      width: 34px;
+      height: 34px;
+      display: grid;
+      place-items: center;
+      border-radius: 10px;
+      color: var(--white);
+      background: var(--blue-600);
+      font-size: 16px;
+    }
+
+    .nav-links {
+      display: flex;
+      align-items: center;
+      gap: 8px;
+      color: var(--ink-700);
+      font-size: 14px;
+    }
+
+    .nav-link {
+      padding: 9px 12px;
+      border-radius: 8px;
+      transition: color .16s ease, background-color .16s ease;
+    }
+
+    .nav-link:hover {
+      color: var(--blue-700);
+      background: var(--blue-50);
+    }
+
+    .hero {
+      padding: 82px 0 70px;
+      border-bottom: 1px solid var(--line);
+    }
+
+    .hero-layout {
+      display: grid;
+      grid-template-columns: minmax(0, 1.35fr) minmax(330px, .65fr);
+      gap: 72px;
+      align-items: center;
+    }
+
+    .eyebrow,
+    .section-kicker {
+      margin: 0 0 16px;
+      color: var(--blue-700);
+      font-size: 13px;
+      font-weight: 700;
+      letter-spacing: .08em;
+    }
+
+    .hero h1 {
+      max-width: 760px;
+      margin: 0;
+      font-size: clamp(38px, 5vw, 64px);
+      line-height: 1.12;
+      letter-spacing: -.035em;
+    }
+
+    .hero-name {
+      color: var(--blue-600);
+    }
+
+    .hero-position {
+      margin: 22px 0 0;
+      color: var(--ink-700);
+      font-size: 18px;
+      font-weight: 600;
+      line-height: 1.6;
+    }
+
+    .hero-description {
+      max-width: 720px;
+      margin: 14px 0 0;
+      color: var(--ink-500);
+      font-size: 16px;
+      line-height: 1.85;
+    }
+
+    .hero-actions {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 12px;
+      margin-top: 30px;
+    }
+
+    .button {
+      min-height: 44px;
+      display: inline-flex;
+      align-items: center;
+      justify-content: center;
+      gap: 8px;
+      padding: 0 18px;
+      border: 1px solid transparent;
+      border-radius: 10px;
+      font-size: 14px;
+      font-weight: 700;
+      transition: background-color .16s ease, border-color .16s ease, color .16s ease, transform .16s ease;
+    }
+
+    .button:hover {
+      transform: translateY(-1px);
+    }
+
+    .button-primary {
+      color: var(--white);
+      background: var(--blue-600);
+    }
+
+    .button-primary:hover {
+      background: var(--blue-700);
+    }
+
+    .button-secondary {
+      color: var(--blue-700);
+      border-color: #a9c5f8;
+      background: var(--white);
+    }
+
+    .button-secondary:hover {
+      border-color: var(--blue-600);
+      background: var(--blue-50);
+    }
+
+    .button svg {
+      width: 17px;
+      height: 17px;
+    }
+
+    .scope-panel {
+      padding: 26px;
+      border: 1px solid var(--line);
+      border-radius: var(--radius-lg);
+      background: var(--surface);
+    }
+
+    .scope-title {
+      margin: 0 0 18px;
+      color: var(--ink-700);
+      font-size: 14px;
+      font-weight: 700;
+    }
+
+    .scope-grid {
+      display: grid;
+      grid-template-columns: repeat(2, minmax(0, 1fr));
+      gap: 10px;
+    }
+
+    .scope-item {
+      min-height: 92px;
+      display: flex;
+      flex-direction: column;
+      justify-content: space-between;
+      padding: 15px;
+      border: 1px solid var(--line);
+      border-radius: var(--radius-md);
+      background: var(--white);
+    }
+
+    .scope-number {
+      color: var(--blue-600);
+      font-size: 12px;
+      font-weight: 700;
+    }
+
+    .scope-label {
+      color: var(--ink-700);
+      font-size: 14px;
+      font-weight: 600;
+      line-height: 1.45;
+    }
+
+    .section {
+      padding: 76px 0;
+    }
+
+    .section-muted {
+      background: var(--surface);
+    }
+
+    .section-heading {
+      display: flex;
+      align-items: end;
+      justify-content: space-between;
+      gap: 32px;
+      margin-bottom: 30px;
+    }
+
+    .section-heading h2 {
+      margin: 0;
+      font-size: clamp(28px, 3vw, 38px);
+      line-height: 1.25;
+      letter-spacing: -.025em;
+    }
+
+    .section-note {
+      max-width: 530px;
+      margin: 0;
+      color: var(--ink-500);
+      font-size: 14px;
+      line-height: 1.75;
+    }
+
+    .workflow {
+      display: grid;
+      grid-template-columns: repeat(4, minmax(0, 1fr));
+      border: 1px solid var(--line);
+      border-radius: var(--radius-lg);
+      overflow: hidden;
+      background: var(--white);
+    }
+
+    .workflow-item {
+      min-height: 160px;
+      padding: 24px;
+      border-right: 1px solid var(--line);
+    }
+
+    .workflow-item:last-child {
+      border-right: 0;
+    }
+
+    .workflow-index {
+      display: inline-flex;
+      align-items: center;
+      justify-content: center;
+      width: 30px;
+      height: 30px;
+      margin-bottom: 30px;
+      border-radius: 8px;
+      color: var(--blue-700);
+      background: var(--blue-50);
+      font-size: 12px;
+      font-weight: 800;
+    }
+
+    .workflow-item h3 {
+      margin: 0 0 8px;
+      font-size: 16px;
+    }
+
+    .workflow-item p {
+      margin: 0;
+      color: var(--ink-500);
+      font-size: 13px;
+      line-height: 1.65;
+    }
+
+    .project-grid {
+      display: grid;
+      grid-template-columns: repeat(2, minmax(0, 1fr));
+      gap: 22px;
+    }
+
+    .project-card {
+      min-width: 0;
+      display: flex;
+      flex-direction: column;
+      padding: 28px;
+      border: 1px solid var(--line);
+      border-radius: var(--radius-lg);
+      background: var(--white);
+      transition: border-color .16s ease, transform .16s ease;
+    }
+
+    .project-card:hover {
+      border-color: #b9cced;
+      transform: translateY(-2px);
+    }
+
+    .project-topline {
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      gap: 16px;
+      margin-bottom: 24px;
+    }
+
+    .project-icon {
+      width: 48px;
+      height: 48px;
+      display: grid;
+      place-items: center;
+      flex: 0 0 auto;
+      border-radius: 13px;
+      color: var(--blue-700);
+      background: var(--blue-50);
+    }
+
+    .project-icon svg {
+      width: 25px;
+      height: 25px;
+      fill: none;
+      stroke: currentColor;
+      stroke-width: 1.8;
+      stroke-linecap: round;
+      stroke-linejoin: round;
+    }
+
+    .project-type {
+      padding: 7px 10px;
+      border: 1px solid var(--blue-100);
+      border-radius: 999px;
+      color: var(--blue-700);
+      background: var(--blue-50);
+      font-size: 12px;
+      font-weight: 700;
+    }
+
+    .project-card h3 {
+      margin: 0;
+      font-size: 22px;
+      line-height: 1.45;
+      letter-spacing: -.015em;
+    }
+
+    .project-summary {
+      min-height: 52px;
+      margin: 10px 0 22px;
+      color: var(--ink-500);
+      font-size: 14px;
+      line-height: 1.75;
+    }
+
+    .project-details {
+      display: grid;
+      grid-template-columns: repeat(2, minmax(0, 1fr));
+      gap: 12px;
+      margin-bottom: 22px;
+    }
+
+    .detail-block {
+      padding: 15px;
+      border-radius: var(--radius-md);
+      background: var(--surface);
+    }
+
+    .detail-label {
+      display: block;
+      margin-bottom: 7px;
+      color: var(--blue-700);
+      font-size: 12px;
+      font-weight: 800;
+    }
+
+    .detail-block p {
+      margin: 0;
+      color: var(--ink-700);
+      font-size: 13px;
+      line-height: 1.65;
+    }
+
+    .tags {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 7px;
+      margin: 0 0 24px;
+      padding: 0;
+      list-style: none;
+    }
+
+    .tag {
+      padding: 6px 9px;
+      border: 1px solid var(--line);
+      border-radius: 7px;
+      color: var(--ink-700);
+      background: var(--white);
+      font-size: 12px;
+      line-height: 1;
+    }
+
+    .project-action {
+      width: 100%;
+      margin-top: auto;
+    }
+
+    .site-footer {
+      padding: 38px 0;
+      border-top: 1px solid var(--line);
+      background: var(--white);
+    }
+
+    .footer-layout {
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      gap: 28px;
+    }
+
+    .footer-copy strong {
+      display: block;
+      margin-bottom: 7px;
+      font-size: 15px;
+    }
+
+    .footer-copy p {
+      margin: 0;
+      color: var(--ink-500);
+      font-size: 13px;
+      line-height: 1.6;
+    }
+
+    .footer-links {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 10px;
+    }
+
+    a:focus-visible {
+      outline: 3px solid #93b8fa;
+      outline-offset: 3px;
+    }
+
+    @media (max-width: 960px) {
+      .hero-layout {
+        grid-template-columns: 1fr;
+        gap: 42px;
+      }
+
+      .scope-panel {
+        max-width: 680px;
+      }
+
+      .workflow {
+        grid-template-columns: repeat(2, minmax(0, 1fr));
+      }
+
+      .workflow-item:nth-child(2) {
+        border-right: 0;
+      }
+
+      .workflow-item:nth-child(-n+2) {
+        border-bottom: 1px solid var(--line);
+      }
+
+      .section-heading {
+        align-items: start;
+        flex-direction: column;
+        gap: 12px;
+      }
+    }
+
+    @media (max-width: 760px) {
+      .page-shell {
+        width: min(calc(100% - 32px), var(--page-width));
+      }
+
+      .nav {
+        min-height: 62px;
+      }
+
+      .nav-links .nav-link:first-child {
+        display: none;
+      }
+
+      .hero {
+        padding: 58px 0 52px;
+      }
+
+      .hero h1 {
+        font-size: clamp(34px, 11vw, 48px);
+      }
+
+      .hero-position {
+        font-size: 16px;
+      }
+
+      .hero-description {
+        font-size: 15px;
+      }
+
+      .section {
+        padding: 56px 0;
+      }
+
+      .project-grid {
+        grid-template-columns: 1fr;
+      }
+
+      .project-card {
+        padding: 22px;
+      }
+
+      .project-summary {
+        min-height: 0;
+      }
+
+      .footer-layout {
+        align-items: flex-start;
+        flex-direction: column;
+      }
+    }
+
+    @media (max-width: 520px) {
+      .scope-grid,
+      .workflow,
+      .project-details {
+        grid-template-columns: 1fr;
+      }
+
+      .scope-item {
+        min-height: 78px;
+      }
+
+      .workflow-item,
+      .workflow-item:nth-child(2) {
+        border-right: 0;
+        border-bottom: 1px solid var(--line);
+      }
+
+      .workflow-item:last-child {
+        border-bottom: 0;
+      }
+
+      .workflow-index {
+        margin-bottom: 18px;
+      }
+
+      .hero-actions,
+      .footer-links {
+        width: 100%;
+      }
+
+      .hero-actions .button,
+      .footer-links .button {
+        width: 100%;
+      }
+    }
+
     @media (prefers-reduced-motion: reduce) {
-      html { scroll-behavior: auto; }
-      .project-card, .button { transition: none; }
+      html {
+        scroll-behavior: auto;
+      }
+
+      *,
+      *::before,
+      *::after {
+        transition-duration: .01ms !important;
+      }
     }
   </style>
 </head>
 <body>
-  <header class="topbar">
-    <div class="shell topbar-inner">
-      <span class="brand">雷雨天｜作品集</span>
-      <nav class="nav" aria-label="页面导航">
-        <a href="#about">关于我</a>
-        <a href="#work">我主要做什么</a>
-        <a href="#projects">项目案例</a>
-      </nav>
-    </div>
+  <header class="site-header">
+    <nav class="nav page-shell" aria-label="页面导航">
+      <a class="brand" href="#top" aria-label="返回页面顶部">
+        <span class="brand-mark" aria-hidden="true">雷</span>
+        <span>雷雨天 · 个人作品集</span>
+      </a>
+      <div class="nav-links">
+        <a class="nav-link" href="#approach">工作方式</a>
+        <a class="nav-link" href="#projects">项目作品</a>
+      </div>
+    </nav>
   </header>
 
-  <main>
-    <section class="hero" id="about">
-      <div class="shell hero-grid">
+  <main id="top">
+    <section class="hero">
+      <div class="hero-layout page-shell">
         <div>
-          <p class="eyebrow">AI产品 · AI应用 · 交互原型</p>
-          <h1>雷雨天</h1>
-          <p class="role">2027届软件工程｜AI产品 / AI应用方向</p>
-          <p class="intro">目前主要关注大模型应用、AI产品和交互原型方向。实习期间参与智慧水产相关产品设计与原型迭代，主要负责交互原型、页面迁移、Dify AI助手验证和数字孪生页面快速设计。</p>
+          <p class="eyebrow">智慧水产 · AI 产品 · 交互原型</p>
+          <h1><span class="hero-name">雷雨天</span><br>把复杂需求整理成可验证的产品原型</h1>
+          <p class="hero-position">2027届软件工程｜AI 产品 / AI 应用方向</p>
+          <p class="hero-description">
+            关注大模型应用、AI 产品与交互原型。实习期间参与智慧水产相关项目，
+            主要完成移动端原型、页面迁移与适配、Dify AI 助手验证，以及数字孪生可视化页面设计与迭代。
+          </p>
+          <div class="hero-actions">
+            <a class="button button-primary" href="#projects">
+              查看项目作品
+              <svg viewBox="0 0 24 24" aria-hidden="true">
+                <path d="M5 12h14M13 6l6 6-6 6" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"></path>
+              </svg>
+            </a>
+            <a class="button button-secondary" href="https://github.com/nigu666/zhihui-shuichan-jiaohu-yuanxing">
+              GitHub 仓库
+            </a>
+          </div>
         </div>
-        <aside class="hero-note" aria-label="主要工作方式">
-          <p class="hero-note-label">我的工作方式</p>
-          <p>理解需求<br>做成可操作原型<br>验证后持续迭代</p>
+
+        <aside class="scope-panel" aria-label="作品集内容范围">
+          <p class="scope-title">本作品集覆盖</p>
+          <div class="scope-grid">
+            <div class="scope-item">
+              <span class="scope-number">01</span>
+              <span class="scope-label">智慧水产移动端</span>
+            </div>
+            <div class="scope-item">
+              <span class="scope-number">02</span>
+              <span class="scope-label">AI 助手原型</span>
+            </div>
+            <div class="scope-item">
+              <span class="scope-number">03</span>
+              <span class="scope-label">Web 管理端</span>
+            </div>
+            <div class="scope-item">
+              <span class="scope-number">04</span>
+              <span class="scope-label">数字孪生可视化</span>
+            </div>
+          </div>
         </aside>
       </div>
     </section>
 
-    <section class="section" id="work">
-      <div class="shell">
+    <section class="section" id="approach">
+      <div class="page-shell">
         <div class="section-heading">
-          <div><p class="section-kicker">工作重点</p><h2>我主要做什么</h2></div>
-          <p class="section-summary">围绕真实业务需求，把文字和流程转化为可以直接查看、操作和讨论的页面，再配合反馈与已有工程持续调整。</p>
+          <div>
+            <p class="section-kicker">我的工作方式</p>
+            <h2>从业务理解到原型验证</h2>
+          </div>
+          <p class="section-note">
+            围绕已有业务逻辑理解需求，用可交互页面快速确认方案，并根据反馈持续调整界面与交互。
+          </p>
         </div>
-        <div class="capability-grid">
-          <article class="capability"><h3>需求理解与拆解</h3><p>把实际业务需求整理为具体页面、功能和交互方式。</p></article>
-          <article class="capability"><h3>交互原型</h3><p>通过可交互页面快速验证界面设计和业务流程。</p></article>
-          <article class="capability"><h3>AI应用验证</h3><p>使用 Dify 等工具验证 AI 助手在真实业务场景中的交互形式。</p></article>
-          <article class="capability"><h3>页面迁移与迭代</h3><p>配合已有前端架构完成原型迁移，并持续根据需求修改。</p></article>
+
+        <div class="workflow">
+          <article class="workflow-item">
+            <span class="workflow-index">01</span>
+            <h3>理解业务</h3>
+            <p>梳理页面目标、业务流程和已有功能逻辑。</p>
+          </article>
+          <article class="workflow-item">
+            <span class="workflow-index">02</span>
+            <h3>搭建原型</h3>
+            <p>把需求转化为结构清晰、可操作的页面方案。</p>
+          </article>
+          <article class="workflow-item">
+            <span class="workflow-index">03</span>
+            <h3>验证交互</h3>
+            <p>通过关键流程和状态反馈确认交互是否合理。</p>
+          </article>
+          <article class="workflow-item">
+            <span class="workflow-index">04</span>
+            <h3>持续迭代</h3>
+            <p>根据团队反馈完成迁移、适配与细节调整。</p>
+          </article>
         </div>
       </div>
     </section>
 
-    <section class="section section-alt" id="projects">
-      <div class="shell">
+    <section class="section section-muted" id="projects">
+      <div class="page-shell">
         <div class="section-heading">
-          <div><p class="section-kicker">项目案例</p><h2>智慧水产交互原型</h2></div>
-          <p class="section-summary">以下内容聚焦我实际参与的产品原型、交互验证和页面迁移工作，不代表完整后端、数据库或生产系统开发。</p>
+          <div>
+            <p class="section-kicker">项目作品</p>
+            <h2>四个可交互原型</h2>
+          </div>
+          <p class="section-note">
+            作品聚焦智慧水产场景中的移动端设备管理、AI 助手、Web 综合看板与数字孪生可视化。
+          </p>
         </div>
-        <div class="project-list">
+
+        <div class="project-grid">
           <article class="project-card">
-            <header class="project-header"><div><p class="project-type">移动端 · AI助手</p><h3>智慧水产-设备管理助手</h3></div><p class="project-intro">面向智慧水产养殖场景的移动端交互原型，覆盖设备管理、养殖业务和 AI 助手等功能。</p></header>
-            <div class="project-body">
-              <section class="project-block"><p class="block-label">我负责</p><ul><li>移动端页面和交互原型搭建</li><li>根据业务需求持续进行界面调整</li><li>配合原型向现有 Vue2 架构迁移和适配</li><li>使用 Dify 搭建 AI 助手的可视化交互流程</li></ul></section>
-              <section class="project-block"><p class="block-label">项目价值</p><p class="value-text">通过可交互原型提前验证页面和 AI 助手的使用方式，帮助团队更直观地确认需求并减少后续页面反复修改。</p><a class="button" href="./智慧水产设备管理助手/">查看在线原型</a></section>
+            <div class="project-topline">
+              <span class="project-icon" aria-hidden="true">
+                <svg viewBox="0 0 24 24">
+                  <rect x="5.5" y="2.5" width="10.5" height="19" rx="2.2"></rect>
+                  <path d="M9 5.5h3.5M9.2 18.5h3.1M18 7l.6 1.4L20 9l-1.4.6L18 11l-.6-1.4L16 9l1.4-.6L18 7Z"></path>
+                </svg>
+              </span>
+              <span class="project-type">移动端 / AI 助手</span>
             </div>
+            <h3>智慧水产-设备管理助手</h3>
+            <p class="project-summary">
+              面向智慧水产场景的移动端交互原型，覆盖设备管理、养殖业务与 AI 助手交互。
+            </p>
+            <div class="project-details">
+              <div class="detail-block">
+                <span class="detail-label">我的负责部分</span>
+                <p>移动端原型设计、Vue2 页面迁移与适配、Dify AI 助手原型验证。</p>
+              </div>
+              <div class="detail-block">
+                <span class="detail-label">核心亮点</span>
+                <p>将设备管理和养殖业务入口整合进移动端流程，并验证助手交互形式。</p>
+              </div>
+            </div>
+            <ul class="tags" aria-label="项目工具与关键词">
+              <li class="tag">移动端原型</li>
+              <li class="tag">Vue2</li>
+              <li class="tag">Dify</li>
+              <li class="tag">AI 助手</li>
+            </ul>
+            <a class="button button-primary project-action" href="./智慧水产设备管理助手/">
+              打开原型
+              <svg viewBox="0 0 24 24" aria-hidden="true">
+                <path d="M5 12h14M13 6l6 6-6 6" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"></path>
+              </svg>
+            </a>
           </article>
 
           <article class="project-card">
-            <header class="project-header"><div><p class="project-type">Web管理端 · 综合看板</p><h3>智慧增殖站项目管理｜综合看板</h3></div><p class="project-intro">智慧增殖放流站 Web 管理端原型，覆盖项目管理、生产繁育、设备运维、维修、巡检、保养和计量校准等业务。</p></header>
-            <div class="project-body">
-              <section class="project-block"><p class="block-label">我负责</p><ul><li>理解已有业务流程和页面关系</li><li>负责 Web 原型的迁移、修改和持续迭代</li><li>根据需求调整页面功能和交互</li><li>通过原型验证跨业务模块的页面衔接方式</li></ul></section>
-              <section class="project-block"><p class="block-label">项目价值</p><p class="value-text">把较复杂的业务需求转换成可以直接查看和操作的页面，帮助团队更快发现交互问题并确认修改方案。</p><a class="button" href="./智慧增殖站综合看板/">查看在线原型</a></section>
+            <div class="project-topline">
+              <span class="project-icon" aria-hidden="true">
+                <svg viewBox="0 0 24 24">
+                  <rect x="2.5" y="4" width="19" height="13" rx="2"></rect>
+                  <path d="M8 21h8M12 17v4M6.5 10.5c1.7-2.1 4-2.1 5.7 0-1.7 2.1-4 2.1-5.7 0Zm5.7 0 2.4-1.5v3l-2.4-1.5Z"></path>
+                </svg>
+              </span>
+              <span class="project-type">数字孪生 / 视频监控</span>
             </div>
+            <h3>渔立方数字孪生养殖系统</h3>
+            <p class="project-summary">
+              面向智慧养殖场景的双界面数字孪生原型，包含视频墙、设备状态与监控交互。
+            </p>
+            <div class="project-details">
+              <div class="detail-block">
+                <span class="detail-label">我的负责部分</span>
+                <p>数字孪生页面搭建、监控场景交互设计，以及页面布局和反馈细节调整。</p>
+              </div>
+              <div class="detail-block">
+                <span class="detail-label">核心亮点</span>
+                <p>围绕视频墙、界面切换、全屏与轮播等操作完成可交互验证。</p>
+              </div>
+            </div>
+            <ul class="tags" aria-label="项目工具与关键词">
+              <li class="tag">数字孪生</li>
+              <li class="tag">视频监控</li>
+              <li class="tag">原型设计</li>
+              <li class="tag">交互验证</li>
+            </ul>
+            <a class="button button-primary project-action" href="./渔立方数字孪生养殖系统/">
+              打开原型
+              <svg viewBox="0 0 24 24" aria-hidden="true">
+                <path d="M5 12h14M13 6l6 6-6 6" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"></path>
+              </svg>
+            </a>
           </article>
 
           <article class="project-card">
-            <header class="project-header"><div><p class="project-type">数字孪生 · 双界面</p><h3>渔立方数字孪生养殖系统</h3></div><p class="project-intro">智慧养殖数字孪生双界面交互原型，主要展示实时监控、设备状态和视频场景。</p></header>
-            <div class="project-body">
-              <section class="project-block"><p class="block-label">我负责</p><ul><li>根据需求快速搭建数字孪生交互原型</li><li>设计视频墙、页面切换、全屏查看和轮巡等交互</li><li>根据反馈持续调整页面布局和操作方式</li><li>用原型验证不同监控场景下的界面方案</li></ul></section>
-              <section class="project-block"><p class="block-label">项目价值</p><p class="value-text">在正式开发之前快速把数字孪生需求变成可交互页面，方便团队直接讨论界面和操作逻辑。</p><a class="button" href="./渔立方数字孪生养殖系统/">查看在线原型</a></section>
+            <div class="project-topline">
+              <span class="project-icon" aria-hidden="true">
+                <svg viewBox="0 0 24 24">
+                  <rect x="3" y="3" width="18" height="18" rx="2"></rect>
+                  <path d="M3 8h18M8 8v13M11 12h6M11 16h4"></path>
+                </svg>
+              </span>
+              <span class="project-type">Web 管理端 / 综合看板</span>
             </div>
+            <h3>智慧增殖站项目管理｜综合看板</h3>
+            <p class="project-summary">
+              智慧增殖放流站 Web 管理端原型，覆盖业务管理、设备运维及综合看板等场景。
+            </p>
+            <div class="project-details">
+              <div class="detail-block">
+                <span class="detail-label">我的负责部分</span>
+                <p>业务流程理解、Web 原型迁移与修改，以及页面功能和交互细节调整。</p>
+              </div>
+              <div class="detail-block">
+                <span class="detail-label">核心亮点</span>
+                <p>将多模块信息集中到管理端页面，支持业务浏览和跨模块流程确认。</p>
+              </div>
+            </div>
+            <ul class="tags" aria-label="项目工具与关键词">
+              <li class="tag">Web 管理端</li>
+              <li class="tag">业务流程</li>
+              <li class="tag">原型迁移</li>
+              <li class="tag">交互迭代</li>
+            </ul>
+            <a class="button button-primary project-action" href="./智慧增殖站综合看板/">
+              打开原型
+              <svg viewBox="0 0 24 24" aria-hidden="true">
+                <path d="M5 12h14M13 6l6 6-6 6" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"></path>
+              </svg>
+            </a>
           </article>
 
           <article class="project-card">
-            <header class="project-header"><div><p class="project-type">数字孪生 · 数据驾驶舱</p><h3>渔立方数字孪生养殖系统｜数据驾驶舱</h3></div><p class="project-intro">面向智慧养殖场景的数据驾驶舱原型，包括水质环境、鱼情、设备运行、实时告警等信息。</p></header>
-            <div class="project-body">
-              <section class="project-block"><p class="block-label">我负责</p><ul><li>数据驾驶舱页面布局和信息层级设计</li><li>水质趋势、鱼情、设备状态和告警模块的交互原型</li><li>图表、Tooltip、图例等展示方式调整</li><li>根据实际展示需求持续进行页面迭代</li></ul></section>
-              <section class="project-block"><p class="block-label">项目价值</p><p class="value-text">将分散的养殖信息集中到统一页面中进行展示，通过原型提前验证数据展示和信息层级是否清晰。</p><a class="button" href="./渔立方数据驾驶舱/">查看在线原型</a></section>
+            <div class="project-topline">
+              <span class="project-icon" aria-hidden="true">
+                <svg viewBox="0 0 24 24">
+                  <path d="M4 20V10M10 20V4M16 20v-7M22 20H2"></path>
+                  <path d="m4 7 5-3 6 4 6-5"></path>
+                  <circle cx="4" cy="7" r="1"></circle>
+                  <circle cx="9" cy="4" r="1"></circle>
+                  <circle cx="15" cy="8" r="1"></circle>
+                  <circle cx="21" cy="3" r="1"></circle>
+                </svg>
+              </span>
+              <span class="project-type">数据驾驶舱 / 可视化</span>
             </div>
+            <h3>渔立方数字孪生养殖系统｜数据驾驶舱</h3>
+            <p class="project-summary">
+              智慧养殖数据驾驶舱原型，集中展示水质、鱼情、设备运行、告警与快捷操作。
+            </p>
+            <div class="project-details">
+              <div class="detail-block">
+                <span class="detail-label">我的负责部分</span>
+                <p>信息层级与布局整理、水质和设备等模块原型搭建、图表交互调整。</p>
+              </div>
+              <div class="detail-block">
+                <span class="detail-label">核心亮点</span>
+                <p>通过图表、提示与图例组织养殖关键指标，提升数据查看效率。</p>
+              </div>
+            </div>
+            <ul class="tags" aria-label="项目工具与关键词">
+              <li class="tag">数据驾驶舱</li>
+              <li class="tag">ECharts</li>
+              <li class="tag">信息可视化</li>
+              <li class="tag">交互原型</li>
+            </ul>
+            <a class="button button-primary project-action" href="./渔立方数据驾驶舱/">
+              打开原型
+              <svg viewBox="0 0 24 24" aria-hidden="true">
+                <path d="M5 12h14M13 6l6 6-6 6" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"></path>
+              </svg>
+            </a>
           </article>
         </div>
       </div>
     </section>
   </main>
-  <footer><div class="shell footer-inner"><span>雷雨天｜AI产品与交互原型作品集</span><span>需求理解 · 原型验证 · 持续迭代</span></div></footer>
+
+  <footer class="site-footer">
+    <div class="footer-layout page-shell">
+      <div class="footer-copy">
+        <strong>雷雨天｜智慧水产交互原型作品集</strong>
+        <p>用于个人求职展示与交互方案说明。</p>
+      </div>
+      <div class="footer-links">
+        <a class="button button-secondary" href="https://github.com/nigu666/zhihui-shuichan-jiaohu-yuanxing">GitHub 仓库</a>
+        <a class="button button-primary" href="https://nigu666.github.io/zhihui-shuichan-jiaohu-yuanxing/">GitHub Pages</a>
+      </div>
+    </div>
+  </footer>
 </body>
 </html>
