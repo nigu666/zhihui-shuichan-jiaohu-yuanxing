@@ -3,338 +3,216 @@
 <head>
   <meta charset="utf-8">
   <meta name="viewport" content="width=device-width, initial-scale=1">
-  <meta name="description" content="雷雨天的智慧水产交互原型作品集，汇集移动端、人工智能助手、智慧增殖站网页端与数字孪生可视化原型。">
-  <title>雷雨天｜智慧水产交互原型作品集</title>
+  <meta name="description" content="雷雨天的 AI 产品、AI 应用与交互原型作品集，展示智慧水产移动端、AI 助手、Web 管理端和数字孪生原型实践。">
+  <title>雷雨天｜AI产品与交互原型作品集</title>
   <style>
     :root {
-      --深海蓝: #123b70;
-      --清水蓝: #1677d2;
-      --浅水蓝: #eaf4ff;
-      --墨色: #14243a;
-      --灰色: #637187;
-      --边线: #dce7f2;
-      --白色: #ffffff;
-      --阴影: 0 18px 48px rgba(28, 77, 126, 0.09);
+      --navy: #12345b;
+      --blue: #176fd1;
+      --blue-dark: #0e5db2;
+      --blue-soft: #edf6ff;
+      --ink: #19283b;
+      --muted: #607087;
+      --line: #dce7f2;
+      --surface: #f7faff;
+      --white: #ffffff;
+      --shadow: 0 20px 55px rgba(18, 52, 91, 0.08);
     }
 
-    * {
-      box-sizing: border-box;
-    }
-
-    html {
-      scroll-behavior: smooth;
-    }
-
+    * { box-sizing: border-box; }
+    html { scroll-behavior: smooth; }
     body {
       margin: 0;
       min-width: 320px;
-      color: var(--墨色);
-      background: var(--白色);
+      color: var(--ink);
+      background: var(--white);
       font-family: "Microsoft YaHei UI", "PingFang SC", "Noto Sans CJK SC", sans-serif;
       -webkit-font-smoothing: antialiased;
     }
+    a { color: inherit; }
+    .shell { width: min(1180px, calc(100% - 64px)); margin: 0 auto; }
+    .topbar { border-bottom: 1px solid var(--line); background: rgba(255, 255, 255, 0.96); }
+    .topbar-inner { display: flex; min-height: 68px; align-items: center; justify-content: space-between; gap: 24px; }
+    .brand { color: var(--navy); font-size: 16px; font-weight: 800; letter-spacing: 0.04em; }
+    .nav { display: flex; align-items: center; gap: 26px; }
+    .nav a { color: var(--muted); font-size: 14px; font-weight: 600; text-decoration: none; }
+    .nav a:hover { color: var(--blue); }
+    .nav a:focus-visible, .button:focus-visible { outline: 3px solid rgba(23, 111, 209, 0.25); outline-offset: 4px; }
 
-    a {
-      color: inherit;
-    }
-
-    .page-shell {
-      width: min(1160px, calc(100% - 64px));
-      margin: 0 auto;
-    }
-
-    .hero {
-      position: relative;
-      overflow: hidden;
-      padding: 92px 0 72px;
-      border-bottom: 1px solid var(--边线);
-    }
-
+    .hero { position: relative; overflow: hidden; padding: 96px 0 86px; border-bottom: 1px solid var(--line); }
     .hero::after {
       content: "";
       position: absolute;
-      right: -8vw;
-      bottom: -102px;
-      width: min(660px, 68vw);
-      height: 220px;
-      border: 1px solid rgba(22, 119, 210, 0.2);
+      right: -130px;
+      bottom: -195px;
+      width: 630px;
+      height: 380px;
+      border: 1px solid rgba(23, 111, 209, 0.2);
       border-radius: 50%;
-      box-shadow:
-        0 -32px 0 -31px rgba(22, 119, 210, 0.18),
-        0 -64px 0 -63px rgba(22, 119, 210, 0.13),
-        0 -96px 0 -95px rgba(22, 119, 210, 0.08);
+      box-shadow: 0 -46px 0 -45px rgba(23, 111, 209, 0.14), 0 -92px 0 -91px rgba(23, 111, 209, 0.09);
       pointer-events: none;
     }
+    .hero-grid { position: relative; z-index: 1; display: grid; grid-template-columns: minmax(0, 1.45fr) minmax(290px, 0.55fr); gap: clamp(48px, 8vw, 110px); align-items: end; }
+    .eyebrow { display: flex; align-items: center; gap: 12px; margin: 0 0 22px; color: var(--blue); font-family: Arial, sans-serif; font-size: 13px; font-weight: 700; letter-spacing: 0.16em; }
+    .eyebrow::before { content: ""; width: 36px; height: 2px; background: var(--blue); }
+    h1 { margin: 0; color: var(--navy); font-family: "HarmonyOS Sans SC", "Microsoft YaHei UI", sans-serif; font-size: clamp(54px, 8vw, 92px); font-weight: 800; line-height: 1; letter-spacing: -0.07em; }
+    .role { margin: 24px 0 0; color: var(--ink); font-size: clamp(20px, 2.4vw, 28px); font-weight: 700; line-height: 1.45; }
+    .intro { max-width: 760px; margin: 24px 0 0; color: var(--muted); font-size: 16px; line-height: 1.95; }
+    .hero-note { padding: 26px 0 4px 28px; border-left: 2px solid var(--blue); }
+    .hero-note-label { margin: 0 0 12px; color: var(--blue); font-size: 13px; font-weight: 700; letter-spacing: 0.1em; }
+    .hero-note p:last-child { margin: 0; color: var(--navy); font-size: 17px; font-weight: 700; line-height: 1.8; }
 
-    .eyebrow {
-      display: flex;
-      align-items: center;
-      gap: 12px;
-      margin: 0 0 22px;
-      color: var(--清水蓝);
-      font-size: 14px;
-      font-weight: 700;
-      letter-spacing: 0.18em;
+    main { display: block; }
+    .section { padding: 86px 0; }
+    .section-alt { border-top: 1px solid var(--line); border-bottom: 1px solid var(--line); background: var(--surface); }
+    .section-heading { display: grid; grid-template-columns: minmax(220px, 0.4fr) minmax(0, 0.6fr); gap: 48px; align-items: end; margin-bottom: 42px; }
+    .section-kicker { margin: 0 0 12px; color: var(--blue); font-size: 13px; font-weight: 700; letter-spacing: 0.12em; }
+    h2 { margin: 0; color: var(--navy); font-size: clamp(30px, 4vw, 44px); line-height: 1.24; letter-spacing: -0.035em; }
+    .section-summary { max-width: 620px; margin: 0; color: var(--muted); font-size: 15px; line-height: 1.85; }
+
+    .capability-grid { display: grid; grid-template-columns: repeat(4, minmax(0, 1fr)); border-top: 1px solid var(--line); border-bottom: 1px solid var(--line); }
+    .capability { position: relative; min-height: 220px; padding: 32px 26px 30px; border-right: 1px solid var(--line); }
+    .capability:last-child { border-right: 0; }
+    .capability::before { content: ""; position: absolute; top: -4px; left: 26px; width: 42px; height: 7px; border-radius: 6px; background: var(--blue); }
+    .capability h3 { margin: 0 0 16px; color: var(--navy); font-size: 20px; line-height: 1.4; }
+    .capability p { margin: 0; color: var(--muted); font-size: 14px; line-height: 1.8; }
+
+    .project-list { display: grid; gap: 28px; }
+    .project-card { overflow: hidden; border: 1px solid var(--line); border-radius: 18px; background: var(--white); box-shadow: 0 1px 0 rgba(18, 52, 91, 0.02); transition: border-color 160ms ease, box-shadow 160ms ease; }
+    .project-card:hover { border-color: #b8d2ec; box-shadow: var(--shadow); }
+    .project-header { display: grid; grid-template-columns: minmax(240px, 0.42fr) minmax(0, 0.58fr); gap: 48px; padding: 36px 40px 32px; border-bottom: 1px solid var(--line); }
+    .project-type { margin: 0 0 12px; color: var(--blue); font-family: Arial, sans-serif; font-size: 12px; font-weight: 700; letter-spacing: 0.12em; }
+    .project-card h3 { margin: 0; color: var(--navy); font-size: clamp(22px, 2.6vw, 30px); line-height: 1.4; }
+    .project-intro { margin: 3px 0 0; color: var(--muted); font-size: 15px; line-height: 1.85; }
+    .project-body { display: grid; grid-template-columns: minmax(0, 1.15fr) minmax(0, 0.85fr); }
+    .project-block { padding: 32px 40px 36px; }
+    .project-block + .project-block { border-left: 1px solid var(--line); background: var(--blue-soft); }
+    .block-label { margin: 0 0 16px; color: var(--blue); font-size: 13px; font-weight: 800; letter-spacing: 0.08em; }
+    .project-block ul { display: grid; gap: 10px; margin: 0; padding: 0; list-style: none; }
+    .project-block li { position: relative; padding-left: 18px; color: var(--ink); font-size: 14px; line-height: 1.72; }
+    .project-block li::before { content: ""; position: absolute; top: 0.72em; left: 0; width: 5px; height: 5px; border-radius: 50%; background: var(--blue); }
+    .value-text { margin: 0 0 24px; color: var(--ink); font-size: 14px; line-height: 1.82; }
+    .button { display: inline-flex; align-items: center; gap: 10px; padding: 12px 17px; border-radius: 9px; color: var(--white); background: var(--navy); font-size: 14px; font-weight: 700; text-decoration: none; transition: background 160ms ease, transform 160ms ease; }
+    .button::after { content: "→"; font-size: 17px; line-height: 1; }
+    .button:hover { background: var(--blue-dark); transform: translateX(2px); }
+
+    footer { padding: 28px 0 38px; color: var(--muted); font-size: 13px; }
+    .footer-inner { display: flex; align-items: center; justify-content: space-between; gap: 20px; }
+
+    @media (max-width: 900px) {
+      .hero-grid, .section-heading, .project-header { grid-template-columns: 1fr; gap: 28px; }
+      .hero-note { max-width: 580px; }
+      .capability-grid { grid-template-columns: repeat(2, minmax(0, 1fr)); }
+      .capability:nth-child(2) { border-right: 0; }
+      .capability:nth-child(-n + 2) { border-bottom: 1px solid var(--line); }
     }
-
-    .eyebrow::before {
-      content: "";
-      width: 34px;
-      height: 2px;
-      background: var(--清水蓝);
+    @media (max-width: 680px) {
+      .shell { width: min(100% - 36px, 560px); }
+      .nav { gap: 14px; }
+      .nav a:first-child { display: none; }
+      .hero { padding: 68px 0 62px; }
+      .hero::after { right: -330px; }
+      h1 { font-size: clamp(50px, 18vw, 72px); letter-spacing: -0.055em; }
+      .section { padding: 62px 0; }
+      .capability-grid, .project-body { grid-template-columns: 1fr; }
+      .capability, .capability:nth-child(2) { min-height: 0; border-right: 0; border-bottom: 1px solid var(--line); }
+      .capability:last-child { border-bottom: 0; }
+      .project-header, .project-block { padding: 28px 24px; }
+      .project-block + .project-block { border-top: 1px solid var(--line); border-left: 0; }
+      .footer-inner { display: block; }
+      .footer-inner span:last-child { display: block; margin-top: 8px; }
     }
-
-    h1 {
-      max-width: 820px;
-      margin: 0;
-      color: var(--深海蓝);
-      font-family: "STZhongsong", "SimSun", serif;
-      font-size: clamp(40px, 6vw, 72px);
-      font-weight: 700;
-      line-height: 1.12;
-      letter-spacing: -0.04em;
-    }
-
-    .subtitle {
-      max-width: 760px;
-      margin: 28px 0 0;
-      color: var(--灰色);
-      font-size: clamp(17px, 2vw, 21px);
-      line-height: 1.8;
-      letter-spacing: 0.03em;
-    }
-
-    main {
-      padding: 68px 0 92px;
-    }
-
-    .section-heading {
-      display: flex;
-      align-items: flex-end;
-      justify-content: space-between;
-      gap: 24px;
-      margin-bottom: 30px;
-    }
-
-    .section-heading h2 {
-      margin: 0;
-      color: var(--深海蓝);
-      font-size: clamp(25px, 3vw, 34px);
-      line-height: 1.3;
-    }
-
-    .section-heading p {
-      margin: 0 0 4px;
-      color: var(--灰色);
-      font-size: 14px;
-    }
-
-    .project-grid {
-      display: grid;
-      grid-template-columns: repeat(2, minmax(0, 1fr));
-      gap: 22px;
-    }
-
-    .project-card {
-      position: relative;
-      display: flex;
-      min-height: 294px;
-      flex-direction: column;
-      overflow: hidden;
-      padding: 34px;
-      border: 1px solid var(--边线);
-      border-radius: 18px;
-      background: var(--白色);
-      box-shadow: 0 1px 0 rgba(18, 59, 112, 0.02);
-      transition: transform 180ms ease, border-color 180ms ease, box-shadow 180ms ease;
-    }
-
-    .project-card::before {
-      content: "";
-      position: absolute;
-      top: 0;
-      left: 0;
-      width: 100%;
-      height: 4px;
-      background: linear-gradient(90deg, var(--深海蓝), var(--清水蓝));
-      transform: scaleX(0.18);
-      transform-origin: left;
-      transition: transform 180ms ease;
-    }
-
-    .project-card:hover {
-      transform: translateY(-4px);
-      border-color: #b8d6f1;
-      box-shadow: var(--阴影);
-    }
-
-    .project-card:hover::before {
-      transform: scaleX(1);
-    }
-
-    .project-type {
-      margin: 0 0 20px;
-      color: var(--清水蓝);
-      font-size: 13px;
-      font-weight: 700;
-      letter-spacing: 0.12em;
-    }
-
-    .project-card h3 {
-      margin: 0;
-      color: var(--深海蓝);
-      font-size: clamp(21px, 2.5vw, 28px);
-      line-height: 1.42;
-    }
-
-    .project-card p {
-      margin: 18px 0 30px;
-      color: var(--灰色);
-      font-size: 15px;
-      line-height: 1.85;
-    }
-
-    .project-link {
-      display: inline-flex;
-      width: fit-content;
-      align-items: center;
-      gap: 10px;
-      margin-top: auto;
-      padding: 12px 18px;
-      border-radius: 10px;
-      color: var(--白色);
-      background: var(--深海蓝);
-      font-size: 15px;
-      font-weight: 700;
-      text-decoration: none;
-      transition: background 160ms ease, transform 160ms ease;
-    }
-
-    .project-link::after {
-      content: "→";
-      font-size: 18px;
-      line-height: 1;
-    }
-
-    .project-link:hover {
-      background: var(--清水蓝);
-      transform: translateX(2px);
-    }
-
-    .project-link:focus-visible {
-      outline: 3px solid rgba(22, 119, 210, 0.3);
-      outline-offset: 3px;
-    }
-
-    footer {
-      padding: 26px 0 36px;
-      border-top: 1px solid var(--边线);
-      color: var(--灰色);
-      font-size: 14px;
-    }
-
-    @media (max-width: 760px) {
-      .page-shell {
-        width: min(100% - 36px, 600px);
-      }
-
-      .hero {
-        padding: 64px 0 58px;
-      }
-
-      .hero::after {
-        right: -180px;
-      }
-
-      h1 {
-        letter-spacing: -0.02em;
-      }
-
-      main {
-        padding: 48px 0 66px;
-      }
-
-      .section-heading {
-        display: block;
-      }
-
-      .section-heading p {
-        margin-top: 10px;
-      }
-
-      .project-grid {
-        grid-template-columns: 1fr;
-      }
-
-      .project-card {
-        min-height: 0;
-        padding: 28px;
-      }
-    }
-
     @media (prefers-reduced-motion: reduce) {
-      html {
-        scroll-behavior: auto;
-      }
-
-      .project-card,
-      .project-card::before,
-      .project-link {
-        transition: none;
-      }
+      html { scroll-behavior: auto; }
+      .project-card, .button { transition: none; }
     }
   </style>
 </head>
 <body>
-  <header class="hero">
-    <div class="page-shell">
-      <p class="eyebrow">智慧水产交互原型作品集</p>
-      <h1>雷雨天｜智慧水产交互原型作品集</h1>
-      <p class="subtitle">智慧水产移动端 · AI助手 · 智慧增殖站Web · 数字孪生可视化</p>
+  <header class="topbar">
+    <div class="shell topbar-inner">
+      <span class="brand">雷雨天｜作品集</span>
+      <nav class="nav" aria-label="页面导航">
+        <a href="#about">关于我</a>
+        <a href="#work">我主要做什么</a>
+        <a href="#projects">项目案例</a>
+      </nav>
     </div>
   </header>
 
   <main>
-    <div class="page-shell">
-      <div class="section-heading">
-        <h2>项目原型</h2>
-        <p>选择项目进入对应交互页面</p>
+    <section class="hero" id="about">
+      <div class="shell hero-grid">
+        <div>
+          <p class="eyebrow">AI产品 · AI应用 · 交互原型</p>
+          <h1>雷雨天</h1>
+          <p class="role">2027届软件工程｜AI产品 / AI应用方向</p>
+          <p class="intro">目前主要关注大模型应用、AI产品和交互原型方向。实习期间参与智慧水产相关产品设计与原型迭代，主要负责交互原型、页面迁移、Dify AI助手验证和数字孪生页面快速设计。</p>
+        </div>
+        <aside class="hero-note" aria-label="主要工作方式">
+          <p class="hero-note-label">我的工作方式</p>
+          <p>理解需求<br>做成可操作原型<br>验证后持续迭代</p>
+        </aside>
       </div>
+    </section>
 
-      <section class="project-grid" aria-label="项目原型列表">
-        <article class="project-card">
-          <p class="project-type">移动端 · AI助手</p>
-          <h3>智慧水产-设备管理助手</h3>
-          <p>移动端智慧水产交互原型，包含设备管理、养殖业务与AI助手交互设计。</p>
-          <a class="project-link" href="./智慧水产设备管理助手/">查看原型</a>
-        </article>
+    <section class="section" id="work">
+      <div class="shell">
+        <div class="section-heading">
+          <div><p class="section-kicker">工作重点</p><h2>我主要做什么</h2></div>
+          <p class="section-summary">围绕真实业务需求，把文字和流程转化为可以直接查看、操作和讨论的页面，再配合反馈与已有工程持续调整。</p>
+        </div>
+        <div class="capability-grid">
+          <article class="capability"><h3>需求理解与拆解</h3><p>把实际业务需求整理为具体页面、功能和交互方式。</p></article>
+          <article class="capability"><h3>交互原型</h3><p>通过可交互页面快速验证界面设计和业务流程。</p></article>
+          <article class="capability"><h3>AI应用验证</h3><p>使用 Dify 等工具验证 AI 助手在真实业务场景中的交互形式。</p></article>
+          <article class="capability"><h3>页面迁移与迭代</h3><p>配合已有前端架构完成原型迁移，并持续根据需求修改。</p></article>
+        </div>
+      </div>
+    </section>
 
-        <article class="project-card">
-          <p class="project-type">数字孪生 · 双界面</p>
-          <h3>渔立方数字孪生养殖系统</h3>
-          <p>面向智慧养殖场景的双界面数字孪生交互原型，包含视频墙、设备状态及监控交互。</p>
-          <a class="project-link" href="./渔立方数字孪生养殖系统/">查看原型</a>
-        </article>
+    <section class="section section-alt" id="projects">
+      <div class="shell">
+        <div class="section-heading">
+          <div><p class="section-kicker">项目案例</p><h2>智慧水产交互原型</h2></div>
+          <p class="section-summary">以下内容聚焦我实际参与的产品原型、交互验证和页面迁移工作，不代表完整后端、数据库或生产系统开发。</p>
+        </div>
+        <div class="project-list">
+          <article class="project-card">
+            <header class="project-header"><div><p class="project-type">移动端 · AI助手</p><h3>智慧水产-设备管理助手</h3></div><p class="project-intro">面向智慧水产养殖场景的移动端交互原型，覆盖设备管理、养殖业务和 AI 助手等功能。</p></header>
+            <div class="project-body">
+              <section class="project-block"><p class="block-label">我负责</p><ul><li>移动端页面和交互原型搭建</li><li>根据业务需求持续进行界面调整</li><li>配合原型向现有 Vue2 架构迁移和适配</li><li>使用 Dify 搭建 AI 助手的可视化交互流程</li></ul></section>
+              <section class="project-block"><p class="block-label">项目价值</p><p class="value-text">通过可交互原型提前验证页面和 AI 助手的使用方式，帮助团队更直观地确认需求并减少后续页面反复修改。</p><a class="button" href="./智慧水产设备管理助手/">查看在线原型</a></section>
+            </div>
+          </article>
 
-        <article class="project-card">
-          <p class="project-type">网页管理端 · 综合看板</p>
-          <h3>智慧增殖站项目管理｜综合看板</h3>
-          <p>智慧增殖放流站Web管理端交互原型，覆盖业务管理、设备运维及综合看板等场景。</p>
-          <a class="project-link" href="./智慧增殖站综合看板/">查看原型</a>
-        </article>
+          <article class="project-card">
+            <header class="project-header"><div><p class="project-type">Web管理端 · 综合看板</p><h3>智慧增殖站项目管理｜综合看板</h3></div><p class="project-intro">智慧增殖放流站 Web 管理端原型，覆盖项目管理、生产繁育、设备运维、维修、巡检、保养和计量校准等业务。</p></header>
+            <div class="project-body">
+              <section class="project-block"><p class="block-label">我负责</p><ul><li>理解已有业务流程和页面关系</li><li>负责 Web 原型的迁移、修改和持续迭代</li><li>根据需求调整页面功能和交互</li><li>通过原型验证跨业务模块的页面衔接方式</li></ul></section>
+              <section class="project-block"><p class="block-label">项目价值</p><p class="value-text">把较复杂的业务需求转换成可以直接查看和操作的页面，帮助团队更快发现交互问题并确认修改方案。</p><a class="button" href="./智慧增殖站综合看板/">查看在线原型</a></section>
+            </div>
+          </article>
 
-        <article class="project-card">
-          <p class="project-type">数字孪生 · 数据驾驶舱</p>
-          <h3>渔立方数字孪生养殖系统｜数据驾驶舱</h3>
-          <p>智慧养殖数据驾驶舱原型，展示水质、鱼情、设备运行、告警及快捷操作等信息。</p>
-          <a class="project-link" href="./渔立方数据驾驶舱/">查看原型</a>
-        </article>
-      </section>
-    </div>
+          <article class="project-card">
+            <header class="project-header"><div><p class="project-type">数字孪生 · 双界面</p><h3>渔立方数字孪生养殖系统</h3></div><p class="project-intro">智慧养殖数字孪生双界面交互原型，主要展示实时监控、设备状态和视频场景。</p></header>
+            <div class="project-body">
+              <section class="project-block"><p class="block-label">我负责</p><ul><li>根据需求快速搭建数字孪生交互原型</li><li>设计视频墙、页面切换、全屏查看和轮巡等交互</li><li>根据反馈持续调整页面布局和操作方式</li><li>用原型验证不同监控场景下的界面方案</li></ul></section>
+              <section class="project-block"><p class="block-label">项目价值</p><p class="value-text">在正式开发之前快速把数字孪生需求变成可交互页面，方便团队直接讨论界面和操作逻辑。</p><a class="button" href="./渔立方数字孪生养殖系统/">查看在线原型</a></section>
+            </div>
+          </article>
+
+          <article class="project-card">
+            <header class="project-header"><div><p class="project-type">数字孪生 · 数据驾驶舱</p><h3>渔立方数字孪生养殖系统｜数据驾驶舱</h3></div><p class="project-intro">面向智慧养殖场景的数据驾驶舱原型，包括水质环境、鱼情、设备运行、实时告警等信息。</p></header>
+            <div class="project-body">
+              <section class="project-block"><p class="block-label">我负责</p><ul><li>数据驾驶舱页面布局和信息层级设计</li><li>水质趋势、鱼情、设备状态和告警模块的交互原型</li><li>图表、Tooltip、图例等展示方式调整</li><li>根据实际展示需求持续进行页面迭代</li></ul></section>
+              <section class="project-block"><p class="block-label">项目价值</p><p class="value-text">将分散的养殖信息集中到统一页面中进行展示，通过原型提前验证数据展示和信息层级是否清晰。</p><a class="button" href="./渔立方数据驾驶舱/">查看在线原型</a></section>
+            </div>
+          </article>
+        </div>
+      </div>
+    </section>
   </main>
-
-  <footer>
-    <div class="page-shell">雷雨天｜智慧水产交互原型作品集</div>
-  </footer>
+  <footer><div class="shell footer-inner"><span>雷雨天｜AI产品与交互原型作品集</span><span>需求理解 · 原型验证 · 持续迭代</span></div></footer>
 </body>
 </html>
