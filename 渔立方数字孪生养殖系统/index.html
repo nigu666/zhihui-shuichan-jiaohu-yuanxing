@@ -1,0 +1,632 @@
+<!doctype html>
+<html lang="zh-CN">
+<head>
+<meta charset="utf-8" />
+<meta name="viewport" content="width=device-width,initial-scale=1" />
+<title>渔立方数字孪生养殖系统</title>
+<link rel="icon" href="data:,">
+<style>
+:root{
+  --blue:#1677ff;--ink:#17243a;--muted:#7d8da8;--line:#e5eaf2;--paper:#fff;
+  --wash:#f5f7fb;--red:#ee4d55;--orange:#f5a623;--green:#1dbb76;
+  --shadow:0 8px 24px rgba(42,70,110,.07);
+  --font-family-ui:"Microsoft YaHei","PingFang SC","Noto Sans CJK SC",Arial,sans-serif;
+  --font-size-xxs:11px;--font-size-xs:12px;--font-size-sm:13px;--font-size-md:14px;--font-size-lg:16px;--font-size-xl:20px;--font-size-number:22px;--font-size-page:24px;
+  --font-weight-normal:400;--font-weight-medium:500;--font-weight-semibold:600;--font-weight-bold:700;
+}
+*{box-sizing:border-box}
+html,body{width:100%;height:100%}
+body{margin:0;overflow:hidden;background:#f5f7fb;color:var(--ink);font-family:var(--font-family-ui);font-size:var(--font-size-sm);font-weight:var(--font-weight-normal);line-height:1.5;font-variant-numeric:tabular-nums}
+button,input,select{font:inherit;color:inherit}
+button{border:0;background:none;cursor:pointer}
+button:disabled{cursor:not-allowed;opacity:.42}
+button:focus-visible,input:focus-visible,select:focus-visible{outline:2px solid #7fb4ff;outline-offset:2px}
+[hidden]{display:none!important}
+
+.topbar{height:54px;background:#fff;border-bottom:1px solid var(--line);display:flex;align-items:center;gap:16px;padding:0 20px;position:relative;z-index:200}
+.brand{display:flex;align-items:center;gap:10px;font-size:var(--font-size-lg);font-weight:var(--font-weight-bold)}.brand-mark{font-size:23px;color:var(--blue);font-style:italic}.divider{width:1px;height:20px;background:#dce3ee}.module{font-weight:700}.top-spacer{flex:1}.clock{color:#8290a8;font-size:12px}.weekday{font-weight:700}.search{width:142px;border:1px solid transparent;background:#f7f8fb;border-radius:18px;padding:7px 12px}.search:focus{border-color:#c7daf6;background:#fff}.ui-icon{display:block;width:1em;height:1em;flex:none;fill:none;stroke:currentColor;stroke-width:1.8;stroke-linecap:round;stroke-linejoin:round;vector-effect:non-scaling-stroke;pointer-events:none}.top-icon{width:32px;height:32px;display:grid;place-items:center;border:1px solid transparent;border-radius:9px;color:#64748b;position:relative;transition:color 140ms ease,background-color 140ms ease,border-color 140ms ease}.top-icon .ui-icon{width:17px;height:17px}.top-icon:hover{background:#f4f8fd;border-color:#e2eaf5;color:var(--blue)}.top-icon:active{background:#edf5ff}.dot{position:absolute;width:6px;height:6px;background:#ee4d55;border:2px solid #fff;border-radius:50%;right:3px;top:3px;box-sizing:content-box}.user{border-left:1px solid var(--line);padding-left:14px;position:relative}.user>button{min-height:32px;display:flex;align-items:center;gap:7px;padding:0 4px;font-weight:var(--font-weight-semibold);color:#44546b}.user>button .ui-icon{width:16px;height:16px;color:#7890ad}.user>button .user-chevron{width:13px;height:13px;color:#8a99ad}.user-menu{position:absolute;right:0;top:36px;width:128px;background:#fff;border:1px solid var(--line);border-radius:10px;box-shadow:var(--shadow);padding:6px;z-index:200}.user-menu button{width:100%;padding:8px;text-align:left;border-radius:6px}.user-menu button:hover{background:#f4f7fc}
+
+.app{height:calc(100vh - 54px);display:grid;grid-template-columns:minmax(0,44%) minmax(0,56%);gap:12px;padding:16px 16px 12px 20px;transition:grid-template-columns 320ms cubic-bezier(.22,.61,.36,1)}
+body.video-wall-mode .app{grid-template-columns:minmax(0,60%) minmax(0,40%)}
+.left{min-width:0;min-height:0;position:relative;isolation:isolate}
+.title-row{display:flex;flex-direction:column;align-items:flex-start;gap:10px;margin:4px 16px 10px}.title{font-size:var(--font-size-page);color:#1169df;letter-spacing:.5px;font-weight:var(--font-weight-bold)}.title:before{content:'◖';display:inline-block;color:#3c8cff;font-size:34px;vertical-align:-4px;margin-right:10px}.nav{display:flex;background:#fff;border:1px solid #e8eef6;border-radius:21px;box-shadow:0 4px 14px rgba(42,70,110,.045);padding:4px;width:max-content;max-width:100%;overflow:auto}.nav button{min-height:34px;display:flex;align-items:center;gap:7px;padding:6px 13px;border:1px solid transparent;border-radius:17px;color:#6f7f96;white-space:nowrap;transition:color 140ms ease,background-color 140ms ease,border-color 140ms ease}.nav button .ui-icon{width:16px;height:16px;stroke-width:1.8}.nav button:hover{background:#f5f8fc;color:#37638f}.nav button.active{background:#edf5ff;border-color:#bcd7fb;color:#1169df;box-shadow:none}.nav button.active .ui-icon{color:#1677ff}
+
+.twin-scene{position:absolute;inset:116px 0 50px;min-width:0;min-height:0;isolation:isolate}
+.twin-scene-viewport{position:absolute;inset:0 8px 0 62px;overflow:hidden;border-radius:12px;background:#e9ebef;border:1px solid rgba(229,234,242,.72)}
+.twin-scene-viewport:before{content:'';position:absolute;inset:0;pointer-events:none;z-index:2;background:linear-gradient(180deg,rgba(245,247,251,.18) 0%,rgba(245,247,251,0) 17%,rgba(245,247,251,0) 86%,rgba(245,247,251,.12) 100%)}
+.scene-transform-layer{position:absolute;inset:0;transform-origin:center center;transform:translate3d(var(--scene-x,0),var(--scene-y,0),0) scale(var(--scene-scale,1));transition:transform 320ms cubic-bezier(.22,.61,.36,1);will-change:transform}
+body.main-view-mode{--scene-x:0%;--scene-y:0%;--scene-scale:1;--scene-label-scale:1}
+body.video-wall-mode{--scene-x:.35%;--scene-y:-.15%;--scene-scale:1.018;--scene-label-scale:.9823}
+.twin-scene-image{position:absolute;inset:0;width:100%;height:100%;object-fit:contain;object-position:center center;transform:scale(1.065) translateY(1%);transform-origin:center center;clip-path:polygon(0 42%,12% 36%,28% 31%,44% 25%,59% 19%,71% 10%,86% 8%,100% 9%,100% 100%,0 100%);filter:contrast(.985) saturate(.96) drop-shadow(0 12px 18px rgba(44,64,90,.08));pointer-events:none;z-index:1}
+.camera-hotspot-layer{position:absolute;inset:0;z-index:20;pointer-events:none}.cam-tag{position:absolute;height:34px;display:flex;align-items:center;gap:7px;padding:0 9px;background:#fff;border:1px solid #dfe7f2;border-radius:10px;box-shadow:0 5px 14px rgba(52,77,112,.11);font-size:11px;font-weight:700;white-space:nowrap;transform:translate(-50%,-50%) scale(var(--scene-label-scale,1));transform-origin:center center;transition:transform 320ms cubic-bezier(.22,.61,.36,1),border-color 140ms ease,background 140ms ease;pointer-events:auto}.cam-tag small{color:#7f90a9;font-weight:500}.cam-tag i{width:18px;height:18px;display:grid;place-items:center;background:var(--blue);color:#fff;border-radius:50%;font-size:9px;font-style:normal}.cam-tag:hover{border-color:#91bbf7;background:#fbfdff}.cam-tag.selected{border-color:#6da8fb;background:#edf5ff;color:#1169df;box-shadow:0 5px 16px rgba(22,119,255,.16)}
+.tag1{left:17%;top:55%}.tag2{left:32%;top:65%}.tag3{left:51%;top:48%}.tag6{left:74%;top:35%}.tag9{left:81%;top:28%}
+.tool-rail{position:absolute;left:10px;top:156px;display:flex;flex-direction:column;gap:5px;padding:7px 5px;background:#fff;border:1px solid #e8eef6;border-radius:20px 20px 10px 10px;box-shadow:0 5px 16px rgba(42,70,110,.06);z-index:30}.tool-rail.bottom{top:354px;border-radius:10px 10px 20px 20px}.tool{width:38px;height:38px;display:grid;place-items:center;border:1px solid transparent;border-radius:50%;color:#718197;transition:color 140ms ease,background-color 140ms ease,border-color 140ms ease}.tool .ui-icon{width:18px;height:18px;stroke-width:1.8}.tool:hover{background:#f3f8ff;border-color:#dbe9fb;color:var(--blue)}.tool.active{background:#edf5ff;border-color:#aecdF8;color:#1169df;box-shadow:none}.tool.active .ui-icon{stroke-width:2}
+.legend{position:absolute;left:50%;bottom:8px;transform:translateX(-50%);display:flex;align-items:center;gap:16px;padding:7px 14px;background:#fff;border:1px solid #edf1f7;border-radius:22px;box-shadow:var(--shadow);white-space:nowrap;z-index:20}.legend button{display:flex;align-items:center;gap:6px;font-weight:700}.legend b{width:17px;height:17px;display:grid;place-items:center;border-radius:50%;color:#fff;font-size:10px}.legend .a{background:#f44}.legend .b{background:#f4af24}.legend .c{background:#2d89ff}.legend .d{background:#46c68a}.legend .e{background:#97a6b9}.legend button.selected{color:var(--blue)}
+
+.view-container{grid-column:2;grid-row:1;min-width:0;min-height:0;height:100%;opacity:0;visibility:hidden;pointer-events:none;transform:translateX(8px);transition:opacity 220ms ease,transform 260ms cubic-bezier(.22,.61,.36,1),visibility 0s linear 260ms;will-change:transform,opacity}
+#videoWallView{transform:translateX(10px)}
+body.main-view-mode #mainView,body.video-wall-mode #videoWallView{opacity:1;visibility:visible;pointer-events:auto;transform:translateX(0);transition:opacity 220ms ease,transform 260ms cubic-bezier(.22,.61,.36,1),visibility 0s}
+body.view-transitioning #mainView,body.view-transitioning #videoWallView{pointer-events:none}
+.panel{height:100%;background:#fff;border:1px solid var(--line);border-radius:12px;box-shadow:var(--shadow);min-width:0;min-height:0;overflow:hidden;position:relative;z-index:20}
+.main-panel{display:grid;grid-template-columns:minmax(0,1.08fr) minmax(330px,.92fr);gap:12px;padding:12px}.col{min-width:0;min-height:0}.main-left{display:flex;flex-direction:column;overflow:hidden}.main-right{display:grid;grid-template-rows:auto auto auto minmax(150px,.9fr) auto minmax(205px,1.1fr);gap:6px;overflow:hidden}.panel-head{display:flex;align-items:center;gap:16px;height:39px;border-bottom:1px solid var(--line);flex-shrink:0}.panel-head button{height:39px;font-size:var(--font-size-md);font-weight:var(--font-weight-medium);color:#72819a}.panel-head button.active{color:var(--ink);border-bottom:2px solid var(--blue)}.section-title{min-height:34px;margin:6px 0 4px;display:flex;align-items:center;justify-content:space-between;font-size:var(--font-size-lg);font-weight:var(--font-weight-semibold);line-height:1.4;flex-shrink:0}.section-title small{font-size:var(--font-size-xs);font-weight:var(--font-weight-medium)}.more-button{padding:0;color:#8290a6;font-size:var(--font-size-xs);font-weight:var(--font-weight-normal)}.more-button:hover{color:var(--blue)}
+.monitor{height:198px;background:#101419;border-radius:8px;overflow:hidden;position:relative;flex-shrink:0}.monitor>img{width:100%;height:100%;display:block;object-fit:cover;pointer-events:none}.monitor-bar{position:absolute;left:0;right:0;top:0;z-index:2;display:flex;justify-content:space-between;padding:10px 12px;color:#fff;background:linear-gradient(#111722dd,transparent);font-size:12px;pointer-events:none}.live:before{content:'●';color:#18c77e;margin-right:6px}.offline:before{color:#9aa6b8}.controls{position:absolute;left:0;right:0;bottom:0;z-index:3;display:flex;align-items:center;gap:13px;padding:25px 9px 8px;background:linear-gradient(transparent,#101419e8)}.controls button{color:#fff;font-size:var(--font-size-lg)}.controls .main-bigview-btn{margin-left:auto;width:32px;height:32px;display:grid;place-items:center;padding:0;border:1px solid rgba(255,255,255,.18);border-radius:8px;background:rgba(18,30,44,.56)}.controls .main-bigview-btn:hover{background:rgba(40,62,86,.86)}.controls .main-bigview-btn .ui-icon{width:17px;height:17px}.camera-empty{position:absolute;inset:0;display:grid;place-items:center;text-align:center;background:#f4f7fb;color:#7d8da8;font-weight:700;line-height:1.8;z-index:1}.camera-empty strong{display:block;color:#53647e;font-size:16px}.fullscreen-exit-btn{position:absolute;top:14px;right:16px;z-index:20;width:36px;height:36px;border-radius:50%;background:rgba(20,35,55,.76);color:#fff;font-size:25px;line-height:36px}.fullscreen-exit-btn:hover{background:var(--blue)}.monitor .monitor-expand-fullscreen-btn{display:none}
+.monitor.big-view{position:fixed;inset:16px;z-index:1200;height:auto;border-radius:10px;box-shadow:0 20px 60px rgba(10,20,35,.45)}.monitor.big-view>img{object-fit:contain;background:#07101b}.monitor.big-view .camera-empty{background:#101820;color:#c4cedb}.monitor.big-view .monitor-bar{padding:18px 22px}.monitor.big-view .controls{display:none!important}.monitor.big-view .monitor-expand-fullscreen-btn{display:grid}
+.result-tabs{display:flex;gap:8px;flex-shrink:0}.result-tabs button{padding:6px 11px;border:1px solid var(--line);background:#fff;border-radius:7px;color:#74839a}.result-tabs button.active{border-color:#8bb8f7;background:#f4f8ff;color:var(--blue)}.cards{display:grid;grid-template-columns:repeat(3,minmax(0,1fr));gap:8px;margin-top:8px;flex-shrink:0}.result-card{min-width:0;border:1px solid var(--line);border-radius:8px;padding:7px;background:#fff}.result-card strong{display:block;font-size:var(--font-size-md);font-weight:var(--font-weight-semibold)}.result-card em{display:block;margin:4px 0;color:var(--blue);font-size:var(--font-size-xl);font-style:normal;font-weight:var(--font-weight-semibold);white-space:nowrap;overflow:hidden;text-overflow:ellipsis;font-variant-numeric:tabular-nums}.result-card em.alert{color:var(--red)}.result-card small{display:block;color:#8b98ab;line-height:1.45}.result-card img{width:100%;height:42px;object-fit:cover;border-radius:5px;margin-top:4px}.thumb-empty{height:42px;display:grid;place-items:center;margin-top:4px;border-radius:5px;background:#f4f7fb;color:#8b98ab;font-size:var(--font-size-xs);font-weight:var(--font-weight-normal)}.result-list{min-height:0;overflow:auto;border:1px solid var(--line);border-radius:8px}.result-row,.history-row{padding:8px 10px;display:flex;align-items:center;justify-content:space-between;gap:10px;border-bottom:1px solid var(--line);color:#6f7f99}.result-row:last-child,.history-row:last-child{border-bottom:0}.result-row .status{margin-left:auto;color:var(--green);font-size:var(--font-size-xs);font-weight:var(--font-weight-medium)}.result-empty{padding:18px;color:#8b98ab;text-align:center}.event-accordion{border-bottom:1px solid var(--line)}.event-accordion:last-child{border-bottom:0}.event-accordion-head{width:100%;display:grid;grid-template-columns:auto minmax(0,1fr) auto auto auto;align-items:center;gap:8px;padding:9px 10px;text-align:left}.event-accordion-head:hover{background:#f7faff}.event-name{font-size:var(--font-size-md);font-weight:var(--font-weight-semibold);overflow:hidden;text-overflow:ellipsis;white-space:nowrap}.event-status{font-size:var(--font-size-xs);font-weight:var(--font-weight-medium)}.event-status.done{color:var(--green)}.event-status.pending{color:var(--red)}.event-arrow{color:#8290a6;font-size:12px}.event-accordion-detail{padding:9px 12px 11px 44px;background:#f7faff;color:#697a94;display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:5px 14px}.event-accordion-detail b{color:#53647e}.level{display:inline-flex;align-items:center;justify-content:center;min-width:24px;padding:2px 5px;border-radius:5px;font-size:var(--font-size-xxs);font-weight:var(--font-weight-semibold)}.high{color:#d9363e;background:#fff0f0}.medium{color:#d98300;background:#fff6e6}.low{color:#0e9d60;background:#eafaf2}
+.stat-grid{display:grid;grid-template-columns:repeat(2,minmax(0,1fr));grid-template-rows:repeat(2,minmax(82px,auto));gap:8px;min-height:0}.stat{position:relative;box-sizing:border-box;min-width:0;min-height:82px;overflow:hidden;padding:10px 11px;border:1px solid var(--line);border-radius:9px;background:#fff;text-align:left;display:grid;grid-template-rows:auto auto auto;align-content:start}.stat:hover,.stat.active{border-color:#94bcf4;background:#f7fbff}.stat label{display:block;padding-right:38px;color:#7888a2;font-size:var(--font-size-xs);font-weight:var(--font-weight-normal);cursor:pointer}.stat strong{display:block;margin:5px 0 4px;font-size:var(--font-size-number);font-weight:var(--font-weight-semibold);font-variant-numeric:tabular-nums}.stat small{display:block;position:static;transform:none;color:var(--blue);font-size:var(--font-size-xs);font-weight:var(--font-weight-normal);line-height:1.4}.stat-icon{position:absolute;right:9px;top:9px;width:29px;height:29px;display:grid;place-items:center;border-radius:50%;background:#edf4ff;color:var(--blue);font-style:normal}.alarm-list,.rules{min-height:0;overflow:auto;border:1px solid var(--line);border-radius:8px}.alarm{width:100%;padding:7px 9px;border-bottom:1px solid var(--line);text-align:left}.alarm:last-child{border-bottom:0}.alarm:hover{background:#f7faff}.alarm-top{display:flex;align-items:center;gap:7px;font-weight:var(--font-weight-normal)}.alarm-name{min-width:0;font-size:var(--font-size-md);font-weight:var(--font-weight-semibold);overflow:hidden;text-overflow:ellipsis;white-space:nowrap}.alarm-status{margin-left:auto;font-size:var(--font-size-xs);font-weight:var(--font-weight-medium)}.alarm-meta{padding:4px 0 0 31px;color:#8a98ad;font-size:var(--font-size-xs);font-weight:var(--font-weight-normal);font-variant-numeric:tabular-nums}.rules{display:grid;grid-template-columns:repeat(2,minmax(0,1fr));grid-template-rows:repeat(3,minmax(66px,1fr))}.rule{min-width:0;padding:7px 6px;border-right:1px solid var(--line);border-bottom:1px solid var(--line);display:flex;flex-direction:column;align-items:center;justify-content:center;gap:2px;text-align:center;background:#fff}.rule:nth-child(even){border-right:0}.rule:nth-last-child(-n+2){border-bottom:0}.rule:hover{background:#f6faff}.rule b{color:var(--blue);font-size:var(--font-size-lg);line-height:1}.rule span{font-size:var(--font-size-md);font-weight:var(--font-weight-medium)}.rule small{color:var(--green);font-size:var(--font-size-xs);font-weight:var(--font-weight-medium)}.rule.is-disabled{background:#f8fafc}.rule.is-disabled b,.rule.is-disabled span{color:#94a3b8}.rule.is-disabled small{color:#94a3b8}
+
+.wall{height:100%;display:flex;flex-direction:column;padding:13px 12px}.wall-head{display:flex;align-items:center;gap:12px;padding-bottom:11px;border-bottom:1px solid var(--line);flex-shrink:0}.wall-head h2{margin:0;font-size:var(--font-size-lg);font-weight:var(--font-weight-semibold)}.wall-actions{margin-left:auto;display:flex;gap:8px}.wall-actions button{min-width:34px;height:30px;border-radius:7px;font-weight:700}.wall-actions button:hover{background:#f2f6fb}.wall-controls{display:flex;gap:8px;margin:10px 0;flex-shrink:0}.wall-controls select{min-width:0;flex:1;border:1px solid var(--line);border-radius:7px;background:#fff;padding:7px 9px}.wall-controls button{padding:7px 10px;border:1px solid var(--line);border-radius:7px;background:#fff}.wall-controls button:hover{border-color:#9ebde9;color:var(--blue)}.video-wall-hint{display:flex;align-items:center;justify-content:flex-end;gap:6px;margin:-3px 0 7px;color:#8290a6;font-size:11px;flex-shrink:0}.hint-icon{width:16px;height:16px;display:grid;place-items:center;border:1px solid #9ab0cb;border-radius:3px;color:#6f88a8;font-size:10px}.wall-grid{display:grid;grid-template-columns:repeat(var(--wall-cols,2),minmax(0,1fr));grid-template-rows:repeat(var(--wall-rows,3),minmax(0,1fr));gap:3px;min-height:0;flex:1;background:#202630;border-radius:7px;overflow:hidden;opacity:1;transition:opacity 160ms ease}.wall-grid.is-updating{opacity:.75}.video-wall-camera,.tile-empty{position:relative;min-width:0;min-height:0;background:#1d222a;overflow:hidden}.video-wall-camera{cursor:pointer}.video-wall-camera.selected{outline:3px solid var(--blue);outline-offset:-3px;z-index:1}.video-wall-camera img{width:100%;height:100%;display:block;object-fit:cover;pointer-events:none}.wall-camera-meta{position:absolute;left:0;right:0;top:0;display:flex;align-items:center;justify-content:space-between;gap:8px;padding:7px 8px;color:#fff;background:linear-gradient(#101218dd,transparent);font-size:var(--font-size-xs);pointer-events:none}.wall-camera-meta .camera-id{min-width:0;overflow:hidden;text-overflow:ellipsis;white-space:nowrap;font-weight:var(--font-weight-semibold)}.wall-camera-meta .camera-time{flex-shrink:0;white-space:nowrap;font-variant-numeric:tabular-nums}.tile-hover-hint{position:absolute;right:7px;bottom:7px;padding:4px 7px;border-radius:5px;background:rgba(14,22,35,.7);color:#fff;font-size:11px;opacity:0;transform:translateY(3px);transition:.16s;pointer-events:none}.video-wall-camera:hover .tile-hover-hint{opacity:1;transform:none}.tile-empty{display:grid;place-items:center;color:#9aa6b8;font-size:12px;text-align:center;padding:10px}.wall-footer{display:flex;align-items:center;gap:8px;padding-top:10px;color:#687993;flex-shrink:0}.layout-switch{display:flex;gap:5px}.layout-switch button,.pager button,.patrol{padding:6px 8px;border:1px solid transparent;border-radius:6px;color:#8090a6}.layout-switch button.active{border-color:#9ac1ff;color:var(--blue);background:#f2f7ff}.pager{margin-left:auto;display:flex;gap:7px;align-items:center}.pager button,.patrol{border-color:var(--line);background:#fff}.patrol-select{padding:6px;border:1px solid var(--line);border-radius:6px;background:#fff}body.video-wall-is-fullscreen #videoWallView{position:fixed;inset:0;z-index:1190;width:100vw;height:100vh;transform:none!important;opacity:1;visibility:visible;pointer-events:auto}.wall.is-wall-fullscreen{position:fixed;inset:16px;z-index:1200;width:auto;height:auto;border-radius:12px;background:#fff;box-shadow:0 18px 50px rgba(15,23,42,.18);transform:scale(1);opacity:1}.wall.is-wall-fullscreen.is-entering{animation:wallFullscreenEnter 240ms cubic-bezier(.22,.61,.36,1)}.wall.is-wall-fullscreen.is-leaving{animation:wallFullscreenLeave 240ms cubic-bezier(.22,.61,.36,1)}.wall.is-wall-fullscreen .wall-grid{border-radius:5px}@keyframes wallFullscreenEnter{from{opacity:.82;transform:scale(.992)}to{opacity:1;transform:scale(1)}}@keyframes wallFullscreenLeave{from{opacity:1;transform:scale(1)}to{opacity:.82;transform:scale(.992)}}
+
+.auxiliary-panel{position:fixed;top:72px;right:22px;width:min(440px,calc(100vw - 44px));max-height:calc(100vh - 94px);overflow:auto;background:#fff;border:1px solid var(--line);border-radius:12px;box-shadow:0 18px 46px rgba(33,58,96,.2);z-index:900;padding:16px}.auxiliary-head{display:flex;align-items:center;justify-content:space-between;padding-bottom:10px;margin-bottom:12px;border-bottom:1px solid var(--line);font-size:var(--font-size-lg);font-weight:var(--font-weight-semibold)}.auxiliary-close{font-size:20px;color:#7d8da8;padding:0 4px}.auxiliary-summary{display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:8px;margin-bottom:12px}.auxiliary-kpi{padding:8px;border:1px solid var(--line);border-radius:8px}.auxiliary-kpi small{display:block;color:#8290a6}.auxiliary-kpi strong{display:block;margin-top:3px;font-size:var(--font-size-number);font-weight:var(--font-weight-semibold);font-variant-numeric:tabular-nums}.auxiliary-row{width:100%;padding:9px 0;border-top:1px solid var(--line);text-align:left}.auxiliary-row:hover{background:#f7faff}.auxiliary-meta{margin-top:4px;color:#8290a6;font-size:var(--font-size-xs);font-weight:var(--font-weight-normal);font-variant-numeric:tabular-nums}.auxiliary-rule{display:flex;align-items:center;justify-content:space-between;gap:12px;padding:10px;margin:7px 0;border:1px solid var(--line);border-radius:8px}.auxiliary-rule small{color:var(--green)}.auxiliary-rule small.disabled{color:#9aa6b8}.auxiliary-rule button{padding:5px 9px;border:1px solid #bdd4fa;color:var(--blue);border-radius:6px}.auxiliary-note{color:#7f8ea5;font-size:12px;line-height:1.8}
+
+.overlay{position:fixed;inset:0;display:flex;align-items:center;justify-content:center;background:rgba(18,33,58,.26);z-index:1400}.modal{position:relative;z-index:1410;width:min(430px,90vw);padding:20px;background:#fff;border:1px solid var(--line);border-radius:12px;box-shadow:0 20px 50px rgba(32,56,91,.22)}.modal h3{margin:0 0 14px}.modal p{color:#6f7f99}.modal input,.modal select{width:100%;padding:9px 10px;margin-top:8px;border:1px solid var(--line);border-radius:7px;background:#fff}.modal-actions{display:flex;justify-content:flex-end;gap:8px;margin-top:18px}.modal-actions button{padding:7px 12px;border:1px solid var(--line);border-radius:7px;background:#fff}.modal-actions .primary{border-color:var(--blue);background:var(--blue);color:#fff}.custom-layout-fields{margin-top:12px}.custom-layout-selects{display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:12px}.custom-layout-selects label{font-size:var(--font-size-sm);font-weight:var(--font-weight-medium);color:#61718b}.custom-layout-selects select{margin-top:6px}.custom-layout-preview{margin-top:12px;padding:10px 12px;border:1px solid var(--line);border-radius:8px;background:#f7faff;color:#61718b;line-height:1.8;font-variant-numeric:tabular-nums}
+.video-wall-camera{transition:opacity 160ms ease,transform 220ms cubic-bezier(.22,.61,.36,1)}.wall-grid.grid-restoring .video-wall-camera{animation:wallGridReturnIn 220ms cubic-bezier(.22,.61,.36,1)}.wall-grid.expanded-mode{display:block;background:#101820}.video-wall-expanded{width:100%;height:100%;background:#101820;animation:wallCameraExpandIn 240ms cubic-bezier(.22,.61,.36,1)}.expanded-camera-frame{position:relative;width:100%;height:100%;min-width:0;min-height:0;display:flex;align-items:center;justify-content:center;overflow:hidden;background:#101820;cursor:zoom-out}.expanded-camera-image{width:100%;height:100%;display:block;object-fit:contain;object-position:center center;pointer-events:none}.expanded-camera-header{position:absolute;left:0;right:0;top:0;display:flex;align-items:center;justify-content:space-between;padding:12px 14px;color:#fff;background:linear-gradient(180deg,rgba(10,18,28,.78),rgba(10,18,28,0));font-size:12px;pointer-events:none}.expanded-camera-header strong{font-size:14px}.expanded-camera-back{position:absolute;right:14px;top:46px;z-index:3;padding:7px 11px;border:1px solid rgba(255,255,255,.28);border-radius:7px;background:rgba(18,30,44,.72);color:#fff}.expanded-camera-back:hover{background:rgba(28,48,70,.9)}.expanded-camera-hint{position:absolute;left:50%;bottom:12px;transform:translateX(-50%);padding:5px 9px;border-radius:6px;background:rgba(12,22,34,.68);color:#dce7f5;font-size:11px;pointer-events:none}.camera-fullscreen-trigger{position:absolute;right:14px;bottom:14px;z-index:20;width:36px;height:36px;display:grid;place-items:center;padding:0;border:1px solid rgba(255,255,255,.24);border-radius:8px;background:rgba(18,30,44,.72);color:#fff;pointer-events:auto;transition:background-color 160ms ease,border-color 160ms ease}.camera-fullscreen-trigger:hover{background:rgba(40,62,86,.92);border-color:rgba(255,255,255,.42)}.camera-fullscreen-trigger .ui-icon{width:18px;height:18px;stroke-width:1.8}.camera-fullscreen-viewer{position:fixed;inset:0;z-index:1350;display:flex;align-items:center;justify-content:center;background:#0b121b;overflow:hidden;pointer-events:auto}.camera-fullscreen-viewer[hidden]{display:none!important}.camera-fullscreen-viewer.is-entering{animation:cameraFullscreenIn 180ms ease}.camera-fullscreen-viewer.is-leaving{animation:cameraFullscreenOut 180ms ease forwards}.camera-fullscreen-image{width:100%;height:100%;display:block;object-fit:contain;object-position:center center;pointer-events:none}.camera-fullscreen-top{position:absolute;left:0;right:0;top:0;z-index:2;display:flex;align-items:center;justify-content:space-between;gap:24px;padding:18px 70px 44px 20px;color:#fff;background:linear-gradient(180deg,rgba(7,14,23,.82),rgba(7,14,23,0));font-size:var(--font-size-sm);font-variant-numeric:tabular-nums;pointer-events:none}.camera-fullscreen-top strong{font-size:var(--font-size-lg);font-weight:var(--font-weight-semibold)}.camera-fullscreen-close{position:absolute;right:18px;top:16px;z-index:4;width:38px;height:38px;display:grid;place-items:center;border:1px solid rgba(255,255,255,.24);border-radius:9px;background:rgba(18,30,44,.74);color:#fff;font-size:24px;line-height:1;pointer-events:auto;transition:background-color 160ms ease,border-color 160ms ease}.camera-fullscreen-close:hover{background:rgba(40,62,86,.94);border-color:rgba(255,255,255,.44)}@keyframes wallCameraExpandIn{from{opacity:0;transform:scale(.985)}to{opacity:1;transform:scale(1)}}@keyframes wallGridReturnIn{from{opacity:0;transform:scale(.99)}to{opacity:1;transform:scale(1)}}@keyframes cameraFullscreenIn{from{opacity:0;transform:scale(.995)}to{opacity:1;transform:scale(1)}}@keyframes cameraFullscreenOut{from{opacity:1;transform:scale(1)}to{opacity:0;transform:scale(.995)}}
+.toast{position:fixed;left:50%;bottom:28px;z-index:1500;transform:translateX(-50%) translateY(12px);padding:9px 17px;border-radius:22px;background:#17243a;color:#fff;opacity:0;pointer-events:none;transition:.18s}.toast.show{opacity:1;transform:translateX(-50%) translateY(0)}
+
+/* Unified field typography */
+.title{font-size:var(--font-size-page);font-weight:var(--font-weight-bold)}
+.nav button,.panel-head button,.result-tabs button{font-size:var(--font-size-md);font-weight:var(--font-weight-medium)}
+.panel-head button.active,.result-tabs button.active{font-weight:var(--font-weight-semibold)}
+.section-title{min-height:34px;margin:6px 0 4px;font-size:var(--font-size-lg);font-weight:var(--font-weight-semibold);line-height:1.4}
+.section-title small,#cameraStatus{font-size:var(--font-size-xs);font-weight:var(--font-weight-medium)}
+.more-button{font-size:var(--font-size-xs);font-weight:var(--font-weight-normal)}
+#currentCamera{font-size:var(--font-size-lg);font-weight:var(--font-weight-semibold)}
+.monitor-bar,.wall-camera-meta,.expanded-camera-header{font-size:var(--font-size-xs);font-weight:var(--font-weight-normal);font-variant-numeric:tabular-nums}
+.result-card strong,.event-name,.alarm-name{font-size:var(--font-size-md);font-weight:var(--font-weight-semibold)}
+.result-card em{font-size:var(--font-size-xl);font-weight:var(--font-weight-semibold);font-variant-numeric:tabular-nums}
+.result-card small,.result-row,.history-row,.event-accordion-detail{font-size:var(--font-size-sm);font-weight:var(--font-weight-normal)}
+.result-row .status,.event-status,.alarm-status,.rule small,.ui-status{font-size:var(--font-size-xs);font-weight:var(--font-weight-medium)}
+.level{font-size:var(--font-size-xxs);font-weight:var(--font-weight-semibold)}
+.stat-grid{gap:8px}.stat{padding:10px 11px}.stat label{font-size:var(--font-size-xs);font-weight:var(--font-weight-normal)}.stat strong{margin:5px 0 4px;font-size:var(--font-size-number);font-weight:var(--font-weight-semibold);font-variant-numeric:tabular-nums}.stat small{font-size:var(--font-size-xs);font-weight:var(--font-weight-normal);color:var(--blue)}
+.alarm-top{font-weight:var(--font-weight-normal)}.alarm-meta{font-size:var(--font-size-xs);font-weight:var(--font-weight-normal);font-variant-numeric:tabular-nums}
+.rule span{font-size:var(--font-size-md);font-weight:var(--font-weight-medium)}.rule b{font-size:var(--font-size-lg)}.rule small{color:var(--green)}.rule.is-disabled small{color:#9aa6b8}
+.wall-head h2{font-size:var(--font-size-lg);font-weight:var(--font-weight-semibold)}.video-wall-hint,.tile-hover-hint,.expanded-camera-hint{font-size:var(--font-size-xs);font-weight:var(--font-weight-normal)}
+.auxiliary-panel{font-size:var(--font-size-sm);font-weight:var(--font-weight-normal)}.auxiliary-head{font-size:var(--font-size-lg);font-weight:var(--font-weight-semibold)}
+.auxiliary-summary{gap:8px}.auxiliary-kpi{padding:10px}.auxiliary-kpi small{font-size:var(--font-size-xs);font-weight:var(--font-weight-normal);color:#8290a6}.auxiliary-kpi strong{display:block;margin:4px 0;font-size:var(--font-size-number);font-weight:var(--font-weight-semibold);font-variant-numeric:tabular-nums}.auxiliary-kpi span{font-size:var(--font-size-xs);font-weight:var(--font-weight-normal);color:var(--blue)}
+.auxiliary-group-title{margin:10px 0 7px;font-size:var(--font-size-md);font-weight:var(--font-weight-semibold)}.auxiliary-count{margin-bottom:8px;color:#8290a6;font-size:var(--font-size-xs)}
+.auxiliary-event-line{display:flex;align-items:center;gap:8px}.auxiliary-event-name{min-width:0;flex:1;font-size:var(--font-size-md);font-weight:var(--font-weight-semibold);overflow:hidden;text-overflow:ellipsis;white-space:nowrap}.auxiliary-meta{font-size:var(--font-size-xs);font-weight:var(--font-weight-normal);font-variant-numeric:tabular-nums}
+.auxiliary-rule{font-size:var(--font-size-sm);align-items:center;background:#fff;transition:background-color 180ms ease}.auxiliary-rule.is-disabled{background:#f8fafc}.auxiliary-rule-main{min-width:0;flex:1;text-align:left;padding:0;border:0!important;color:inherit!important}.auxiliary-rule-main b{display:block;font-size:var(--font-size-md);font-weight:var(--font-weight-medium);color:var(--ink)}.auxiliary-rule-main .rule-camera{display:block;margin-top:3px;font-size:var(--font-size-xs);font-weight:var(--font-weight-normal);color:#71839d}.auxiliary-rule-main .rule-status{display:block;margin-top:3px;font-size:var(--font-size-xs);font-weight:var(--font-weight-medium);color:var(--green)}.auxiliary-rule.is-disabled .auxiliary-rule-main b,.auxiliary-rule.is-disabled .rule-camera,.auxiliary-rule.is-disabled .rule-status,.ui-status.disabled{color:#94a3b8}.rule-switch{position:relative;flex:0 0 38px;width:38px;height:22px;padding:0!important;border:0!important;border-radius:999px!important;background:#cbd5e1!important;transition:background-color 180ms ease}.rule-switch.is-enabled{background:var(--blue)!important}.rule-switch-thumb{position:absolute;left:3px;top:3px;width:16px;height:16px;border-radius:50%;background:#fff;box-shadow:0 1px 3px rgba(15,23,42,.2);transform:translateX(0);transition:transform 180ms ease}.rule-switch.is-enabled .rule-switch-thumb{transform:translateX(16px)}.auxiliary-rule-detail{display:grid;gap:8px;color:#61718b;font-size:var(--font-size-sm);font-weight:var(--font-weight-normal)}.rule-detail-card{padding:12px;border:1px solid var(--line);border-radius:8px;background:#fff}.rule-detail-card.is-disabled{background:#f8fafc}.rule-detail-head{display:flex;align-items:flex-start;justify-content:space-between;gap:12px}.rule-detail-name{font-size:var(--font-size-md);font-weight:var(--font-weight-semibold);color:var(--ink)}.rule-detail-card.is-disabled .rule-detail-name{color:#94a3b8}.rule-detail-meta{display:grid;gap:7px;margin-top:10px;color:#61718b}.rule-detail-status{color:var(--green);font-weight:var(--font-weight-medium)}.rule-detail-card.is-disabled .rule-detail-meta,.rule-detail-card.is-disabled .rule-detail-status{color:#94a3b8}.auxiliary-note{font-size:var(--font-size-sm);font-weight:var(--font-weight-normal)}
+
+@media(max-width:1250px){
+  .app{grid-template-columns:minmax(0,45%) minmax(0,55%);padding-left:12px}.title{font-size:var(--font-size-page)}.nav button{padding-inline:10px}.main-panel{gap:8px}.monitor{height:174px}.cards{grid-template-columns:1fr 1fr}.result-card:nth-child(3){display:none}.main-right{grid-template-rows:auto auto auto minmax(136px,.9fr) auto minmax(190px,1.1fr)}
+}
+@media(max-width:980px){
+  body{overflow:auto}.topbar{gap:9px}.topbar .module,.topbar .divider,.topbar .search{display:none}.app,body.video-wall-mode .app{height:auto;min-height:calc(100vh - 54px);grid-template-columns:1fr;padding:12px}.left{min-height:700px}.view-container{grid-column:1;grid-row:auto;height:720px}.twin-scene{inset:116px 0 48px}.main-panel{grid-template-columns:1fr;overflow:auto}.main-right{display:block}.main-right>*{margin-bottom:8px}.wall{min-height:700px}
+}
+@media(prefers-reduced-motion:reduce){*,*::before,*::after{scroll-behavior:auto!important;transition-duration:.01ms!important;animation-duration:.01ms!important}}
+</style>
+</head>
+<body class="main-view-mode">
+<header class="topbar">
+  <div class="brand"><span class="brand-mark">V</span><span>数字化运维</span></div>
+  <span class="divider"></span><span class="module">▦　数据驾驶舱</span>
+  <div class="top-spacer"></div>
+  <span class="clock" id="clock">2026.08.19 09:02:10</span><span class="weekday">星期三</span>
+  <input class="search" id="globalSearch" placeholder="全局搜索" aria-label="全局搜索" />
+  <button class="top-icon" data-toast="通知中心功能建设中" aria-label="通知"><svg class="ui-icon" viewBox="0 0 24 24" aria-hidden="true"><path d="M18 8a6 6 0 0 0-12 0c0 7-3 7-3 9h18c0-2-3-2-3-9"/><path d="M10 21h4"/></svg><i class="dot"></i></button>
+  <button class="top-icon" data-toast="窗口功能建设中" aria-label="窗口"><svg class="ui-icon" viewBox="0 0 24 24" aria-hidden="true"><rect x="4" y="5" width="16" height="14" rx="2"/><path d="M4 9h16"/><path d="M8 7h.01M11 7h.01"/></svg></button>
+  <button class="top-icon" data-toast="帮助中心功能建设中" aria-label="帮助"><svg class="ui-icon" viewBox="0 0 24 24" aria-hidden="true"><circle cx="12" cy="12" r="9"/><path d="M9.8 9a2.4 2.4 0 1 1 3.9 1.9c-.9.7-1.7 1.1-1.7 2.6"/><path d="M12 17h.01"/></svg></button>
+  <button class="top-icon" data-toast="AI 助手功能建设中" aria-label="AI"><svg class="ui-icon" viewBox="0 0 24 24" aria-hidden="true"><path d="M12 3l1.2 3.3L16.5 7.5l-3.3 1.2L12 12l-1.2-3.3-3.3-1.2 3.3-1.2L12 3Z"/><path d="M18 13l.8 2.2L21 16l-2.2.8L18 19l-.8-2.2L15 16l2.2-.8L18 13Z"/><path d="M6 14l.7 1.8 1.8.7-1.8.7L6 19l-.7-1.8-1.8-.7 1.8-.7L6 14Z"/></svg></button>
+  <div class="user"><button id="userButton"><svg class="ui-icon" viewBox="0 0 24 24" aria-hidden="true"><circle cx="12" cy="8" r="3"/><path d="M6.5 19a5.5 5.5 0 0 1 11 0"/></svg><span>渔立方数字学生</span><svg class="ui-icon user-chevron" viewBox="0 0 24 24" aria-hidden="true"><path d="m7 10 5 5 5-5"/></svg></button><div class="user-menu" id="userMenu" hidden><button data-toast="个人设置功能建设中">个人设置</button><button data-toast="退出登录功能建设中">退出登录</button></div></div>
+  <b>超级管理员</b>
+</header>
+
+<main class="app" id="appRoot">
+  <section class="left">
+    <div class="title-row">
+      <div class="title">渔立方数字孪生养殖系统</div>
+      <nav class="nav" id="systemNav">
+        <button class="active" data-system="home"><svg class="ui-icon" viewBox="0 0 24 24" aria-hidden="true"><path d="m4 10 8-6 8 6"/><path d="M6.5 9.5V20h11V9.5"/><path d="M10 20v-6h4v6"/></svg><span>首页</span></button><button data-system="1"><svg class="ui-icon" viewBox="0 0 24 24" aria-hidden="true"><rect x="4" y="4" width="16" height="16" rx="3"/><path d="M8 8h3v3H8zM13 8h3M13 11h3M8 14h8M8 17h5"/></svg><span>1#系统</span></button><button data-system="2"><svg class="ui-icon" viewBox="0 0 24 24" aria-hidden="true"><rect x="4" y="4" width="16" height="16" rx="3"/><path d="M8 8h3v3H8zM13 8h3M13 11h3M8 14h8M8 17h5"/></svg><span>2#系统</span></button><button data-system="3"><svg class="ui-icon" viewBox="0 0 24 24" aria-hidden="true"><rect x="4" y="4" width="16" height="16" rx="3"/><path d="M8 8h3v3H8zM13 8h3M13 11h3M8 14h8M8 17h5"/></svg><span>3#系统</span></button><button data-system="4"><svg class="ui-icon" viewBox="0 0 24 24" aria-hidden="true"><rect x="4" y="4" width="16" height="16" rx="3"/><path d="M8 8h3v3H8zM13 8h3M13 11h3M8 14h8M8 17h5"/></svg><span>4#系统</span></button>
+      </nav>
+    </div>
+    <div class="twin-scene">
+      <div class="twin-scene-viewport">
+        <div class="scene-transform-layer">
+          <img class="twin-scene-image" src="assets/digital-twin-main.png" alt="数字孪生养殖场景" />
+          <div class="camera-hotspot-layer">
+            <button class="cam-tag tag1" data-camera="H_PO_CA1">◉　监控摄像头 <small>H_PO_CA1</small><i>▶</i></button>
+            <button class="cam-tag tag2" data-camera="H_PO_CA2">◉　监控摄像头 <small>H_PO_CA2</small><i>▶</i></button>
+            <button class="cam-tag tag3 selected" data-camera="H_PO_CA3">◉　监控摄像头 <small>H_PO_CA3</small><i>▶</i></button>
+            <button class="cam-tag tag6" data-camera="H_PO_CA6">◉　监控摄像头 <small>H_PO_CA6</small><i>▶</i></button>
+            <button class="cam-tag tag9" data-camera="H_PO_CA9">◉　监控摄像头 <small>H_PO_CA9</small><i>▶</i></button>
+          </div>
+        </div>
+      </div>
+      <div class="tool-rail">
+        <button class="tool" data-toast="视图工具功能建设中" aria-label="视图工具"><svg class="ui-icon" viewBox="0 0 24 24" aria-hidden="true"><path d="M2.5 12s3.5-5 9.5-5 9.5 5 9.5 5-3.5 5-9.5 5-9.5-5-9.5-5Z"/><circle cx="12" cy="12" r="2.5"/></svg></button><button class="tool active" id="openVideoWallToolBtn" aria-label="视频监控"><svg class="ui-icon" viewBox="0 0 24 24" aria-hidden="true"><rect x="3" y="5" width="18" height="13" rx="2"/><path d="M8 21h8M12 18v3"/><path d="M8 9h8v5H8z"/></svg></button><button class="tool" data-toast="图层工具功能建设中" aria-label="图层工具"><svg class="ui-icon" viewBox="0 0 24 24" aria-hidden="true"><path d="m12 3 9 5-9 5-9-5 9-5Z"/><path d="m3 12 9 5 9-5"/><path d="m3 16 9 5 9-5"/></svg></button><button class="tool" data-toast="定位工具功能建设中" aria-label="定位工具"><svg class="ui-icon" viewBox="0 0 24 24" aria-hidden="true"><path d="M20 10c0 5-8 11-8 11S4 15 4 10a8 8 0 1 1 16 0Z"/><circle cx="12" cy="10" r="2.5"/></svg></button>
+      </div>
+      <div class="tool-rail bottom">
+        <button class="tool" data-toast="首页定位功能建设中" aria-label="首页定位"><svg class="ui-icon" viewBox="0 0 24 24" aria-hidden="true"><path d="m4 10 8-6 8 6"/><path d="M6.5 9.5V20h11V9.5"/><path d="M10 20v-6h4v6"/></svg></button><button class="tool" data-toast="场景设置功能建设中" aria-label="场景设置"><svg class="ui-icon" viewBox="0 0 24 24" aria-hidden="true"><circle cx="12" cy="12" r="3"/><path d="M19.4 15a1.7 1.7 0 0 0 .3 1.9l.1.1-2.8 2.8-.1-.1a1.7 1.7 0 0 0-1.9-.3 1.7 1.7 0 0 0-1 1.6V21h-4v-.1a1.7 1.7 0 0 0-1-1.6 1.7 1.7 0 0 0-1.9.3l-.1.1L4.2 17l.1-.1a1.7 1.7 0 0 0 .3-1.9A1.7 1.7 0 0 0 3 14H3v-4h.1a1.7 1.7 0 0 0 1.6-1 1.7 1.7 0 0 0-.3-1.9L4.2 7 7 4.2l.1.1a1.7 1.7 0 0 0 1.9.3 1.7 1.7 0 0 0 1-1.6V3h4v.1a1.7 1.7 0 0 0 1 1.6 1.7 1.7 0 0 0 1.9-.3l.1-.1L19.8 7l-.1.1a1.7 1.7 0 0 0-.3 1.9 1.7 1.7 0 0 0 1.6 1h.1v4H21a1.7 1.7 0 0 0-1.6 1Z"/></svg></button><button class="tool" data-toast="场景分析功能建设中" aria-label="场景分析"><svg class="ui-icon" viewBox="0 0 24 24" aria-hidden="true"><path d="M4 19V9M10 19V5M16 19v-7M22 19H2"/></svg></button><button class="tool" data-toast="测量工具功能建设中" aria-label="测量工具"><svg class="ui-icon" viewBox="0 0 24 24" aria-hidden="true"><path d="m4 17 13-13 3 3L7 20H4v-3Z"/><path d="m13 8 3 3M10 11l2 2M7 14l3 3"/></svg></button><button class="tool" data-toast="场景记录功能建设中" aria-label="场景记录"><svg class="ui-icon" viewBox="0 0 24 24" aria-hidden="true"><rect x="5" y="4" width="14" height="17" rx="2"/><path d="M9 4.5V3h6v1.5M9 9h6M9 13h6M9 17h4"/></svg></button>
+      </div>
+    </div>
+    <div class="legend" id="faultLegend">
+      <button data-level="A"><b class="a">A</b>紧急故障</button><button data-level="B"><b class="b">B</b>设备故障</button><button data-level="C"><b class="c">C</b>运行异常</button><button data-level="D"><b class="d">D</b>一般</button><button data-level="E"><b class="e">E</b>提醒</button>
+    </div>
+  </section>
+
+  <section class="view-container" id="mainView" aria-hidden="false">
+    <section class="panel main-panel" id="mainPanel">
+      <div class="col main-left">
+        <div class="panel-head"><button id="openVideoWallBtn">视频监控</button><button class="active" id="analysisTab">智能识别分析 <sup>AI</sup></button></div>
+        <div class="section-title"><span id="currentCamera">H_PO_CA3</span><small class="live" id="cameraStatus">在线</small></div>
+        <div class="monitor" id="monitor">
+          <img id="mainMonitorImage" src="assets/camera-ca3-main.png" alt="H_PO_CA3监控画面" />
+          <div class="camera-empty" id="cameraEmpty" hidden><div><strong>暂无该摄像头画面</strong><span id="cameraEmptyId"></span><br/>当前未提供该摄像头图像内容</div></div>
+          <div class="monitor-bar"><span class="live">直播</span><span id="mainMonitorTime">2026-08-19 09:02:10</span></div>
+          <div class="controls"><button id="playButton">Ⅱ</button><button data-toast="已截图保存">▣</button><button data-toast="已开始录像">◉</button><button data-toast="画面缩放功能已执行">⛶</button><button data-toast="画面控制已打开">◫</button><button type="button" class="main-bigview-btn" id="mainBigViewButton" aria-label="放大查看主监控" title="放大查看"><svg class="ui-icon" viewBox="0 0 24 24" aria-hidden="true"><path d="M8 3H3v5M16 3h5v5M8 21H3v-5M16 21h5v-5"/></svg></button></div>
+          <button type="button" class="camera-fullscreen-trigger monitor-expand-fullscreen-btn" data-action="fullscreen-main-monitor" aria-label="全屏查看当前监控" title="全屏查看"><svg class="ui-icon" viewBox="0 0 24 24" aria-hidden="true"><path d="M8 3H3v5M16 3h5v5M8 21H3v-5M16 21h5v-5"/></svg></button>
+          <button class="fullscreen-exit-btn" id="monitorBigViewExitBtn" aria-label="关闭主监控大图" hidden>×</button>
+        </div>
+        <div class="section-title">识别结果</div>
+        <div class="result-tabs" id="resultTabs"><button class="active" data-tab="realtime">实时结果</button><button data-tab="history">历史结果</button><button data-tab="events">事件记录</button></div>
+        <div class="cards" id="resultCards"></div>
+        <div class="section-title">识别结果列表</div>
+        <div class="result-list" id="resultList"></div>
+      </div>
+      <aside class="col main-right">
+        <div class="section-title"><span>AI识别统计（今日）</span><button class="more-button" data-more="statistics-detail">更多 ></button></div>
+        <div class="stat-grid" id="statGrid">
+          <button class="stat" data-filter="all"><label>事件总数</label><strong>0</strong><small>较昨日 +20%</small><i class="stat-icon">◉</i></button>
+          <button class="stat" data-filter="alarm"><label>告警事件</label><strong>0</strong><small>较昨日 +25%</small><i class="stat-icon" style="color:#ef5960;background:#fff0f0">♟</i></button>
+          <button class="stat" data-filter="processed"><label>已处理</label><strong>0</strong><small>较昨日 +16%</small><i class="stat-icon" style="color:#1dbb76;background:#edfbf3">✓</i></button>
+          <button class="stat" data-filter="unprocessed"><label>未处理</label><strong>0</strong><small>较昨日 +45%</small><i class="stat-icon" style="color:#ef9a1c;background:#fff7e8">!</i></button>
+        </div>
+        <div class="section-title"><span>告警事件列表</span><button class="more-button" data-more="alarm-list">更多 ></button></div>
+        <div class="alarm-list" id="alarmList"></div>
+        <div class="section-title"><span>识别规则配置</span><button class="more-button" data-more="rule-list">更多 ></button></div>
+        <div class="rules" id="rules"></div>
+      </aside>
+    </section>
+  </section>
+
+  <section class="view-container" id="videoWallView" aria-hidden="true">
+    <section class="panel wall" id="wall">
+      <div class="wall-head"><h2>▣　视频墙</h2><div class="wall-actions"><button id="videoWallCollapseBtn">收起</button><button id="videoWallCloseBtn" aria-label="关闭视频墙">×</button></div></div>
+      <div class="wall-controls"><select id="wallSelect" aria-label="视频墙选择"><option>视频墙1（主屏）</option></select><button id="newWall">新建视频墙</button><button id="wallFull">全屏显示</button></div>
+      <div class="video-wall-hint"><span>双击摄像头画面可展开查看</span></div>
+      <div class="wall-grid layout-2" id="wallGrid"></div>
+      <div class="wall-footer">
+        <div class="layout-switch" id="layoutSwitch"><button class="active" data-layout="2x3">2x3</button><button data-layout="3x3">3x3</button><button data-layout="4x4">4x4</button><button id="customLayout">自定义</button></div>
+        <div class="pager"><button id="prevPage">‹</button><span id="pageText">1/1</span><button id="nextPage">›</button></div>
+        <span>轮巡间隔</span><select class="patrol-select" id="patrolInterval"><option value="5">5秒</option><option value="10" selected>10秒</option><option value="30">30秒</option><option value="60">60秒</option></select><button class="patrol" id="patrolButton">Ⅱ　暂停轮巡</button>
+      </div>
+    </section>
+  </section>
+</main>
+
+<div id="cameraFullscreenViewer" class="camera-fullscreen-viewer" hidden>
+  <img id="cameraFullscreenImage" class="camera-fullscreen-image" alt="当前摄像头全屏画面" />
+  <div class="camera-fullscreen-top"><strong id="cameraFullscreenName"></strong><span id="cameraFullscreenTime"></span></div>
+  <button type="button" class="camera-fullscreen-close" id="cameraFullscreenClose" data-action="exit-camera-fullscreen" aria-label="退出当前摄像头全屏">×</button>
+</div>
+
+<aside class="auxiliary-panel" id="auxiliaryPanel" hidden><div class="auxiliary-head"><span id="auxiliaryTitle"></span><button class="auxiliary-close" id="auxiliaryClose" aria-label="关闭详情">×</button></div><div id="auxiliaryBody"></div></aside>
+
+<div class="overlay" id="overlay" hidden>
+  <div class="modal"><h3 id="modalTitle">设置</h3><p id="modalCopy"></p><input id="wallName" placeholder="输入视频墙名称" hidden /><div class="custom-layout-fields" id="customLayoutFields" hidden><div class="custom-layout-selects"><label>行数<select id="customRowsSelect"><option value="1">1</option><option value="2">2</option><option value="3">3</option><option value="4">4</option></select></label><label>列数<select id="customColsSelect"><option value="1">1</option><option value="2">2</option><option value="3">3</option><option value="4">4</option></select></label></div><div class="custom-layout-preview" id="customLayoutPreview">当前布局：2 × 3<br>窗口数量：6</div></div><div class="modal-actions"><button id="modalCancel">取消</button><button class="primary" id="modalConfirm">确定</button></div></div>
+</div>
+
+<div class="toast" id="toast"></div>
+
+<script>
+const $=selector=>document.querySelector(selector);
+const $$=selector=>[...document.querySelectorAll(selector)];
+
+const cameraProfiles={
+  H_PO_CA1:{id:'H_PO_CA1',name:'监控摄像头',mainImage:'assets/camera-ca1.png',wallImage:'assets/camera-ca1.png',status:'在线',realtime:{cards:[{title:'人员识别',value:'1人',rule:'区域入侵识别',confidence:'96%',image:null}],rows:[{name:'烟雾火焰识别',status:'未检测到异常'},{name:'液位识别',status:'正常'},{name:'异物识别',status:'未检测到异常'}]},history:[{type:'区域入侵',result:'未发现异常',time:'2026-08-19 08:48:22',confidence:'97%',status:'已处理'}]},
+  H_PO_CA2:{id:'H_PO_CA2',name:'监控摄像头',mainImage:'assets/camera-ca2.png',wallImage:'assets/camera-ca2.png',status:'在线',realtime:{cards:[{title:'人员识别',value:'0人',rule:'区域入侵识别',confidence:'99%',image:null}],rows:[{name:'烟雾火焰识别',status:'未检测到异常'},{name:'液位识别',status:'平均液位：74%'},{name:'异物识别',status:'未检测到异常'}]},history:[{type:'液位识别',result:'平均液位 74%',time:'2026-08-19 08:41:06',confidence:'95%',status:'已处理'}]},
+  H_PO_CA3:{id:'H_PO_CA3',name:'监控摄像头',mainImage:'assets/camera-ca3-main.png',wallImage:'assets/camera-ca3.png',status:'在线',realtime:{cards:[{title:'人员识别',value:'2人',rule:'区域入侵识别',confidence:'98%',image:'assets/recognition-person.png'},{title:'穿戴识别',value:'1人未佩戴安全帽',rule:'安全帽识别',confidence:'92%',image:'assets/recognition-helmet.png',alert:true},{title:'设备状态识别',value:'1处异常',rule:'设备运行状态',confidence:'95%',image:'assets/recognition-device.png',alert:true}],rows:[{name:'烟雾火焰识别',status:'未检测到异常'},{name:'液位识别',status:'正常'},{name:'异物识别',status:'未检测到异常'}]},history:[{type:'穿戴识别',result:'1人未佩戴安全帽',time:'2026-08-19 08:52:17',confidence:'92%',status:'未处理'}]},
+  H_PO_CA5:{id:'H_PO_CA5',name:'监控摄像头',mainImage:'assets/camera-ca5.png',wallImage:'assets/camera-ca5.png',status:'在线',realtime:{cards:[{title:'人员识别',value:'0人',rule:'区域入侵识别',confidence:'98%',image:null}],rows:[{name:'烟雾火焰识别',status:'未检测到异常'},{name:'液位识别',status:'液位偏高'},{name:'异物识别',status:'未检测到异常'}]},history:[{type:'液位识别',result:'液位偏高',time:'2026-08-19 08:56:10',confidence:'94%',status:'已处理'}]},
+  H_PO_CA6:{id:'H_PO_CA6',name:'监控摄像头',mainImage:'assets/camera-ca6.png',wallImage:'assets/camera-ca6.png',status:'在线',realtime:{cards:[{title:'人员识别',value:'1人',rule:'区域入侵识别',confidence:'97%',image:null}],rows:[{name:'烟雾火焰识别',status:'未检测到异常'},{name:'液位识别',status:'正常'},{name:'异物识别',status:'未检测到异常'}]},history:[{type:'人员识别',result:'1人',time:'2026-08-19 08:36:45',confidence:'97%',status:'已处理'}]},
+  H_PO_CA7:{id:'H_PO_CA7',name:'监控摄像头',mainImage:'assets/camera-ca7.png',wallImage:'assets/camera-ca7.png',status:'在线',realtime:{cards:[{title:'人员识别',value:'0人',rule:'区域入侵识别',confidence:'99%',image:null}],rows:[{name:'烟雾火焰识别',status:'未检测到异常'},{name:'液位识别',status:'正常'},{name:'异物识别',status:'未检测到异常'}]},history:[]},
+  H_PO_CA8:{id:'H_PO_CA8',name:'监控摄像头',mainImage:null,wallImage:null,status:'离线',realtime:{cards:[],rows:[]},history:[]},
+  H_PO_CA9:{id:'H_PO_CA9',name:'监控摄像头',mainImage:null,wallImage:null,status:'离线',realtime:{cards:[],rows:[]},history:[]}
+};
+
+const eventRecords=[
+  {id:'evt-helmet',name:'安全帽未佩戴',level:'高',camera:'H_PO_CA3',time:'2026-08-19 09:01:45',status:'未处理',isAlarm:true,rule:'安全帽识别',type:'穿戴识别',confidence:'92%',description:'检测到人员未佩戴安全帽'},
+  {id:'evt-temperature',name:'设备温度异常',level:'中',camera:'H_PO_CA8',time:'2026-08-19 08:59:32',status:'未处理',isAlarm:true,rule:'设备状态',type:'设备状态识别',confidence:'94%',description:'检测到设备温度超过规则阈值'},
+  {id:'evt-intrusion',name:'区域入侵检测',level:'高',camera:'H_PO_CA1',time:'2026-08-19 08:58:21',status:'未处理',isAlarm:true,rule:'区域入侵',type:'人员识别',confidence:'96%',description:'检测到限制区域内出现人员'},
+  {id:'evt-level',name:'液位过高',level:'中',camera:'H_PO_CA5',time:'2026-08-19 08:56:10',status:'已处理',isAlarm:true,rule:'液位识别',type:'液位识别',confidence:'94%',description:'检测液位高于设定范围'},
+  {id:'evt-foreign',name:'异物检测',level:'低',camera:'H_PO_CA2',time:'2026-08-19 08:55:02',status:'已处理',isAlarm:true,rule:'异物识别',type:'异物识别',confidence:'91%',description:'检测到区域内疑似异物'},
+  {id:'evt-smoke',name:'烟雾火焰识别',level:'低',camera:'H_PO_CA6',time:'2026-08-19 08:52:18',status:'已处理',isAlarm:false,rule:'烟雾火焰',type:'烟雾火焰识别',confidence:'98%',description:'例行识别记录'},
+  {id:'evt-flow',name:'流量波动',level:'低',camera:'H_PO_CA7',time:'2026-08-19 08:49:06',status:'已处理',isAlarm:false,rule:'设备状态',type:'设备状态识别',confidence:'93%',description:'识别到流量短时波动'},
+  {id:'evt-ph',name:'水质指标异常',level:'中',camera:'H_PO_CA9',time:'2026-08-19 08:45:50',status:'已处理',isAlarm:false,rule:'设备状态',type:'设备状态识别',confidence:'90%',description:'关联水质设备状态记录'},
+  {id:'evt-feed',name:'投喂状态识别',level:'低',camera:'H_PO_CA3',time:'2026-08-19 08:41:27',status:'已处理',isAlarm:false,rule:'设备状态',type:'设备状态识别',confidence:'96%',description:'投喂设备状态正常'},
+  {id:'evt-pump',name:'水泵运行识别',level:'低',camera:'H_PO_CA1',time:'2026-08-19 08:38:12',status:'已处理',isAlarm:false,rule:'设备状态',type:'设备状态识别',confidence:'97%',description:'水泵运行状态正常'},
+  {id:'evt-door',name:'区域门状态',level:'中',camera:'H_PO_CA2',time:'2026-08-19 08:34:09',status:'未处理',isAlarm:false,rule:'区域入侵',type:'区域状态识别',confidence:'89%',description:'区域门保持开启状态'},
+  {id:'evt-light',name:'照明状态识别',level:'低',camera:'H_PO_CA6',time:'2026-08-19 08:31:44',status:'未处理',isAlarm:false,rule:'设备状态',type:'设备状态识别',confidence:'95%',description:'照明状态识别记录'}
+];
+
+const recognitionRuleState=[
+  {id:'rule-1',name:'区域入侵',icon:'⌘',enabled:true,relatedCamera:'H_PO_CA1',description:'检测限制区域内人员进入情况'},
+  {id:'rule-2',name:'安全帽识别',icon:'♧',enabled:true,relatedCamera:'H_PO_CA3',description:'识别人员安全帽佩戴状态'},
+  {id:'rule-3',name:'设备状态',icon:'◈',enabled:true,relatedCamera:'H_PO_CA6',description:'识别设备运行和异常状态'},
+  {id:'rule-4',name:'烟雾火焰',icon:'♨',enabled:true,relatedCamera:'H_PO_CA7',description:'识别烟雾和火焰风险'},
+  {id:'rule-5',name:'液位识别',icon:'◉',enabled:true,relatedCamera:'H_PO_CA5',description:'识别液位变化及越限情况'},
+  {id:'rule-6',name:'异物识别',icon:'♢',enabled:true,relatedCamera:'H_PO_CA2',description:'识别养殖区域疑似异物'}
+];
+
+const aiStatMeta={
+  all:{label:'事件总数',comparison:'较昨日 +20%'},
+  alarm:{label:'告警事件',comparison:'较昨日 +25%'},
+  processed:{label:'已处理',comparison:'较昨日 +16%'},
+  unprocessed:{label:'未处理',comparison:'较昨日 +45%'}
+};
+
+const videoWallCameraIds=['H_PO_CA1','H_PO_CA2','H_PO_CA3','H_PO_CA6','H_PO_CA7','H_PO_CA5'];
+let selectedCamera='H_PO_CA3';
+let activeResultTab='realtime';
+let expandedEventId=null;
+let currentView='main';
+let viewTransitioning=false;
+let viewTransitionTimer=null;
+let videoGridTransitionTimer=null;
+let currentStatFilter=null;
+let auxPanelState={open:false,type:null,title:'',payload:null};
+let videoWallLayout='2x3';
+let customWallRows=2;
+let customWallCols=3;
+let videoWallPage=1;
+let expandedWallCameraId=null;
+let cameraFullscreenState={open:false,cameraId:null,source:null};
+let cameraFullscreenTimer=null;
+let videoWallFullscreen=false;
+let wallExpandTransitioning=false;
+let wallFullscreenTransitioning=false;
+let isPatrolling=true;
+let patrolTimer=null;
+let monitorBigView=false;
+let wallExpandTimer=null;
+let modalMode=null;
+let customLayoutDraft=null;
+let toastTimer=null;
+let clockTimer=null;
+const baseClock=new Date(2026,7,19,9,2,10);
+const baseClockStarted=Date.now();
+
+function toast(message){
+  const el=$('#toast');
+  clearTimeout(toastTimer);
+  el.textContent=message;
+  el.classList.add('show');
+  toastTimer=setTimeout(()=>el.classList.remove('show'),1800);
+}
+function levelClass(level){return level==='高'?'high':level==='中'?'medium':'low'}
+function eventStatusClass(status){return status==='已处理'?'done':'pending'}
+function profileFor(id){return cameraProfiles[id]||null}
+function getEventStats(){return{total:eventRecords.length,alarm:eventRecords.filter(item=>item.isAlarm).length,processed:eventRecords.filter(item=>item.status==='已处理').length,unprocessed:eventRecords.filter(item=>item.status==='未处理').length}}
+function eventsByFilter(filter){return eventRecords.filter(item=>filter==='alarm'?item.isAlarm:filter==='processed'?item.status==='已处理':filter==='unprocessed'?item.status==='未处理':true)}
+function currentCameraEvents(){return eventRecords.filter(item=>item.camera===selectedCamera)}
+
+function updateClock(){
+  const d=new Date(baseClock.getTime()+(Date.now()-baseClockStarted));
+  const text=d.toLocaleString('zh-CN',{year:'numeric',month:'2-digit',day:'2-digit',hour:'2-digit',minute:'2-digit',second:'2-digit'}).replaceAll('/','.').replace(',','');
+  $('#clock').textContent=text;$('#mainMonitorTime').textContent=text;
+  const expandedTime=$('#expandedCameraTime');if(expandedTime)expandedTime.textContent=text;
+  const cameraFullscreenTime=$('#cameraFullscreenTime');if(cameraFullscreenTime)cameraFullscreenTime.textContent=text;
+  $$('.camera-time[data-time-mode]').forEach(item=>item.textContent=item.dataset.timeMode==='short'?text.slice(-8):text);
+}
+
+function syncVideoWallSelection(){
+  $$('.video-wall-camera[data-camera-id]').forEach(cell=>cell.classList.toggle('selected',cell.dataset.cameraId===selectedCamera));
+}
+function finalizeViewTransition(targetView){
+  const isMain=targetView==='main';
+  $('#mainView').setAttribute('aria-hidden',String(!isMain));
+  $('#videoWallView').setAttribute('aria-hidden',String(isMain));
+  if(!isMain)syncVideoWallSelection();
+  document.body.classList.remove('view-transitioning');
+  viewTransitioning=false;viewTransitionTimer=null;
+}
+function switchView(mode){
+  const targetView=mode==='videoWall'?'videoWall':'main';
+  if(viewTransitioning)return false;
+  if(currentView===targetView){
+    if(targetView==='main')renderCameraDetail();else syncVideoWallSelection();
+    return false;
+  }
+  viewTransitioning=true;document.body.classList.add('view-transitioning');
+  if(targetView==='main'){stopPatrolTimer();renderCameraDetail()}else{syncVideoWallSelection();startPatrolTimer()}
+  requestAnimationFrame(()=>{
+    const isMain=targetView==='main';
+    document.body.classList.toggle('main-view-mode',isMain);document.body.classList.toggle('video-wall-mode',!isMain);
+    currentView=targetView;
+    clearTimeout(viewTransitionTimer);viewTransitionTimer=setTimeout(()=>finalizeViewTransition(targetView),340);
+  });
+  return true;
+}
+function enterVideoWall(){if(viewTransitioning)return;videoWallPage=1;switchView('videoWall')}
+function exitVideoWall(){if(viewTransitioning)return;closeCameraFullscreenViewer({immediate:true});clearExpandedWallCamera({render:false,resumePatrol:false});videoWallFullscreen=false;wallFullscreenTransitioning=false;const wall=$('#wall');wall.classList.remove('is-entering','is-leaving');updateVideoWallFullscreenState({visual:false});switchView('main')}
+
+function selectCamera(cameraId,{showMain=false,tab='realtime',eventId=null}={}){
+  if(!cameraProfiles[cameraId])return;
+  selectedCamera=cameraId;activeResultTab=tab;expandedEventId=eventId;
+  $$('.cam-tag').forEach(tag=>tag.classList.toggle('selected',tag.dataset.camera===cameraId));
+  if(showMain){if(currentView==='videoWall')clearExpandedWallCamera({render:false,resumePatrol:false});switchView('main')}
+  else if(currentView==='main')renderCameraDetail();
+  else{if(expandedWallCameraId)expandedWallCameraId=cameraProfiles[cameraId].wallImage?cameraId:null;renderVideoWall()}
+}
+
+function renderCameraImage(profile){
+  const image=$('#mainMonitorImage'),empty=$('#cameraEmpty');
+  if(profile.mainImage){image.src=profile.mainImage;image.alt=profile.id+'监控画面';image.hidden=false;empty.hidden=true}
+  else{image.removeAttribute('src');image.alt='';image.hidden=true;empty.hidden=false;$('#cameraEmptyId').textContent=profile.id}
+  const controls=$('#monitor .controls');controls.style.display=profile.mainImage?'flex':'none';
+}
+function renderRealtime(profile){
+  const cards=profile.realtime.cards;
+  $('#resultCards').innerHTML=cards.length?cards.map(card=>`<article class="result-card"><strong>${card.title}</strong><em class="${card.alert?'alert':''}">${card.value}</em><small>规则：${card.rule}<br>置信度：${card.confidence}</small>${card.image?`<img src="${card.image}" alt="${card.title}">`:'<div class="thumb-empty">暂无识别截图</div>'}</article>`).join(''):'<div class="result-empty">暂无实时识别结果</div>';
+  $('#resultList').innerHTML=profile.realtime.rows.length?profile.realtime.rows.map(row=>`<div class="result-row"><span>◉　${row.name}</span><span class="status">${row.status}</span></div>`).join(''):'<div class="result-empty">暂无实时识别结果</div>';
+}
+function renderHistory(profile){
+  $('#resultCards').innerHTML='<div class="result-empty">历史识别结果</div>';
+  $('#resultList').innerHTML=profile.history.length?profile.history.map(item=>`<div class="history-row"><span>${item.type} · ${item.result}</span><span>${item.time}　${item.confidence}　${item.status}</span></div>`).join(''):'<div class="result-empty">暂无历史识别记录</div>';
+}
+function eventAccordionHtml(item){
+  const open=item.id===expandedEventId;
+  return `<div class="event-accordion ${open?'open':''}" data-event-id="${item.id}"><button class="event-accordion-head" data-toggle-event="${item.id}"><span class="level ${levelClass(item.level)}">${item.level}</span><span class="event-name">${item.name}</span><span>${item.time}</span><span class="event-status ${eventStatusClass(item.status)}">${item.status}</span><span class="event-arrow">${open?'⌃':'⌄'}</span></button>${open?`<div class="event-accordion-detail"><span><b>事件名称：</b>${item.name}</span><span><b>等级：</b>${item.level}</span><span><b>摄像头：</b>${item.camera}</span><span><b>发生时间：</b>${item.time}</span><span><b>处理状态：</b>${item.status}</span><span><b>识别规则：</b>${item.rule}</span><span><b>识别类型：</b>${item.type}</span><span><b>置信度：</b>${item.confidence}</span><span style="grid-column:1/-1"><b>说明：</b>${item.description}</span></div>`:''}</div>`;
+}
+function renderEvents(){
+  const items=currentCameraEvents();
+  $('#resultCards').innerHTML='<div class="result-empty">当前摄像头事件记录</div>';
+  $('#resultList').innerHTML=items.length?items.map(eventAccordionHtml).join(''):'<div class="result-empty">暂无事件记录</div>';
+}
+function renderCameraDetail(){
+  const profile=profileFor(selectedCamera);if(!profile)return;
+  $('#currentCamera').textContent=profile.id;$('#cameraStatus').textContent=profile.status;$('#cameraStatus').classList.toggle('offline',profile.status!=='在线');
+  renderCameraImage(profile);
+  $$('#resultTabs button').forEach(button=>button.classList.toggle('active',button.dataset.tab===activeResultTab));
+  if(activeResultTab==='history')renderHistory(profile);else if(activeResultTab==='events')renderEvents();else renderRealtime(profile);
+}
+
+function renderStats(){
+  const stats=getEventStats(),values={all:stats.total,alarm:stats.alarm,processed:stats.processed,unprocessed:stats.unprocessed};
+  $$('#statGrid .stat').forEach(button=>{const key=button.dataset.filter,meta=aiStatMeta[key];button.querySelector('label').textContent=meta.label;button.querySelector('strong').textContent=values[key];button.querySelector('small').textContent=meta.comparison;button.classList.toggle('active',currentStatFilter===key)});
+}
+function renderAlarms(){
+  const items=eventRecords.filter(item=>item.isAlarm);
+  $('#alarmList').innerHTML=items.map(item=>`<button class="alarm" data-open-event="${item.id}"><div class="alarm-top"><span class="level ${levelClass(item.level)}">${item.level}</span><span class="alarm-name">${item.name}</span><span class="alarm-status ${eventStatusClass(item.status)}">${item.status}</span></div><div class="alarm-meta">${item.camera}　|　${item.time}</div></button>`).join('');
+}
+function renderRules(){
+  $('#rules').innerHTML=recognitionRuleState.map(rule=>`<button class="rule ${rule.enabled?'':'is-disabled'}" data-rule-id="${rule.id}"><b>${rule.icon}</b><span>${rule.name}</span><small>${rule.enabled?'已启用':'已关闭'}</small></button>`).join('');
+}
+function renderRightPanel(){renderStats();renderAlarms();renderRules()}
+
+function auxiliaryEventRows(items){
+  return items.map(item=>`<button class="auxiliary-row" data-open-event="${item.id}"><div class="auxiliary-event-line"><b class="level ${levelClass(item.level)}">${item.level}</b><span class="auxiliary-event-name">${item.name}</span><span class="event-status ${eventStatusClass(item.status)}">${item.status}</span></div><div class="auxiliary-meta">${item.camera}　|　${item.time}</div></button>`).join('')||'<div class="result-empty">暂无符合条件的事件</div>';
+}
+function getAuxPanelTitle(type,payload){
+  const titles={'statistics-detail':'AI识别统计（今日）','event-filter':'事件列表','alarm-list':'告警事件列表','rule-list':'识别规则配置','rule-detail':'规则详情','recognition-detail':'识别详情'};
+  if(type==='event-filter'){const filter=payload?.filter;return filter==='alarm'?'告警事件':filter==='processed'?'已处理事件':filter==='unprocessed'?'未处理事件':'全部事件'}
+  return titles[type]||'';
+}
+function ruleSwitchHtml(rule){
+  return `<button type="button" class="rule-switch ${rule.enabled?'is-enabled':'is-disabled'}" role="switch" aria-checked="${rule.enabled?'true':'false'}" aria-label="${rule.name}${rule.enabled?'已启用':'已关闭'}" data-toggle-rule="${rule.id}" data-rule-id="${rule.id}"><span class="rule-switch-thumb"></span></button>`;
+}
+function ruleListHtml(){
+  return recognitionRuleState.map(rule=>`<div class="auxiliary-rule ${rule.enabled?'is-enabled':'is-disabled'}"><button class="auxiliary-rule-main" data-open-rule="${rule.id}"><b>${rule.name}</b><span class="rule-camera">${rule.relatedCamera}</span><span class="rule-status">${rule.enabled?'已启用':'已关闭'}</span></button>${ruleSwitchHtml(rule)}</div>`).join('');
+}
+function renderAuxPanel(){
+  const panel=$('#auxiliaryPanel'),title=$('#auxiliaryTitle'),body=$('#auxiliaryBody');
+  panel.hidden=!auxPanelState.open;
+  if(!auxPanelState.open){title.textContent='';body.innerHTML='';return}
+  title.textContent=auxPanelState.title;
+  const {type,payload}=auxPanelState,stats=getEventStats();
+  if(type==='statistics-detail'){
+    const values={all:stats.total,alarm:stats.alarm,processed:stats.processed,unprocessed:stats.unprocessed};
+    body.innerHTML=`<div class="auxiliary-summary">${Object.keys(aiStatMeta).map(key=>`<div class="auxiliary-kpi"><small>${aiStatMeta[key].label}</small><strong>${values[key]}</strong><span>${aiStatMeta[key].comparison}</span></div>`).join('')}</div><div class="auxiliary-group-title">当前事件</div>${auxiliaryEventRows(eventRecords)}`;
+  }else if(type==='event-filter'){
+    const items=eventsByFilter(payload?.filter||'all');body.innerHTML=`<div class="auxiliary-count">共 ${items.length} 条</div>${auxiliaryEventRows(items)}`;
+  }else if(type==='alarm-list'){
+    const items=eventRecords.filter(item=>item.isAlarm);body.innerHTML=`<div class="auxiliary-count">共 ${items.length} 条</div>${auxiliaryEventRows(items)}`;
+  }else if(type==='rule-list'){
+    body.innerHTML=ruleListHtml();
+  }else if(type==='rule-detail'){
+    const rule=recognitionRuleState.find(item=>item.id===payload?.ruleId);body.innerHTML=rule?`<div class="rule-detail-card ${rule.enabled?'is-enabled':'is-disabled'}"><div class="rule-detail-head"><div><div class="rule-detail-name">${rule.name}</div><div class="rule-status rule-detail-status">${rule.enabled?'已启用':'已关闭'}</div></div>${ruleSwitchHtml(rule)}</div><div class="rule-detail-meta"><span>关联摄像头：${rule.relatedCamera}</span><span>识别类型：${rule.name}</span><span>规则说明：${rule.description}</span></div></div>`:'<div class="result-empty">规则不存在</div>';
+  }else{
+    body.innerHTML='<div class="result-empty">暂无可展示内容</div>';
+  }
+}
+function openAuxPanel(type,payload=null){
+  if(type!=='event-filter'){currentStatFilter=null;renderStats()}
+  auxPanelState={open:true,type,title:getAuxPanelTitle(type,payload),payload};renderAuxPanel();
+}
+function openRuleConfig(ruleId){const rule=recognitionRuleState.find(item=>item.id===ruleId);if(rule)openAuxPanel('rule-detail',{ruleId})}
+function closeAuxPanel(){auxPanelState={open:false,type:null,title:'',payload:null};currentStatFilter=null;renderStats();renderAuxPanel()}
+function openEventById(id){
+  const item=eventRecords.find(event=>event.id===id);if(!item)return;
+  closeAuxPanel();selectCamera(item.camera,{showMain:true,tab:'events',eventId:item.id});
+}
+function toggleRule(ruleId){
+  const rule=recognitionRuleState.find(item=>item.id===ruleId);if(!rule)return;
+  rule.enabled=!rule.enabled;renderRules();if(auxPanelState.open)renderAuxPanel();toast(`${rule.name}${rule.enabled?'已启用':'已关闭'}`);
+}
+
+function getVideoWallGridSpec(){
+  switch(videoWallLayout){
+    case '2x3':return {rows:3,cols:2,capacity:6};
+    case '3x3':return {rows:3,cols:3,capacity:9};
+    case '4x4':return {rows:4,cols:4,capacity:16};
+    case 'custom':return {rows:customWallRows,cols:customWallCols,capacity:customWallRows*customWallCols};
+    default:return {rows:3,cols:2,capacity:6};
+  }
+}
+function getVideoWallPageCount(){return Math.max(1,Math.ceil(videoWallCameraIds.length/getVideoWallGridSpec().capacity))}
+function normalizeVideoWallPage(){videoWallPage=Math.min(Math.max(videoWallPage,1),getVideoWallPageCount())}
+function shouldUseCompactWallTime(spec){return !videoWallFullscreen&&(spec.cols>=4||spec.rows>=4||spec.capacity>=9)}
+function renderNormalWallGrid({restoring=false}={}){
+  normalizeVideoWallPage();
+  const spec=getVideoWallGridSpec(),{rows,cols,capacity}=spec,start=(videoWallPage-1)*capacity,ids=videoWallCameraIds.slice(start,start+capacity),grid=$('#wallGrid'),compactTime=shouldUseCompactWallTime(spec),clockText=$('#clock').textContent;
+  grid.className=`wall-grid${restoring?' grid-restoring':''}`;
+  grid.style.setProperty('--wall-cols',cols);grid.style.setProperty('--wall-rows',rows);
+  grid.innerHTML=Array.from({length:capacity},(_,index)=>{const id=ids[index];if(!id)return '<div class="tile-empty">未配置摄像头</div>';const camera=cameraProfiles[id],timeText=compactTime?clockText.slice(-8):clockText;return `<div class="video-wall-camera ${id===selectedCamera?'selected':''}" data-camera-id="${id}">${camera.wallImage?`<img src="${camera.wallImage}" alt="${id}监控画面">`:'<div class="tile-empty">暂无该摄像头画面</div>'}<div class="wall-camera-meta"><span class="camera-id">${id}</span><span class="camera-time" data-time-mode="${compactTime?'short':'full'}">${timeText}</span></div><div class="tile-hover-hint">双击展开查看</div></div>`}).join('');
+}
+function renderExpandedWallCamera(){
+  const camera=cameraProfiles[expandedWallCameraId],grid=$('#wallGrid');
+  if(!camera?.wallImage){expandedWallCameraId=null;renderNormalWallGrid({restoring:true});return}
+  grid.className='wall-grid expanded-mode';grid.style.removeProperty('--wall-cols');grid.style.removeProperty('--wall-rows');
+  grid.innerHTML=`<div class="video-wall-expanded"><div class="expanded-camera-frame" data-camera-id="${camera.id}"><img class="expanded-camera-image" src="${camera.wallImage}" alt="${camera.id}监控画面"><div class="expanded-camera-header"><strong>${camera.id}</strong><span id="expandedCameraTime">${$('#clock').textContent}</span></div><button class="expanded-camera-back" data-collapse-expanded="true">← 返回多画面</button><div class="expanded-camera-hint">双击画面返回多画面</div><button type="button" class="camera-fullscreen-trigger expanded-camera-fullscreen-btn" data-action="fullscreen-expanded-camera" aria-label="全屏查看当前摄像头" title="全屏查看"><svg class="ui-icon" viewBox="0 0 24 24" aria-hidden="true"><path d="M8 3H3v5M16 3h5v5M8 21H3v-5M16 21h5v-5"/></svg></button></div></div>`;
+}
+function getCameraFullscreenImage(camera,source){
+  if(!camera)return null;
+  return source==='main-monitor'?(camera.mainImage||camera.wallImage):camera.wallImage;
+}
+function renderCameraFullscreenViewer(){
+  const {open,cameraId,source}=cameraFullscreenState,camera=cameraProfiles[cameraId],imageSrc=getCameraFullscreenImage(camera,source);
+  if(!open||!camera||!imageSrc)return false;
+  $('#cameraFullscreenName').textContent=camera.id;$('#cameraFullscreenTime').textContent=$('#clock').textContent;
+  const image=$('#cameraFullscreenImage');image.src=imageSrc;image.alt=`${camera.id}监控画面`;
+  return true;
+}
+function openCameraFullscreenViewer(cameraId,source){
+  if(cameraFullscreenState.open||!['main-monitor','video-wall-expanded'].includes(source))return;
+  if(source==='main-monitor'&&cameraId!==selectedCamera)return;
+  if(source==='video-wall-expanded'&&cameraId!==expandedWallCameraId)return;
+  const camera=cameraProfiles[cameraId],imageSrc=getCameraFullscreenImage(camera,source);if(!imageSrc){toast('当前摄像头暂无可用画面');return}
+  cameraFullscreenState={open:true,cameraId,source};if(!renderCameraFullscreenViewer()){cameraFullscreenState={open:false,cameraId:null,source:null};return}
+  const viewer=$('#cameraFullscreenViewer');clearTimeout(cameraFullscreenTimer);cameraFullscreenTimer=null;viewer.classList.remove('is-leaving');viewer.hidden=false;requestAnimationFrame(()=>viewer.classList.add('is-entering'));cameraFullscreenTimer=setTimeout(()=>{viewer.classList.remove('is-entering');cameraFullscreenTimer=null},190);
+}
+function closeCameraFullscreenViewer({immediate=false}={}){
+  const viewer=$('#cameraFullscreenViewer');
+  if(!cameraFullscreenState.open&&viewer.hidden)return;
+  cameraFullscreenState={open:false,cameraId:null,source:null};clearTimeout(cameraFullscreenTimer);cameraFullscreenTimer=null;viewer.classList.remove('is-entering');
+  if(immediate){viewer.classList.remove('is-leaving');viewer.hidden=true;return}
+  viewer.classList.add('is-leaving');cameraFullscreenTimer=setTimeout(()=>{viewer.classList.remove('is-leaving');viewer.hidden=true;cameraFullscreenTimer=null},180);
+}
+function renderVideoWallGrid(options={}){if(expandedWallCameraId){renderExpandedWallCamera();return}renderNormalWallGrid(options)}
+function renderVideoWallControls(){
+  const count=getVideoWallPageCount();$('#pageText').textContent=`${videoWallPage}/${count}`;$('#prevPage').disabled=count<=1||!!expandedWallCameraId;$('#nextPage').disabled=count<=1||!!expandedWallCameraId;
+  $$('#layoutSwitch [data-layout]').forEach(button=>button.classList.toggle('active',button.dataset.layout===videoWallLayout));
+  $('#customLayout').classList.toggle('active',videoWallLayout==='custom');
+}
+function renderVideoWall(options={}){renderVideoWallGrid(options);renderVideoWallControls()}
+function finishWallExpandTransition({resumePatrol=false}={}){
+  wallExpandTransitioning=false;wallExpandTimer=null;
+  if(resumePatrol&&isPatrolling&&currentView==='videoWall')startPatrolTimer();
+}
+function toggleExpandedWallCamera(cameraId){
+  if(wallExpandTransitioning)return;
+  const camera=cameraProfiles[cameraId];if(!camera?.wallImage){toast('当前摄像头暂无可用画面');return}
+  const collapsing=expandedWallCameraId===cameraId;
+  wallExpandTransitioning=true;clearTimeout(wallExpandTimer);selectedCamera=cameraId;
+  if(collapsing){
+    expandedWallCameraId=null;renderVideoWall({restoring:true});
+    wallExpandTimer=setTimeout(()=>finishWallExpandTransition({resumePatrol:true}),220);
+  }else{
+    stopPatrolTimer();expandedWallCameraId=cameraId;renderVideoWall();
+    wallExpandTimer=setTimeout(()=>finishWallExpandTransition(),220);
+  }
+}
+function clearExpandedWallCamera({render=true,resumePatrol=false}={}){
+  closeCameraFullscreenViewer({immediate:true});
+  if(!expandedWallCameraId&&!wallExpandTransitioning)return;
+  clearTimeout(wallExpandTimer);wallExpandTimer=null;wallExpandTransitioning=false;expandedWallCameraId=null;
+  if(render)renderVideoWall({restoring:true});
+  if(resumePatrol&&isPatrolling&&currentView==='videoWall')startPatrolTimer();
+}
+function finishVideoWallGridChange(){
+  $('#wallGrid').classList.remove('is-updating');videoGridTransitionTimer=null;
+  if(isPatrolling&&currentView==='videoWall')startPatrolTimer();
+}
+function setVideoWallLayout(layout){
+  if(!['2x3','3x3','4x4'].includes(layout))return;
+  if(cameraFullscreenState.open)closeCameraFullscreenViewer({immediate:true});
+  stopPatrolTimer();clearExpandedWallCamera({render:false,resumePatrol:false});videoWallLayout=layout;videoWallPage=1;
+  renderVideoWallGrid();renderVideoWallControls();$('#wallGrid').classList.add('is-updating');clearTimeout(videoGridTransitionTimer);videoGridTransitionTimer=setTimeout(finishVideoWallGridChange,160);
+}
+function nextVideoWallPage(){if(expandedWallCameraId)return;videoWallPage=videoWallPage>=getVideoWallPageCount()?1:videoWallPage+1;renderVideoWall()}
+function previousVideoWallPage(){if(expandedWallCameraId)return;videoWallPage=videoWallPage<=1?getVideoWallPageCount():videoWallPage-1;renderVideoWall()}
+function startPatrolTimer(){stopPatrolTimer();if(expandedWallCameraId||!isPatrolling||getVideoWallPageCount()<=1)return;patrolTimer=setInterval(nextVideoWallPage,Number($('#patrolInterval').value)*1000)}
+function stopPatrolTimer(){if(patrolTimer){clearInterval(patrolTimer);patrolTimer=null}}
+
+function updateMonitorBigView(){$('#monitor').classList.toggle('big-view',monitorBigView);$('#monitorBigViewExitBtn').hidden=!monitorBigView}
+function exitMonitorBigView(){if(cameraFullscreenState.open&&cameraFullscreenState.source==='main-monitor')closeCameraFullscreenViewer({immediate:true});monitorBigView=false;updateMonitorBigView()}
+function updateVideoWallFullscreenState({visual=videoWallFullscreen}={}){
+  const wall=$('#wall');document.body.classList.toggle('video-wall-is-fullscreen',visual);wall.classList.toggle('is-wall-fullscreen',visual);$('#videoWallCollapseBtn').hidden=visual;$('#wallFull').textContent=videoWallFullscreen?'退出全屏':'全屏显示';$('#videoWallCloseBtn').setAttribute('aria-label',visual?'退出视频墙全屏':'关闭视频墙');
+}
+function enterVideoWallFullscreen(){
+  if(wallFullscreenTransitioning||videoWallFullscreen)return;
+  wallFullscreenTransitioning=true;videoWallFullscreen=true;updateVideoWallFullscreenState();const wall=$('#wall');wall.classList.remove('is-leaving');wall.classList.add('is-entering');renderVideoWall();
+  setTimeout(()=>{wall.classList.remove('is-entering');wallFullscreenTransitioning=false},240);
+}
+function exitVideoWallFullscreen(){
+  if(wallFullscreenTransitioning||!videoWallFullscreen)return;
+  wallFullscreenTransitioning=true;videoWallFullscreen=false;const wall=$('#wall');wall.classList.remove('is-entering');wall.classList.add('is-leaving');updateVideoWallFullscreenState({visual:true});
+  setTimeout(()=>{wall.classList.remove('is-leaving');updateVideoWallFullscreenState({visual:false});renderVideoWall();wallFullscreenTransitioning=false},240);
+}
+function handleVideoWallClose(){if(wallFullscreenTransitioning)return;if(videoWallFullscreen){exitVideoWallFullscreen();return}exitVideoWall()}
+
+function openModal(mode){
+  if(mode==='layout'){openCustomLayout();return}
+  modalMode=mode;customLayoutDraft=null;$('#overlay').hidden=false;$('#wallName').hidden=mode!=='wall';$('#customLayoutFields').hidden=true;
+  if(mode==='wall'){$('#modalTitle').textContent='新建视频墙';$('#modalCopy').textContent='新视频墙继续复用当前 cameraProfiles 摄像头数据，只保存视频墙名称。';$('#wallName').value=''}
+}
+function openCustomLayout(){
+  if(cameraFullscreenState.open)closeCameraFullscreenViewer({immediate:true});
+  modalMode='layout';customLayoutDraft={rows:customWallRows,cols:customWallCols};$('#overlay').hidden=false;$('#wallName').hidden=true;$('#customLayoutFields').hidden=false;$('#modalTitle').textContent='自定义布局';$('#modalCopy').textContent='根据实际监控需求设置行列数量。';$('#customRowsSelect').value=String(customLayoutDraft.rows);$('#customColsSelect').value=String(customLayoutDraft.cols);updateCustomLayoutPreview();
+}
+function updateCustomLayoutPreview(){
+  if(!customLayoutDraft)return;customLayoutDraft={rows:Number($('#customRowsSelect').value),cols:Number($('#customColsSelect').value)};$('#customLayoutPreview').innerHTML=`当前布局：${customLayoutDraft.rows} × ${customLayoutDraft.cols}<br>窗口数量：${customLayoutDraft.rows*customLayoutDraft.cols}`;
+}
+function closeModal(){$('#overlay').hidden=true;$('#customLayoutFields').hidden=true;customLayoutDraft=null;modalMode=null}
+function confirmCustomLayout(){
+  if(!customLayoutDraft)return;const selectedRows=customLayoutDraft.rows,selectedCols=customLayoutDraft.cols;if(selectedRows<1||selectedRows>4||selectedCols<1||selectedCols>4)return;
+  if(cameraFullscreenState.open)closeCameraFullscreenViewer({immediate:true});
+  stopPatrolTimer();clearExpandedWallCamera({render:false,resumePatrol:false});customWallRows=selectedRows;customWallCols=selectedCols;videoWallLayout='custom';videoWallPage=1;renderVideoWallGrid();renderVideoWallControls();$('#wallGrid').classList.add('is-updating');clearTimeout(videoGridTransitionTimer);videoGridTransitionTimer=setTimeout(finishVideoWallGridChange,160);closeModal();toast(`视频墙布局已更新为 ${customWallRows}×${customWallCols}`);
+}
+function confirmModal(){
+  if(modalMode==='wall'){
+    const name=$('#wallName').value.trim();if(!name){toast('请输入视频墙名称');return}
+    const option=document.createElement('option');option.value=name;option.textContent=name;$('#wallSelect').append(option);$('#wallSelect').value=name;toast(`已创建“${name}”`);closeModal();return;
+  }
+  if(modalMode==='layout'){confirmCustomLayout()}
+}
+
+$('#appRoot').addEventListener('click',event=>{
+  const cameraTag=event.target.closest('.cam-tag');if(cameraTag){selectCamera(cameraTag.dataset.camera,{showMain:true});return}
+  const fullscreenMain=event.target.closest('[data-action="fullscreen-main-monitor"]');if(fullscreenMain){openCameraFullscreenViewer(selectedCamera,'main-monitor');return}
+  const fullscreenExpanded=event.target.closest('[data-action="fullscreen-expanded-camera"]');if(fullscreenExpanded){openCameraFullscreenViewer(expandedWallCameraId,'video-wall-expanded');return}
+  const collapseExpanded=event.target.closest('[data-collapse-expanded]');if(collapseExpanded){if(expandedWallCameraId)toggleExpandedWallCamera(expandedWallCameraId);return}
+  const tile=event.target.closest('.video-wall-camera[data-camera-id]');if(tile){selectedCamera=tile.dataset.cameraId;$$('.video-wall-camera').forEach(item=>item.classList.toggle('selected',item===tile));return}
+  const resultTab=event.target.closest('#resultTabs [data-tab]');if(resultTab){activeResultTab=resultTab.dataset.tab;if(activeResultTab!=='events')expandedEventId=null;renderCameraDetail();return}
+  const eventToggle=event.target.closest('[data-toggle-event]');if(eventToggle){const id=eventToggle.dataset.toggleEvent;expandedEventId=expandedEventId===id?null:id;renderEvents();return}
+  const openEvent=event.target.closest('[data-open-event]');if(openEvent){openEventById(openEvent.dataset.openEvent);return}
+  const stat=event.target.closest('.stat[data-filter]');if(stat){const filter=stat.dataset.filter;if(currentStatFilter===filter&&auxPanelState.open&&auxPanelState.type==='event-filter'&&auxPanelState.payload?.filter===filter){closeAuxPanel()}else{currentStatFilter=filter;renderStats();openAuxPanel('event-filter',{filter})}return}
+  const more=event.target.closest('[data-more]');if(more){openAuxPanel(more.dataset.more);return}
+  const rule=event.target.closest('[data-rule-id]');if(rule){openRuleConfig(rule.dataset.ruleId);return}
+  const layout=event.target.closest('#layoutSwitch [data-layout]');if(layout){setVideoWallLayout(layout.dataset.layout);return}
+  const toolToast=event.target.closest('[data-toast]');if(toolToast){toast(toolToast.dataset.toast);return}
+});
+
+function handleVideoWallDoubleClick(event){
+  if(wallExpandTransitioning||event.target.closest('[data-action="fullscreen-expanded-camera"]'))return;
+  const cell=event.target.closest('.video-wall-camera[data-camera-id],.expanded-camera-frame[data-camera-id]');if(!cell)return;
+  const cameraId=cell.dataset.cameraId,camera=cameraProfiles[cameraId];if(!camera?.wallImage){toast('当前摄像头暂无可用画面');return}
+  event.preventDefault();event.stopPropagation();selectedCamera=cameraId;toggleExpandedWallCamera(cameraId);
+}
+$('#wallGrid').addEventListener('dblclick',handleVideoWallDoubleClick);
+$('#cameraFullscreenClose').onclick=()=>closeCameraFullscreenViewer();
+$('#cameraFullscreenViewer').addEventListener('dblclick',event=>{if(event.target.closest('[data-action="exit-camera-fullscreen"]'))return;if(cameraFullscreenState.open)closeCameraFullscreenViewer()});
+$('#systemNav').addEventListener('click',event=>{const button=event.target.closest('button');if(!button)return;$$('#systemNav button').forEach(item=>item.classList.toggle('active',item===button));if(button.dataset.system!=='home')toast(`${button.textContent.trim()}功能建设中`)});
+$('#faultLegend').addEventListener('click',event=>{const button=event.target.closest('button[data-level]');if(!button)return;$$('#faultLegend button').forEach(item=>item.classList.toggle('selected',item===button));toast('当前无该等级设备')});
+$('#userButton').onclick=()=>{$('#userMenu').hidden=!$('#userMenu').hidden};
+$$('.topbar [data-toast]').forEach(button=>button.onclick=()=>toast(button.dataset.toast));
+$('#globalSearch').addEventListener('keydown',event=>{if(event.key==='Enter'){const value=event.currentTarget.value.trim();toast(value?`正在搜索：${value}`:'请输入搜索内容')}});
+$('#openVideoWallBtn').onclick=enterVideoWall;$('#openVideoWallToolBtn').onclick=enterVideoWall;$('#videoWallCollapseBtn').onclick=exitVideoWall;$('#videoWallCloseBtn').onclick=handleVideoWallClose;
+$('#analysisTab').onclick=()=>{if(currentView!=='main')exitVideoWall();toast('已进入智能识别分析')};
+$('#playButton').onclick=()=>{const button=$('#playButton');button.textContent=button.textContent==='Ⅱ'?'▶':'Ⅱ';toast(button.textContent==='Ⅱ'?'监控已继续播放':'监控已暂停')};
+$('#mainBigViewButton').onclick=()=>{monitorBigView=true;updateMonitorBigView()};$('#monitorBigViewExitBtn').onclick=exitMonitorBigView;
+$('#wallFull').onclick=()=>{if(wallFullscreenTransitioning)return;if(videoWallFullscreen)exitVideoWallFullscreen();else enterVideoWallFullscreen()};
+$('#prevPage').onclick=previousVideoWallPage;$('#nextPage').onclick=nextVideoWallPage;
+$('#patrolInterval').onchange=startPatrolTimer;$('#patrolButton').onclick=()=>{isPatrolling=!isPatrolling;$('#patrolButton').textContent=isPatrolling?'Ⅱ　暂停轮巡':'▶　开始轮巡';startPatrolTimer()};
+$('#newWall').onclick=()=>{clearExpandedWallCamera({render:true,resumePatrol:true});openModal('wall')};$('#customLayout').onclick=openCustomLayout;$('#customRowsSelect').onchange=updateCustomLayoutPreview;$('#customColsSelect').onchange=updateCustomLayoutPreview;$('#wallSelect').onchange=()=>{clearExpandedWallCamera({render:true,resumePatrol:true});toast(`已切换至“${$('#wallSelect').value}”`)};
+$('#modalCancel').onclick=closeModal;$('#modalConfirm').onclick=confirmModal;
+$('#auxiliaryClose').onclick=closeAuxPanel;
+$('#auxiliaryBody').addEventListener('click',event=>{const openEvent=event.target.closest('[data-open-event]');if(openEvent){openEventById(openEvent.dataset.openEvent);return}const openRule=event.target.closest('[data-open-rule]');if(openRule){openRuleConfig(openRule.dataset.openRule);return}const toggle=event.target.closest('[data-toggle-rule]');if(toggle)toggleRule(toggle.dataset.toggleRule)});
+window.addEventListener('keydown',event=>{if(event.key!=='Escape')return;if(cameraFullscreenState.open){closeCameraFullscreenViewer();return}if(expandedWallCameraId){clearExpandedWallCamera({render:true,resumePatrol:true});return}if(videoWallFullscreen){exitVideoWallFullscreen();return}if(monitorBigView){exitMonitorBigView();return}if(!$('#overlay').hidden){closeModal();return}if(!$('#auxiliaryPanel').hidden)closeAuxPanel()});
+window.addEventListener('beforeunload',()=>{stopPatrolTimer();clearInterval(clockTimer);clearTimeout(toastTimer);clearTimeout(viewTransitionTimer);clearTimeout(videoGridTransitionTimer);clearTimeout(wallExpandTimer);clearTimeout(cameraFullscreenTimer)});
+
+renderCameraDetail();renderRightPanel();renderVideoWall();updateMonitorBigView();updateVideoWallFullscreenState({visual:false});updateClock();clockTimer=setInterval(updateClock,1000);
+</script>
+</body>
+</html>
