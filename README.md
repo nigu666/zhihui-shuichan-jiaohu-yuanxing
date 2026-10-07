@@ -10,6 +10,8 @@
 - [AI 应用工程师方向作品集](https://nigu666.github.io/ai-application-engineer-portfolio/)
 - [工程师方向仓库](https://github.com/nigu666/ai-application-engineer-portfolio)
 
+点击首页“发送邮件”会通过 `mailto:` 打开设备默认邮件应用，预填收件人 `3077602965@qq.com` 和对应作品集的联系主题；需先在设备上配置可用的邮件应用。发送由访客自行确认。
+
 ## 我在项目中的角色
 
 本人实习期间主要参与产品原型与前端交互工作：
