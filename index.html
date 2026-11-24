@@ -1,94 +1,498 @@
 <!doctype html>
 <html lang="zh-CN">
 <head>
-  <meta charset="UTF-8">
+  <meta charset="utf-8">
   <meta name="viewport" content="width=device-width, initial-scale=1">
-  <meta name="description" content="雷雨天面向2027届校招的AI项目经理方向作品集，展示智慧水产AI助手、Web管理端、数字孪生与数据驾驶舱中的需求理解、原型验证和协作迭代实践。">
-  <meta name="theme-color" content="#245BEB">
-  <title>雷雨天｜AI 项目经理方向｜2027 届</title>
-  <link rel="icon" href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 64 64'%3E%3Crect width='64' height='64' rx='12' fill='%23245BEB'/%3E%3Ctext x='32' y='39' text-anchor='middle' fill='white' font-family='Arial,sans-serif' font-size='21' font-weight='700'%3ELYT%3C/text%3E%3C/svg%3E">
+  <meta name="theme-color" content="#f8f5ec">
+  <meta name="description" content="雷雨天的 AI 产品经理方向作品集，面向 2027 届校招。展示甲方需求沟通、模块规划、工单验证与 AI 场景设计。">
+  <title>雷雨天｜AI 产品经理方向 · 2027 届</title>
   <style>
-    :root{--blue:#245BEB;--ink:#14233B;--muted:#52627A;--wash:#F5F7FB;--line:#DFE5EF;--white:#fff;--width:1184px}
-    *{box-sizing:border-box}html{scroll-behavior:smooth;scroll-padding-top:24px}body{margin:0;color:var(--ink);background:var(--white);font:16px/1.75 -apple-system,BlinkMacSystemFont,"Segoe UI","Microsoft YaHei",sans-serif}a{color:inherit;text-decoration:none}img{display:block;max-width:100%;height:auto}button{font:inherit;color:inherit}h1,h2,h3,p,figure{margin:0}ul{margin:0;padding-left:1.2em}button,a,summary{touch-action:manipulation}button{cursor:pointer}a:focus-visible,button:focus-visible,summary:focus-visible{outline:3px solid var(--blue);outline-offset:5px}.shell{width:min(var(--width),calc(100% - 80px));margin:auto}.skip-link{position:absolute;left:20px;top:-70px;background:var(--blue);color:#fff;padding:12px 18px;z-index:10}.skip-link:focus{top:12px}.nav{min-height:76px;display:flex;align-items:center;justify-content:space-between;border-bottom:1px solid var(--line);gap:24px}.brand{display:flex;align-items:center;gap:12px;font-weight:700;white-space:nowrap}.brand-mark{width:40px;height:40px;display:grid;place-items:center;background:var(--blue);color:#fff;border-radius:8px;font-size:16px;letter-spacing:-.5px}.nav-links{display:flex;flex-wrap:wrap;gap:24px;color:var(--muted)}.nav-links a{padding:9px 0}.nav-links a:hover{color:var(--blue)}.intro{padding:38px 0 30px;display:flex;justify-content:space-between;gap:40px;align-items:flex-end}.role{font-size:16px;font-weight:650;color:var(--blue);margin-bottom:8px}.intro h1{font-size:44px;font-weight:750;line-height:1.2;letter-spacing:-1.4px}.profile{color:var(--muted);margin-top:13px}.profile strong{color:var(--ink);font-weight:650}.intro-note{max-width:376px;color:var(--muted)}.archive{border-top:2px solid var(--ink);display:grid;grid-template-columns:minmax(0,1fr) minmax(0,1.12fr);column-gap:40px;grid-template-rows:repeat(4,auto)}.entry{display:grid;grid-template-columns:44px minmax(0,1fr) 26px;gap:18px;padding:21px 0;border-bottom:1px solid var(--line);transition:background .18s}.entry:hover{background:var(--wash)}.entry:active{background:#EDF2FF}.entry-index{font-variant-numeric:tabular-nums;font-size:25px;font-weight:650;line-height:1.3;color:var(--blue);padding-top:2px}.entry h2{font-size:22px;font-weight:650;line-height:1.4;letter-spacing:-.4px;margin-bottom:5px}.entry p{color:var(--muted);line-height:1.6}.entry-arrow{font-size:23px;color:var(--blue);transition:transform .2s}.entry:hover .entry-arrow{transform:translateX(4px)}.entry01{grid-column:1;grid-row:1}.entry02{grid-column:1;grid-row:2}.entry03{grid-column:1;grid-row:3}.entry04{grid-column:1;grid-row:4}.archive-visual{grid-column:2;grid-row:1/5;padding-top:23px;display:flex;flex-direction:column;justify-content:space-between;gap:15px;animation:arrive .32s ease-out both}.visual-head{display:flex;justify-content:space-between;gap:20px;color:var(--muted)}.cover-shot{background:var(--wash);border:1px solid var(--line);border-radius:2px;overflow:hidden}.cover-shot img{width:100%;aspect-ratio:1.5;object-fit:contain}.archive-visual figcaption{color:var(--muted);padding:0 0 22px;border-bottom:1px solid var(--line)}.archive-visual figcaption strong{color:var(--ink);font-weight:650}.archive-foot{display:flex;justify-content:space-between;gap:30px;color:var(--muted);padding:18px 0 39px}.archive-foot strong{color:var(--ink);font-weight:650}.section-label{font-size:16px;color:var(--blue);font-weight:650;margin-bottom:7px}.case{padding:44px 0 53px;border-top:1px solid var(--line);display:grid;grid-template-columns:220px minmax(0,1fr);gap:44px}.case-sidebar .case-index{font-size:35px;color:var(--blue);font-weight:700;line-height:1.2;margin-bottom:14px}.case-sidebar h2{font-size:25px;line-height:1.45;letter-spacing:-.5px;margin-bottom:10px}.case-kind{color:var(--muted);margin-bottom:18px}.case-body{min-width:0}.facts{display:grid;grid-template-columns:1fr 1fr;gap:26px 34px}.fact h3{font-size:18px;margin-bottom:8px}.fact p,.fact li{color:var(--muted)}.fact li+li{margin-top:4px}.button{display:inline-flex;align-items:center;justify-content:center;gap:18px;min-height:46px;padding:10px 16px;background:var(--blue);color:#fff;border:1px solid var(--blue);border-radius:5px;font-weight:650;transition:background .15s,transform .12s;text-align:center}.button:hover{background:#164BDA}.button:active{transform:scale(.98)}.button-secondary{background:#fff;border-color:var(--line);color:var(--ink)}.button-secondary:hover{background:var(--wash)}.text-link{display:inline-flex;align-items:center;gap:9px;color:var(--blue);font-weight:650;min-height:44px;transition:gap .18s}.text-link:hover{gap:14px}.text-link:active{transform:translateY(1px)}.shots{margin-top:30px;display:grid;gap:24px}.mobile-shots{grid-template-columns:1fr 1fr;max-width:590px}.proof{min-width:0}.shot-button{display:block;width:100%;padding:0;border:0;background:transparent;text-align:left;position:relative;border-radius:2px}.shot-button img{transition:filter .18s}.shot-button:hover img{filter:brightness(.96)}.shot-button:active img{filter:brightness(.92)}.shot-hint{position:absolute;right:12px;bottom:12px;display:flex;align-items:center;justify-content:center;min-height:40px;padding:6px 12px;background:#fff;color:var(--ink);border:1px solid var(--line);border-radius:4px;box-shadow:0 2px 8px #14233B0D}.phone-shot{background:var(--wash);border:1px solid var(--line);padding:20px;display:grid;place-items:center}.phone-shot img{height:334px;width:auto;max-width:100%;border-radius:19px}.proof figcaption{color:var(--muted);margin-top:11px}.proof figcaption strong{color:var(--ink);font-weight:650}.workflow-proof{margin-top:25px}.workflow-shot{border:1px solid var(--line);background:var(--wash)}.workflow-shot img{width:100%;height:auto}.project-shot{border:1px solid var(--line);background:var(--wash)}.project-shot img{width:100%;height:auto}.twin-shot{padding:16px;display:grid;place-items:center}.twin-shot img{max-height:420px;width:auto;max-width:100%}.boundary{margin-top:25px;color:var(--muted);border-left:3px solid var(--blue);padding:11px 0 11px 18px}.boundary strong{display:block;color:var(--ink);font-weight:650;margin-bottom:3px}.module-map{margin-top:29px;padding-top:23px;border-top:1px solid var(--line)}.module-map h3{font-size:18px;margin-bottom:12px}.module-list{display:grid;grid-template-columns:1fr 1fr;gap:0 30px}.module-list div{display:flex;justify-content:space-between;gap:20px;padding:12px 0;border-bottom:1px solid var(--line)}.module-list dt{font-weight:650}.module-list dd{margin:0;color:var(--muted)}.work-method{padding:44px 0 49px;border-top:1px solid var(--line)}.section-head{display:flex;justify-content:space-between;gap:40px;align-items:flex-end;margin-bottom:28px}.section-head h2{font-size:29px;line-height:1.4;letter-spacing:-.5px}.section-head .section-note{max-width:436px;color:var(--muted)}.method-grid{display:grid;grid-template-columns:repeat(4,1fr);gap:28px}.method-item{border-top:2px solid var(--line);padding-top:19px}.method-item .method-index{color:var(--blue);font-size:24px;line-height:1.3;font-weight:650;display:block;margin-bottom:11px}.method-item h3{font-size:19px;margin-bottom:8px}.method-item p{color:var(--muted)}.role-details{margin-top:29px;border-top:1px solid var(--line);border-bottom:1px solid var(--line)}.role-details summary{cursor:pointer;display:flex;justify-content:space-between;gap:20px;list-style:none;padding:16px 0;font-weight:650}.role-details summary::-webkit-details-marker{display:none}.role-details summary::after{content:"＋";color:var(--blue);font-size:24px;line-height:1.2;transition:transform .2s}.role-details[open] summary::after{transform:rotate(45deg)}.role-details .details-body{color:var(--muted);padding:0 0 19px;max-width:960px;animation:arrive .22s ease-out}.details-body p+p{margin-top:10px}.contact{border-top:1px solid var(--line);background:var(--wash);padding:43px 0 45px}.contact-inner{display:flex;align-items:center;justify-content:space-between;gap:40px}.contact h2{font-size:30px;line-height:1.4;letter-spacing:-.5px}.contact-role{color:var(--muted);margin:8px 0 16px}.contact-links{display:flex;gap:8px 25px;flex-wrap:wrap;align-items:center}.email{color:var(--blue);overflow-wrap:anywhere;min-height:44px;display:inline-flex;align-items:center}.contact-action{display:flex;gap:13px;flex-wrap:wrap}.footer{padding:25px 0;color:var(--muted);border-top:1px solid var(--line)}.footer-inner{display:flex;justify-content:space-between;gap:24px;flex-wrap:wrap}.footer-inner strong{color:var(--ink);font-weight:650}.footer-links{display:flex;flex-wrap:wrap;gap:12px 24px}.footer-links a:hover{color:var(--blue)}.image-viewer{border:1px solid var(--line);border-radius:9px;background:#fff;color:var(--ink);padding:0;width:min(1160px,calc(100% - 40px));max-width:none;max-height:calc(100dvh - 40px);overflow:auto;box-shadow:0 25px 85px #07162940}.image-viewer::backdrop{background:#071629C9}.viewer-content{padding:22px}.viewer-header{display:flex;justify-content:space-between;gap:24px;align-items:flex-start}.viewer-header h2{font-size:21px;line-height:1.45}.viewer-close,.viewer-step{min-width:48px;min-height:46px;padding:9px 14px;border:1px solid var(--line);background:#fff;border-radius:5px;font-weight:650;white-space:nowrap;transition:background .15s,transform .12s}.viewer-close:hover,.viewer-step:hover{background:var(--wash)}.viewer-close:active,.viewer-step:active{transform:scale(.98)}.viewer-image-wrap{background:var(--wash);display:grid;place-items:center;margin:17px 0;min-height:100px}.viewer-image{max-height:calc(100dvh - 278px);max-width:100%;object-fit:contain;width:auto;height:auto}.viewer-caption{color:var(--muted);margin-top:13px}.viewer-controls{display:flex;justify-content:space-between;gap:16px;align-items:center;margin-top:17px;flex-wrap:wrap}.viewer-navigation{display:flex;align-items:center;gap:12px}.viewer-count{color:var(--muted);font-variant-numeric:tabular-nums;min-width:49px;text-align:center}.viewer-original{color:var(--blue);font-weight:650;min-height:44px;display:inline-flex;align-items:center}.viewer-error{padding:20px;color:var(--muted)}.viewer-error[hidden]{display:none}.image-viewer[open]{animation:arrive .2s ease-out}@keyframes arrive{from{opacity:0;transform:translateY(6px)}to{opacity:1;transform:translateY(0)}}
-    .shot-button.cover-shot{background:var(--wash);border:1px solid var(--line)}.viewer-image[hidden]{display:none}
-    @media(max-width:1000px){.shell{width:calc(100% - 48px)}.nav-links{gap:17px}.archive{grid-template-columns:1fr 1fr;column-gap:28px}.entry{grid-template-columns:36px minmax(0,1fr) 22px;gap:12px;padding:19px 0}.entry h2{font-size:20px}.cover-shot img{aspect-ratio:1.3}.intro-note{max-width:320px}.case{grid-template-columns:190px minmax(0,1fr);gap:28px}.facts{gap:24px}.method-grid{grid-template-columns:1fr 1fr;gap:25px}.contact-action{max-width:300px}.module-list{grid-template-columns:1fr}.module-list div{justify-content:flex-start}.module-list dt{min-width:96px}}
-    @media(max-width:680px){.shell{width:calc(100% - 36px)}.nav{min-height:62px}.nav-links{gap:18px}.nav-optional{display:none}.brand{gap:9px}.brand-mark{width:36px;height:36px}.intro{display:block;padding:24px 0 23px}.intro h1{font-size:34px;letter-spacing:-.8px}.intro-note{display:none}.profile{margin-top:10px}.archive{display:block}.entry{padding:18px 0;grid-template-columns:35px minmax(0,1fr) 20px;gap:12px}.entry-index{font-size:23px}.entry h2{font-size:21px;margin-bottom:6px}.archive-visual{padding-top:22px;gap:12px}.visual-head{gap:12px}.cover-shot img{aspect-ratio:auto}.archive-visual figcaption{padding-bottom:19px}.archive-foot{display:block;padding:17px 0 30px}.archive-foot p+p{margin-top:6px}.case{display:block;padding:29px 0 37px}.case-sidebar{display:grid;grid-template-columns:40px minmax(0,1fr);gap:0 14px;margin-bottom:25px}.case-sidebar .case-index{font-size:28px;grid-row:1/3;margin:0}.case-sidebar h2{font-size:23px;margin:0 0 7px}.case-kind{margin:0 0 15px}.case-sidebar .button{grid-column:2;justify-self:start}.facts{grid-template-columns:1fr;gap:21px}.mobile-shots{gap:14px;margin-top:24px}.phone-shot{padding:12px 9px}.phone-shot img{height:auto;width:100%;border-radius:12px}.shot-hint{right:8px;bottom:8px;padding:5px 10px;font-size:16px;min-height:36px}.mobile-shots .shot-hint{bottom:8px;right:6px;font-size:16px;padding:5px 8px}.proof figcaption{margin-top:9px}.workflow-proof{margin-top:22px}.workflow-shot .shot-hint{position:static;box-shadow:none;border:0;border-top:1px solid var(--line);border-radius:0;justify-content:flex-end;background:#fff}.twin-shot{padding:10px}.boundary{margin-top:23px;padding-left:15px}.module-map{margin-top:23px;padding-top:19px}.module-list div{display:block;padding:11px 0}.module-list dt{min-width:0;margin-bottom:2px}.work-method{padding:31px 0 36px}.section-head{display:block;margin-bottom:23px}.section-head h2{font-size:25px}.section-note{margin-top:12px}.method-grid{grid-template-columns:1fr;gap:0}.method-item{display:grid;grid-template-columns:36px minmax(0,1fr);gap:0 15px;padding:18px 0;border-top:1px solid var(--line)}.method-item .method-index{grid-row:1/3;margin:0;font-size:22px}.method-item h3{font-size:19px;margin-bottom:6px}.role-details{margin-top:11px}.contact{padding:30px 0 32px}.contact-inner{display:block}.contact h2{font-size:26px}.contact-action{margin-top:20px;max-width:none}.contact-action .button{flex:1}.footer{padding:22px 0}.footer-inner{display:block}.footer-links{margin-top:12px}.image-viewer{width:calc(100% - 20px);max-height:calc(100dvh - 20px)}.viewer-content{padding:16px}.viewer-header{gap:14px}.viewer-header h2{font-size:19px}.viewer-close{min-width:48px;padding:9px 12px}.viewer-image{max-height:calc(100dvh - 325px)}.viewer-controls{gap:7px;margin-top:13px}.viewer-navigation{gap:7px}.viewer-step{padding:9px 11px}.viewer-count{min-width:40px}.viewer-original{width:100%;justify-content:center}}
-    @media(prefers-reduced-motion:reduce){html{scroll-behavior:auto}*,*::before,*::after{animation:none!important;transition:none!important}}
-    .boundary{border-left:0;border-top:1px solid var(--line);padding:14px 0 0}
-    @media(min-width:681px) and (max-width:900px){.case{display:block}.case-sidebar{display:grid;grid-template-columns:44px minmax(0,1fr) auto;gap:0 16px;margin-bottom:24px}.case-sidebar .case-index{grid-row:1/3;font-size:28px;margin:0}.case-sidebar h2{font-size:25px;margin:0 0 6px}.case-sidebar h2 br{display:none}.case-kind{grid-column:2;grid-row:2;margin:0}.case-sidebar .button{grid-column:3;grid-row:1/3;align-self:center}.facts{grid-template-columns:1fr 1fr}}
-    html{scroll-behavior:auto}.entry p .phrase{display:inline-block;white-space:nowrap}
-    @media(max-height:550px){.image-viewer[open]{display:flex;flex-direction:column;overflow:hidden}.viewer-content{max-height:calc(100dvh - 40px);display:flex;flex-direction:column;min-height:0}.viewer-header,.viewer-caption,.viewer-controls{flex-shrink:0}.viewer-image-wrap{flex:1 1 auto;min-height:0;overflow:auto;display:block}.viewer-image{max-height:none;width:100%;height:auto}}
-  .mail-hint{margin-top:12px;color:var(--muted);font-size:16px;line-height:1.7}
+    :root {
+      color-scheme: light;
+      --ink: #202b25;
+      --muted: #4f5e55;
+      --accent: #16483d;
+      --accent-hover: #0b342b;
+      --line: #d6d2c4;
+      --control-line: #687c70;
+      --soft: #e8efe7;
+      --paper: #f8f5ec;
+      --white: #fffdf7;
+      --copper: #7c502c;
+      --display-font: "Noto Serif SC", "Source Han Serif SC", "Songti SC", "STSong", "SimSun", "Noto Serif CJK SC", Georgia, serif;
+      --ease: cubic-bezier(.2, .8, .2, 1);
+    }
+    *, *::before, *::after { box-sizing: border-box; }
+    html { scroll-behavior: smooth; }
+    body {
+      margin: 0; color: var(--ink); background: var(--paper);
+      font: 16px/1.7 "Segoe UI", "PingFang SC", "Microsoft YaHei", system-ui, sans-serif;
+      overflow-wrap: break-word;
+    }
+    h1, h2, h3, p, figure { margin: 0; }
+    h1, h2, h3 { line-height: 1.28; }
+    h1, h2 { font-family: var(--display-font); font-weight: 700; text-wrap: balance; }
+    a { color: var(--accent); text-decoration: underline; text-underline-offset: .25em; }
+    a:hover { text-decoration-thickness: 2px; }
+    :focus-visible { outline: 3px solid var(--accent); outline-offset: 3px; }
+    button { font: inherit; cursor: pointer; }
+    img { display: block; max-width: 100%; height: auto; }
+    [hidden] { display: none !important; }
+    .shell { width: min(1180px, calc(100% - 64px)); margin-inline: auto; }
+    .skip { position: absolute; top: .5rem; left: .5rem; padding: .5rem; background: white; transform: translateY(-150%); z-index: 2; }
+    .skip:focus { transform: translateY(0); }
+    .topbar { border-bottom: 1px solid var(--line); background: var(--white); }
+    .topbar .shell, .nav-links, .links { display: flex; align-items: center; flex-wrap: wrap; gap: .55rem 1.35rem; }
+    .topbar .shell { justify-content: space-between; padding-block: .6rem; }
+    .topbar a { display: inline-flex; align-items: center; min-height: 44px; }
+    .brand { font-family: var(--display-font); color: var(--ink); font-weight: 700; }
+    .nav-links { font-size: .9375rem; }
+    .hero {
+      display: flex; align-items: end; justify-content: space-between; flex-wrap: wrap;
+      gap: .6rem 2rem; padding-block: clamp(1.55rem, 4vw, 3rem) 1.35rem;
+    }
+    .eyebrow { color: var(--copper); font-weight: 700; }
+    .hero h1 { color: var(--accent); font-size: clamp(2.7rem, 6vw, 5rem); letter-spacing: .045em; margin-top: .14rem; }
+    .hero .lead {
+      max-width: 29em; padding-inline-start: 1rem; border-inline-start: 2px solid #a77348;
+      font-size: clamp(1rem, 1.65vw, 1.16rem); text-wrap: pretty;
+    }
+    .profile { margin-top: .35rem; color: var(--muted); }
+    .showcase { padding-bottom: 1.85rem; scroll-margin-top: 1rem; }
+    .picker-label { font-weight: 700; margin-bottom: .4rem; }
+    .case-index {
+      display: grid; grid-template-columns: repeat(2, minmax(0, 1fr)); gap: .6rem;
+      margin-bottom: .8rem;
+    }
+    .index-link {
+      display: flex; align-items: center; gap: .65rem;
+      min-width: 0; min-height: 56px; padding: .48rem .75rem;
+      border: 1px solid var(--control-line); border-radius: 6px;
+      background: var(--white); text-decoration: none; color: var(--accent);
+      transition: background .18s var(--ease), color .18s var(--ease);
+    }
+    .index-link img {
+      width: 60px; flex: 0 0 60px; aspect-ratio: 3 / 2; object-fit: cover;
+      object-position: left top; border: 1px solid var(--line); border-radius: 5px;
+    }
+    .index-link:hover { background: var(--soft); }
+    .index-link[aria-selected="true"] {
+      color: var(--white); background: var(--accent); border-color: var(--accent);
+    }
+    .index-link strong { font-size: 1rem; line-height: 1.38; }
+    .tab-status { margin-inline-start: auto; flex: none; font-size: .875rem; font-weight: 700; }
+    .showcase-panel:focus-visible { border-radius: 8px; }
+    .stage {
+      display: grid; grid-template-rows: minmax(0, 1fr); place-items: center; overflow: hidden;
+      min-width: 0; height: clamp(280px, 30vw, 420px);
+      padding: clamp(.9rem, 2vw, 1.6rem);
+      border: 1px solid #193e34; border-radius: 9px;
+      background: linear-gradient(135deg, #142f2a, #275245);
+      animation: stage-in .22s var(--ease) both;
+    }
+    .stage--ai {
+      background: linear-gradient(135deg, #172e2d, #2c4a41);
+    }
+    .stage img {
+      max-width: 100%; max-height: 100%; height: auto; width: auto;
+      object-fit: contain; border: 1px solid #b2c3b7; border-radius: 5px;
+      background: white; box-shadow: 0 12px 28px #061a1766;
+    }
+    .stage-copy {
+      display: grid; grid-template-columns: minmax(0, 1fr) auto; align-items: center;
+      gap: .55rem 1.3rem; padding: 1.1rem .1rem .2rem;
+    }
+    .stage-copy h2 { font-size: clamp(1.48rem, 2.65vw, 2.25rem); }
+    .stage-copy p { color: var(--muted); margin-top: .2rem; }
+    .stage-actions { display: flex; flex-wrap: wrap; gap: .55rem; }
+    @keyframes stage-in { from { opacity: .78; } to { opacity: 1; } }
+    .case {
+      display: grid; grid-template-columns: minmax(0, .72fr) minmax(0, 2fr);
+      gap: clamp(1.5rem, 5vw, 4.25rem); padding-block: clamp(2.5rem, 6vw, 4.75rem);
+      border-top: 1px solid var(--line); scroll-margin-top: 1rem;
+    }
+    .case-header h2, .secondary h2, .contact h2 { font-size: clamp(1.6rem, 3vw, 2.5rem); letter-spacing: -.035em; }
+    .case-header h2 { margin: .35rem 0 .65rem; }
+    .case-header time { color: var(--muted); }
+    .case-header .links { margin-top: .75rem; }
+    .case-header .links a, .links a { display: inline-flex; align-items: center; min-height: 44px; }
+    .case-body { min-width: 0; }
+    .case-body > p { font-size: 1.063rem; }
+    .case-body > section { margin-top: 1.9rem; }
+    .case-body h3, .secondary h3 { font-size: 1.18rem; margin-bottom: .55rem; }
+    .case-body p + p { margin-top: .55rem; }
+    .scope-list {
+      list-style: none; margin: .85rem 0 .85rem; padding: .95rem 0;
+      display: grid; grid-template-columns: repeat(3, minmax(0, 1fr));
+      border-radius: 7px; border: 1px solid var(--line); background: #f0ebdd;
+    }
+    .scope-list li { padding: .05rem clamp(.6rem, 2vw, 1.25rem); }
+    .scope-list li + li { border-left: 1px solid var(--line); }
+    .scope-list strong {
+      display: block; font: 700 clamp(1.45rem, 3vw, 2.2rem)/1.3 var(--display-font);
+      font-variant-numeric: lining-nums tabular-nums; color: var(--copper);
+    }
+    .scope-list span { display: block; color: var(--muted); }
+    .flow {
+      margin: .85rem 0; padding: .8rem 1rem; background: var(--soft); border-radius: 12px;
+      display: flex; flex-wrap: wrap; align-items: center; list-style: none; gap: .25rem .75rem;
+    }
+    .flow li { display: flex; gap: .75rem; align-items: center; }
+    .flow span { color: var(--accent); }
+    .note { color: var(--muted); font-size: .9375rem; }
+    .proof img { width: 100%; border: 1px solid var(--line); border-radius: 6px; }
+    .proof figcaption { margin-top: .55rem; }
+    .scenario-list h3 { margin-bottom: .7rem; }
+    details { margin-block: .45rem; }
+    summary {
+      display: flex; align-items: center; justify-content: space-between; gap: .7rem;
+      padding: .62rem .85rem; color: var(--accent); cursor: pointer;
+      font-weight: 700; min-height: 48px; list-style: none;
+      border: 1px solid var(--control-line); border-radius: 6px; background: var(--white);
+    }
+    summary::-webkit-details-marker { display: none; }
+    summary:hover, details[open] > summary { background: var(--soft); }
+    .disclosure-state { display: flex; align-items: center; flex: none; font-size: .9375rem; }
+    .disclosure-state .close-label, details[open] > summary .open-label { display: none; }
+    details[open] > summary .close-label { display: inline; }
+    .scenario-body { padding: .75rem .85rem 1rem; }
+    .scenario-body figure { margin-top: .85rem; max-width: 620px; }
+    .exchange { margin: 0 0 .7rem; padding: .6rem .85rem; background: var(--soft); }
+    .exchange div { display: grid; grid-template-columns: 3.25rem minmax(0, 1fr); gap: .4rem; }
+    .exchange dt { font-weight: 700; color: var(--accent); }
+    .exchange dd { margin: 0; }
+    .secondary { border-top: 1px solid var(--line); padding-block: 2.5rem; }
+    .secondary h2 { margin-bottom: .85rem; }
+    .project-row {
+      display: grid; grid-template-columns: minmax(0, 1fr) auto; align-items: center; gap: .5rem 1rem;
+      padding-block: 1rem; border-bottom: 1px solid var(--line);
+    }
+    .project-row p { color: var(--muted); }
+    .project-row a { display: flex; align-items: center; min-height: 44px; }
+    .contact { background: var(--soft); padding-block: 2.5rem; }
+    .contact h2 { margin-bottom: .45rem; }
+    .contact .links { margin-top: .8rem; }
+    .button {
+      display: inline-flex; justify-content: center; align-items: center; min-height: 44px;
+      border: 1px solid var(--accent); border-radius: 5px; padding: .48rem .85rem;
+      background: var(--accent); color: var(--white); font-weight: 700; text-decoration: none;
+    }
+    .button:hover { background: var(--accent-hover); }
+    .button--outline, .viewer-close, .viewer-step {
+      background: var(--white); color: var(--accent); border-color: var(--control-line);
+    }
+    .button--outline:hover { background: var(--soft); }
+    .footer { padding-block: 1rem; color: var(--muted); }
+    .image-viewer {
+      width: min(960px, calc(100% - 24px)); max-height: calc(100dvh - 24px);
+      padding: 0; border: 1px solid var(--line); border-radius: 8px; color: var(--ink); background: white;
+    }
+    .image-viewer::backdrop { background: rgba(12, 23, 39, .68); }
+    .viewer-content { padding: clamp(.8rem, 3vw, 1.5rem); }
+    .viewer-header, .viewer-controls, .viewer-navigation { display: flex; align-items: center; flex-wrap: wrap; gap: .5rem .8rem; }
+    .viewer-header, .viewer-controls { justify-content: space-between; }
+    .viewer-header h2 { font-size: 1.2rem; }
+    .viewer-image-wrap { margin-block: .75rem; background: var(--soft); }
+    .viewer-image { margin-inline: auto; max-height: 62dvh; width: auto; object-fit: contain; }
+    .viewer-caption { margin-bottom: .7rem; color: var(--muted); }
+    .viewer-close, .viewer-step {
+      border: 1px solid var(--control-line); border-radius: 5px; min-height: 44px;
+      padding: .35rem .65rem;
+    }
+    .viewer-close:hover, .viewer-step:hover { background: var(--soft); }
+    .viewer-count { white-space: nowrap; }
+    @media (max-width: 700px) {
+      .shell { width: calc(100% - 36px); }
+      .case { grid-template-columns: minmax(0, 1fr); gap: 1.4rem; }
+      .hero { padding-block: 1.45rem 1rem; align-items: start; }
+      .stage { height: clamp(185px, 56vw, 330px); padding: .65rem; }
+      .stage-copy { grid-template-columns: minmax(0, 1fr); justify-items: start; }
+      .stage-copy .button { margin-top: .2rem; }
+      .index-link { padding: .45rem .55rem; gap: .45rem; }
+      .index-link img { width: 34px; flex-basis: 34px; aspect-ratio: 1; }
+      .case-header h2 { margin-bottom: .4rem; }
+      .project-row { grid-template-columns: minmax(0, 1fr); gap: .1rem; }
+    }
+    @media (max-width: 445px) {
+      .index-link { flex-wrap: wrap; align-content: center; gap: .15rem .35rem; }
+      .index-link img { display: none; }
+      .tab-status { margin-inline-start: 0; }
+      .index-link strong { flex-basis: 100%; }
+    }
+    @media (max-width: 350px) {
+      .nav-links { gap: .25rem .85rem; }
+      .scope-list li { padding-inline: .5rem; }
+    }
+    @media (prefers-reduced-motion: reduce) {
+      html { scroll-behavior: auto; }
+      .stage { animation: none; }
+      .index-link { transition: none; }
+    }
   </style>
 </head>
 <body>
-  <a class="skip-link" href="#main">跳到项目内容</a>
-  <header class="shell">
-    <nav class="nav" aria-label="主导航">
-      <a class="brand" href="#top" aria-label="雷雨天，返回顶部"><span class="brand-mark" aria-hidden="true">LYT</span><span>雷雨天</span></a>
-      <div class="nav-links"><a href="#archive">项目目录</a><a class="nav-optional" href="#method">工作方法</a><a class="nav-optional" href="../ai-application-engineer-portfolio/">工程师站 ↗</a><a href="#contact">联系</a></div>
+  <a class="skip" href="#main">跳到正文</a>
+  <header class="topbar" id="top">
+    <nav class="shell" aria-label="主导航">
+      <a class="brand" href="#top">雷雨天</a>
+      <div class="nav-links">
+        <a href="#archive">产品案例</a>
+        <a href="#more">更多作品</a>
+        <a href="#contact">联系</a>
+      </div>
     </nav>
   </header>
-  <main id="main">
-    <div class="shell" id="top">
-      <section class="intro" aria-labelledby="page-title">
-        <div><p class="role">AI 项目经理方向｜2027 届</p><h1 id="page-title">项目协作档案</h1><p class="profile"><strong>雷雨天</strong> · 武汉轻工大学 · 软件工程</p></div>
-        <p class="intro-note">四个智慧水产原型，展示需求理解、方案验证与反馈迭代中的具体职责。目标岗位为 AI 项目经理。</p>
-      </section>
-      <section class="archive" id="archive" aria-label="四个项目的职责目录">
-        <a class="entry entry01" href="#case-ai"><span class="entry-index" aria-hidden="true">01</span><div><h2>智慧水产 AI 助手</h2><p><span class="phrase">移动端原型</span> · <span class="phrase">Vue2 迁移适配</span> · <span class="phrase">Dify 验证</span></p></div><span class="entry-arrow" aria-hidden="true">↘</span></a>
-        <a class="entry entry02" href="#case-web"><span class="entry-index" aria-hidden="true">02</span><div><h2>智慧增殖站 Web 管理端</h2><p><span class="phrase">业务流程</span> · <span class="phrase">原型迁移</span> · <span class="phrase">跨模块验证</span></p></div><span class="entry-arrow" aria-hidden="true">↘</span></a>
-        <a class="entry entry03" href="#case-twin"><span class="entry-index" aria-hidden="true">03</span><div><h2>渔立方数字孪生</h2><p>监控交互 · 布局修改 · 反馈迭代</p></div><span class="entry-arrow" aria-hidden="true">↘</span></a>
-        <a class="entry entry04" href="#case-dashboard"><span class="entry-index" aria-hidden="true">04</span><div><h2>渔立方数据驾驶舱</h2><p>信息层级 · 模块原型 · 图表交互调整</p></div><span class="entry-arrow" aria-hidden="true">↘</span></a>
-        <figure class="archive-visual"><div class="visual-head"><span>档案 04 · 渔立方数据驾驶舱</span></div><button class="shot-button cover-shot" type="button" data-gallery="dashboard" data-image="渔立方数据驾驶舱/assets/yulifang-dashboard-reference.png" data-title="渔立方数据驾驶舱" data-caption="数据驾驶舱现有项目画面，展示信息组织与可视化原型；画面中的指标不作为生产运行或业务成效证明。" aria-label="放大查看档案04渔立方数据驾驶舱截图"><img src="渔立方数据驾驶舱/assets/yulifang-dashboard-reference.png" width="2048" height="989" alt="档案04渔立方数据驾驶舱，包含养殖场景、水质趋势、设备状态及告警模块"><span class="shot-hint" aria-hidden="true">查看画面 ↗</span></button><figcaption><strong>04 / 渔立方数据驾驶舱</strong><br>整理水质、鱼情、设备与告警的信息层级，让关键状态集中可见。</figcaption></figure>
-      </section>
-      <div class="archive-foot"><p><strong>实习实践</strong> / 交互原型与前端页面协作</p></div>
 
-      <article class="case" id="case-ai" aria-labelledby="case-ai-title">
-        <header class="case-sidebar"><p class="case-index" aria-hidden="true">01</p><h2 id="case-ai-title">智慧水产<br>设备管理助手</h2><p class="case-kind">移动端 / AI 助手</p><a class="button" href="./智慧水产设备管理助手/" target="_blank" rel="noopener noreferrer">打开原型 <span aria-hidden="true">↗</span></a></header>
+  <main id="main">
+    <section class="shell hero" aria-labelledby="page-title">
+      <div>
+        <p class="eyebrow">AI 产品经理方向 · 2027 届</p>
+        <h1 id="page-title">雷雨天</h1>
+        <p class="profile">武汉轻工大学 · 软件工程</p>
+      </div>
+      <p class="lead">从现场需求出发，把业务规则做成可验证的原型。</p>
+    </section>
+
+    <section class="shell showcase" id="archive" aria-label="产品案例预览">
+      <p class="picker-label" id="picker-label">选择案例</p>
+      <div class="case-index" id="case-picker" aria-labelledby="picker-label">
+        <a class="index-link" id="pick-web" href="#case-web" data-panel="preview-web">
+          <img src="../ai-application-engineer-portfolio/assets/web-prototype/overview.png" alt="" width="60" height="40">
+          <strong>智慧增殖站</strong>
+          <span class="tab-status" aria-hidden="true">打开 ↓</span>
+        </a>
+        <a class="index-link" id="pick-ai" href="#case-ai" data-panel="preview-ai">
+          <img src="../ai-application-engineer-portfolio/assets/01_Dify_Workflow_脱敏.png" alt="" width="60" height="40">
+          <strong>智慧水产 AI 助手</strong>
+          <span class="tab-status" aria-hidden="true">打开 ↓</span>
+        </a>
+      </div>
+      <div class="showcase-panel" id="preview-web">
+        <div class="stage">
+          <img id="stage-web-image" src="../ai-application-engineer-portfolio/assets/web-prototype/overview.png"
+            width="1440" height="900" alt="智慧增殖站 Web 管理端的业务模块与综合看板" fetchpriority="high">
+        </div>
+        <div class="stage-copy">
+          <div><h2>智慧增殖站</h2><p>三方需求沟通、33 份资料归并与维修工单验证。</p></div>
+          <div class="stage-actions">
+            <a class="button" href="#case-web">阅读案例 ↓</a>
+            <button class="button button--outline" type="button" aria-haspopup="dialog" data-image="stage-web-image"
+              data-title="智慧增殖站 Web 管理端" data-caption="已完成的管理端原型画面，原型内数据用于演示。">放大截图 ↗</button>
+          </div>
+        </div>
+      </div>
+      <div class="showcase-panel" id="preview-ai" hidden>
+        <div class="stage stage--ai">
+          <img id="stage-ai-image" src="../ai-application-engineer-portfolio/assets/01_Dify_Workflow_脱敏.png"
+            width="1536" height="675" alt="智慧水产 AI 助手的 Dify 工作流及场景分支" loading="lazy">
+        </div>
+        <div class="stage-copy">
+          <div><h2>智慧水产 AI 助手</h2><p>按业务场景分流，追问缺失的池体编号，验证查询反馈。</p></div>
+          <div class="stage-actions">
+            <a class="button" href="#case-ai">阅读案例 ↓</a>
+            <button class="button button--outline" type="button" aria-haspopup="dialog" data-image="stage-ai-image"
+              data-title="智慧水产 AI 助手工作流" data-caption="脱敏后的 Dify 工作流，展示知识检索、设备查询和水质分析的分支。">放大截图 ↗</button>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <div class="shell">
+      <article class="case" id="case-web" aria-labelledby="case-web-title">
+        <header class="case-header">
+          <p class="eyebrow">B 端产品 · 实习案例</p>
+          <h2 id="case-web-title">智慧增殖站</h2>
+          <p><time datetime="2026-08">2026 年 8 月</time>–<time datetime="2026-09">9 月</time></p>
+          <div class="links"><a href="./智慧增殖站综合看板/" target="_blank" rel="noopener noreferrer">打开 Web 原型 ↗</a></div>
+        </header>
         <div class="case-body">
-          <div class="facts"><section class="fact"><h3>业务背景</h3><p>在设备管理和养殖业务场景中，将 AI 助手入口与知识问答、设备状态查询等需求联系起来。</p></section><section class="fact"><h3>我负责</h3><p>移动端页面和交互原型搭建，配合现有 Vue2 项目迁移与适配；通过 Dify 可视化搭建助手流程并验证效果。</p></section><section class="fact"><h3>协作与迭代过程</h3><p>根据需求与团队反馈，迭代业务入口、对话界面与状态反馈。</p></section><section class="fact"><h3>项目价值</h3><p>让设备管理、养殖业务与 AI 助手处于同一移动端流程，为确认页面衔接与助手交互形式提供具体原型。</p></section></div>
-          <div class="shots mobile-shots"><figure class="proof"><button class="shot-button phone-shot" type="button" data-gallery="mobile-home" data-image="../ai-application-engineer-portfolio/assets/mobile-ai-assistant/05_移动端AI落地全景.png" data-title="智慧水产移动端业务入口" data-caption="移动端首页与AI助手入口的现有项目截图，展示业务入口及页面交互；页面读数不作为业务成效证明。" aria-label="放大查看移动端业务首页截图"><img src="../ai-application-engineer-portfolio/assets/mobile-ai-assistant/05_移动端AI落地全景.png" width="390" height="844" alt="智慧水产移动端业务首页，水质监测、知识库、设备管家与AI助手入口处于同一页面" loading="lazy"><span class="shot-hint" aria-hidden="true">放大 ↗</span></button><figcaption><strong>业务入口</strong><br>将 AI 助手融入已有移动端场景。</figcaption></figure><figure class="proof"><button class="shot-button phone-shot" type="button" data-gallery="mobile-chat" data-image="../ai-application-engineer-portfolio/assets/mobile-ai-assistant/02_AI对话页面.png" data-title="移动端AI对话页面" data-caption="移动端AI对话页面的现有截图，展示对话面板、输入与消息样式；此画面不作为成功调用AI服务的证据。" aria-label="放大查看移动端AI对话页面截图"><img src="../ai-application-engineer-portfolio/assets/mobile-ai-assistant/02_AI对话页面.png" width="390" height="844" alt="移动端AI助手独立对话面板及消息输入界面" loading="lazy"><span class="shot-hint" aria-hidden="true">放大 ↗</span></button><figcaption><strong>对话交互</strong><br>用页面验证消息与输入的呈现方式。</figcaption></figure></div>
-          <figure class="proof workflow-proof"><button class="shot-button workflow-shot" type="button" data-gallery="workflow" data-image="../ai-application-engineer-portfolio/assets/01_Dify_Workflow_脱敏.png" data-title="Dify助手验证流程" data-caption="智慧水产AI助手的既有Dify工作流截图，敏感信息已脱敏；展示可视化流程搭建与验证实践，不代表负责完整后端。" aria-label="放大查看已脱敏的Dify助手工作流截图"><img src="../ai-application-engineer-portfolio/assets/01_Dify_Workflow_脱敏.png" width="1536" height="675" alt="智慧水产AI助手的Dify工作流验证画面，敏感信息已脱敏" loading="lazy"><span class="shot-hint" aria-hidden="true">查看流程 ↗</span></button><figcaption><strong>可视化流程也是讨论依据</strong><br>用 Dify 将 AI 助手能力与具体业务场景之间的关系落到可查看的流程。</figcaption></figure>
-          <p class="boundary"><strong>交付边界</strong>主要参与原型和前端交互，不代表负责完整后端、数据库或生产系统。当前移动端服务不可用时会展示网络异常；对话界面和异常反馈不作为成功调用证据。</p>
+          <p id="role-boundary">我参加导师、甲方与养殖专家的三方会谈，负责记录结论、修改投喂模块原型、归并运行资料，并验证维修工单与经验库的联动。</p>
+          <section aria-labelledby="feeding-title">
+            <h3 id="feeding-title">投喂方案怎样调整</h3>
+            <p>养殖专家指出，人工投喂难以准确计量，按池体和鱼种填报又增加现场工作量。导师提出 AGV 分区投喂和自动记录方案。我记录会谈结论，并据此修改投喂模块原型。方案随后进入开发阶段。</p>
+          </section>
+          <section id="method" aria-labelledby="scope-title">
+            <h3 id="scope-title">33 份运行资料怎样进入系统</h3>
+            <ul class="scope-list">
+              <li><strong>17 份</strong><span>纳入核心业务</span></li>
+              <li><strong>10 份</strong><span>并入现有流程</span></li>
+              <li><strong>6 份</strong><span>保留在本期范围之外</span></li>
+            </ul>
+            <p>我按资料对生产、设备和库存的影响归类。养殖日志由生产记录汇总，设备巡查和维修资料沿用现有模块，行政、车辆等资料留在本期系统范围之外。</p>
+          </section>
+          <section aria-labelledby="repair-title">
+            <h3 id="repair-title">维修工单与经验库联动</h3>
+            <ol class="flow" aria-label="工单主流程">
+              <li>巡检异常 <span aria-hidden="true">→</span></li>
+              <li>报修 <span aria-hidden="true">→</span></li>
+              <li>维修执行 <span aria-hidden="true">→</span></li>
+              <li>验收 <span aria-hidden="true">→</span></li>
+              <li>提交维修经验</li>
+            </ol>
+            <p>我发现工单与经验库的流转状态不同步，并逐项验证提交、驳回、重新提交及审核结果回填。原型通过工单 ID 关联记录，验收通过后才开放经验提交入口。</p>
+          </section>
         </div>
       </article>
 
-      <article class="case" id="case-web" aria-labelledby="case-web-title">
-        <header class="case-sidebar"><p class="case-index" aria-hidden="true">02</p><h2 id="case-web-title">智慧增殖站<br>Web 管理端</h2><p class="case-kind">业务管理 / 综合看板</p><a class="button" href="./智慧增殖站综合看板/" target="_blank" rel="noopener noreferrer">打开原型 <span aria-hidden="true">↗</span></a></header>
-        <div class="case-body"><div class="facts"><section class="fact"><h3>业务背景</h3><p>智慧增殖放流站管理端覆盖项目管理、生产繁育、设备运维，以及维修、巡检、保养和计量校准等业务页面。</p></section><section class="fact"><h3>我负责</h3><p>理解已有业务流程和页面关系，完成 Web 原型的迁移、修改与持续迭代，调整页面功能和交互细节。</p></section><section class="fact"><h3>协作与迭代过程</h3><p>用原型确认跨模块页面衔接，再根据需求与反馈修改。</p></section><section class="fact"><h3>项目价值</h3><p>将多模块业务需求具体化为可浏览的管理端页面，为确认信息组织与跨模块交互提供共同的讨论依据。</p></section></div><section class="module-map" aria-labelledby="module-map-title"><h3 id="module-map-title">原型覆盖的业务区域</h3><dl class="module-list"><div><dt>项目管理</dt><dd>项目信息与页面关系</dd></div><div><dt>生产繁育</dt><dd>业务记录与管理页面</dd></div><div><dt>设备运维</dt><dd>设备信息与运维业务</dd></div><div><dt>维护业务</dt><dd>维修 / 巡检 / 保养 / 校准</dd></div></dl></section><p class="boundary"><strong>交付边界</strong>展示业务流程理解与 Web 交互原型，不代表负责实际项目排期、预算管理、后端系统或生产运营。</p></div>
+      <article class="case" id="case-ai" aria-labelledby="case-ai-title">
+        <header class="case-header">
+          <p class="eyebrow">AI 应用 · 实习案例</p>
+          <h2 id="case-ai-title">智慧水产 AI 助手</h2>
+          <p><time datetime="2026-07">2026 年 7 月</time>–<time datetime="2026-08">8 月</time></p>
+          <div class="links"><a href="./智慧水产设备管理助手/" target="_blank" rel="noopener noreferrer">打开移动端原型 ↗</a></div>
+        </header>
+        <div class="case-body">
+          <p>我梳理了养殖问答、设备状态查询和水质分析三类场景，参与 Dify 工作流配置、接口联调和移动端对话设计。</p>
+          <section class="scenario-list" aria-labelledby="scenarios-title">
+            <h3 id="scenarios-title">三种场景，三种处理规则</h3>
+            <details open name="ai-scenario">
+              <summary><span>缺少池体编号 · 先追问</span><span class="disclosure-state" aria-hidden="true"><span class="open-label">＋ 展开</span><span class="close-label">− 收起</span></span></summary>
+              <div class="scenario-body">
+                <dl class="exchange" aria-label="追问交互摘述">
+                  <div><dt>用户</dt><dd>检测水质</dd></div>
+                  <div><dt>助手</dt><dd>询问要检测的池体编号。</dd></div>
+                </dl>
+                <p>拿到池体编号后再继续查询。我实际测试过这一追问路径。</p>
+                <p class="note">根据测试经历整理的对话摘述。</p>
+              </div>
+            </details>
+            <details name="ai-scenario">
+              <summary><span>查询设备状态 · 读取业务接口</span><span class="disclosure-state" aria-hidden="true"><span class="open-label">＋ 展开</span><span class="close-label">− 收起</span></span></summary>
+              <div class="scenario-body">
+                <p>识别设备并映射到设备 ID，读取业务接口返回的状态，再组织成回答。</p>
+                <figure class="proof">
+                  <img id="device-state-image" src="../ai-application-engineer-portfolio/assets/03_业务API_设备状态查询_脱敏.png" alt="设备状态查询的 Dify 历史运行记录与回答" loading="lazy">
+                  <figcaption>
+                    <button class="button button--outline" type="button" aria-haspopup="dialog" data-image="device-state-image"
+                      data-title="设备状态查询" data-caption="Dify 历史运行截图，展示设备查询和结果反馈。">放大运行截图 ↗</button>
+                  </figcaption>
+                </figure>
+              </div>
+            </details>
+            <details name="ai-scenario">
+              <summary><span>设备查不到 · 明确告知</span><span class="disclosure-state" aria-hidden="true"><span class="open-label">＋ 展开</span><span class="close-label">− 收起</span></span></summary>
+              <div class="scenario-body">
+                <p>设备匹配为空时停止查询，返回“未找到对应设备”。</p>
+                <figure class="proof">
+                  <img id="device-missing-image" src="../ai-application-engineer-portfolio/assets/03_API_NOT_FOUND_真实截图.png" alt="工作流进入未找到设备分支并告知用户未找到对应设备" loading="lazy">
+                  <figcaption>
+                    <button class="button button--outline" type="button" aria-haspopup="dialog" data-image="device-missing-image"
+                      data-title="未匹配到设备" data-caption="Dify 历史运行截图。未匹配设备与接口失败是不同场景。">放大运行截图 ↗</button>
+                  </figcaption>
+                </figure>
+              </div>
+            </details>
+          </section>
+          <div class="links"><a href="../ai-application-engineer-portfolio/?project=dify#evidence">查看工作流与检索证据 ↗</a></div>
+          <p class="note">移动端入口为交互原型，运行证据来自历史测试。</p>
+        </div>
       </article>
 
-      <article class="case" id="case-twin" aria-labelledby="case-twin-title">
-        <header class="case-sidebar"><p class="case-index" aria-hidden="true">03</p><h2 id="case-twin-title">渔立方<br>数字孪生养殖系统</h2><p class="case-kind">数字孪生 / 监控交互</p><a class="button" href="./渔立方数字孪生养殖系统/" target="_blank" rel="noopener noreferrer">打开原型 <span aria-hidden="true">↗</span></a></header>
-        <div class="case-body"><div class="facts"><section class="fact"><h3>业务背景</h3><p>面向智慧养殖监控场景的双界面原型，组织养殖场景、设备状态与视频画面等信息。</p></section><section class="fact"><h3>我负责</h3><p>根据需求搭建数字孪生交互原型，设计视频墙、界面切换、全屏查看和轮巡等操作。</p></section><section class="fact"><h3>协作与迭代过程</h3><p>用原型验证监控场景，按反馈调整布局、查看与切换操作。</p></section><section class="fact"><h3>项目价值</h3><p>将监控场景中的查看与切换需求落为可交互页面，帮助确认视频墙布局及关键操作的呈现方式。</p></section></div><figure class="proof workflow-proof"><button class="shot-button project-shot twin-shot" type="button" data-gallery="twin" data-image="渔立方数字孪生养殖系统/assets/digital-twin-main.png" data-title="渔立方数字孪生养殖场景" data-caption="数字孪生原型使用的现有养殖场景素材。该素材用于场景呈现，不代表本人独立制作三维模型或已经接入实时生产系统。" aria-label="放大查看数字孪生养殖场景"><img src="渔立方数字孪生养殖系统/assets/digital-twin-main.png" width="735" height="600" alt="数字孪生原型使用的养殖场景素材，展示养殖池及设备布局" loading="lazy"><span class="shot-hint" aria-hidden="true">查看场景 ↗</span></button><figcaption><strong>监控场景的组织</strong><br>复用既有养殖场景素材，原型中的视频墙与切换操作可通过项目入口查看。</figcaption></figure><p class="boundary"><strong>交付边界</strong>我负责页面与交互原型，场景素材为原项目既有资源。展示内容不代表实时生产系统接入或三维模型独立制作。</p></div>
-      </article>
-
-      <article class="case" id="case-dashboard" aria-labelledby="case-dashboard-title">
-        <header class="case-sidebar"><p class="case-index" aria-hidden="true">04</p><h2 id="case-dashboard-title">渔立方<br>数据驾驶舱</h2><p class="case-kind">信息层级 / 数据可视化</p><a class="button" href="./渔立方数据驾驶舱/" target="_blank" rel="noopener noreferrer">打开原型 <span aria-hidden="true">↗</span></a></header>
-        <div class="case-body"><div class="facts"><section class="fact"><h3>业务背景</h3><p>智慧养殖驾驶舱集中呈现水质环境、鱼情、设备运行与告警信息，需要让关键状态便于查看。</p></section><section class="fact"><h3>我负责</h3><p>整理页面布局和信息层级，搭建水质、鱼情、设备状态与告警等模块的交互原型，调整图表、提示和图例。</p></section><section class="fact"><h3>协作与迭代过程</h3><p>围绕展示需求调整图表与阅读顺序，并根据反馈持续迭代。</p></section><section class="fact"><h3>项目价值</h3><p>通过统一布局、图表和图例组织养殖关键信息，为确认数据查看方式与信息层级提供可验证的界面。</p></section></div><figure class="proof workflow-proof"><button class="shot-button project-shot" type="button" data-gallery="dashboard" data-image="渔立方数据驾驶舱/assets/yulifang-dashboard-reference.png" data-title="渔立方数据驾驶舱" data-caption="数据驾驶舱现有项目画面，展示信息组织与可视化原型；画面中的指标不作为生产运行或业务成效证明。" aria-label="放大查看渔立方数据驾驶舱项目截图"><img src="渔立方数据驾驶舱/assets/yulifang-dashboard-reference.png" width="2048" height="989" alt="渔立方数据驾驶舱项目画面，集中呈现水质、鱼情、设备与告警信息" loading="lazy"><span class="shot-hint" aria-hidden="true">查看全图 ↗</span></button><figcaption><strong>让关键状态集中可见</strong><br>水质趋势、设备状态与告警等模块按业务阅读顺序组织。</figcaption></figure><p class="boundary"><strong>交付边界</strong>页面展示信息组织和图表交互原型。画面及原型中的数据不作为实时生产数据、模型效果或业务成效证明。</p></div>
-      </article>
-
-      <section class="work-method" id="method" aria-labelledby="method-title"><div class="section-head"><div><h2 id="method-title">从需求理解到页面交付</h2></div><p class="section-note">这些方法来自已有的原型与前端协作实践，用具体工作说明 AI 项目经理方向的岗位适配能力。</p></div><div class="method-grid"><article class="method-item"><span class="method-index" aria-hidden="true">01</span><h3>需求理解</h3><p>梳理页面目标、已有业务流程与功能关系。</p></article><article class="method-item"><span class="method-index" aria-hidden="true">02</span><h3>方案验证</h3><p>用可操作原型确认关键流程、页面衔接与状态反馈。</p></article><article class="method-item"><span class="method-index" aria-hidden="true">03</span><h3>反馈修改</h3><p>根据需求和团队反馈，调整页面布局与交互细节。</p></article><article class="method-item"><span class="method-index" aria-hidden="true">04</span><h3>迁移适配</h3><p>配合原有项目架构，完成页面迁移与适配。</p></article></div><details class="role-details" id="role-boundary"><summary>我在项目中的角色与边界</summary><div class="details-body"><p>实习期间，我主要参与产品原型与前端交互：移动端和 Web 原型搭建、Vue2 页面迁移与适配、Dify 助手验证，以及数字孪生和驾驶舱页面迭代。</p><p>AI 项目经理是本作品集的求职方向，并非曾任职位。这里不表述完整后端或生产系统开发，也不将原型工作扩展为项目负责人、预算或排期管理经历。</p><p>原型中的页面数据和交互反馈用于展示方案。移动端 AI 服务不可用时会呈现网络异常；服务异常和对话空屏不作为 AI 成功运行的证明。</p></div></details></section>
+      <section class="secondary" id="more" aria-labelledby="more-title">
+        <h2 id="more-title">更多作品</h2>
+        <article class="project-row" id="case-picture">
+          <div><h3>AI 修图智能体</h3><p>把确认计划、执行、采用与撤销拆成清晰的操作。以 AI 协作完成实现，我参与方案取舍与结果核对。</p></div>
+          <a href="../ai-application-engineer-portfolio/?project=picture#picture-editor">查看修图案例 ↗</a>
+        </article>
+        <details id="more-prototypes">
+          <summary><span>其他智慧水产原型</span><span class="disclosure-state" aria-hidden="true"><span class="open-label">＋ 展开</span><span class="close-label">− 收起</span></span></summary>
+          <article class="project-row" id="case-twin">
+            <div><h3>渔立方数字孪生</h3><p>视频墙、全屏与轮巡交互。</p></div>
+            <a href="./渔立方数字孪生养殖系统/" target="_blank" rel="noopener noreferrer">打开数字孪生 ↗</a>
+          </article>
+          <article class="project-row" id="case-dashboard">
+            <div><h3>渔立方数据驾驶舱</h3><p>水质、鱼情、设备状态与告警的信息层级。</p></div>
+            <a href="./渔立方数据驾驶舱/" target="_blank" rel="noopener noreferrer">打开数据驾驶舱 ↗</a>
+          </article>
+        </details>
+      </section>
     </div>
-    <section class="contact" id="contact" aria-labelledby="contact-title"><div class="shell contact-inner"><div><p class="section-label">联系与更多作品</p><h2 id="contact-title">雷雨天</h2><p class="contact-role">AI 项目经理方向｜2027 届 · 武汉轻工大学 · 软件工程</p><div class="contact-links"><a class="email" href="mailto:3077602965@qq.com">3077602965@qq.com</a><a class="text-link" href="../ai-application-engineer-portfolio/">查看工程师方向作品集 <span aria-hidden="true">↗</span></a></div><p class="mail-hint" id="email-help">点击后打开设备默认邮件应用，收件人为 3077602965@qq.com。</p></div><div class="contact-action"><a class="button" aria-describedby="email-help" title="打开默认邮件应用，写信给 3077602965@qq.com" href="mailto:3077602965@qq.com?subject=AI%E9%A1%B9%E7%9B%AE%E7%BB%8F%E7%90%86%E6%96%B9%E5%90%91%E4%BD%9C%E5%93%81%E9%9B%86%E8%81%94%E7%B3%BB">发送邮件 <span aria-hidden="true">↗</span></a><a class="button button-secondary" href="https://github.com/nigu666/zhihui-shuichan-jiaohu-yuanxing" target="_blank" rel="noopener noreferrer">GitHub 仓库 <span aria-hidden="true">↗</span></a></div></div></section>
+
+    <section class="contact" id="contact" aria-labelledby="contact-title">
+      <div class="shell">
+        <h2 id="contact-title">联系雷雨天</h2>
+        <p>3077602965@qq.com</p>
+        <div class="links">
+          <a class="button" title="打开设备默认邮件应用" href="mailto:3077602965@qq.com?subject=AI%20%E4%BA%A7%E5%93%81%E7%BB%8F%E7%90%86%E4%BD%9C%E5%93%81%E9%9B%86%E8%81%94%E7%B3%BB">发送邮件</a>
+          <a href="../ai-application-engineer-portfolio/">工程师作品集 ↗</a>
+          <a href="https://github.com/nigu666">GitHub 主页 ↗</a>
+        </div>
+      </div>
+    </section>
   </main>
-  <footer class="footer"><div class="shell footer-inner"><p><strong>LYT / 雷雨天</strong> · AI 项目经理方向</p><div class="footer-links"><a href="../ai-application-engineer-portfolio/">工程师作品集 ↗</a><a href="https://github.com/nigu666/zhihui-shuichan-jiaohu-yuanxing" target="_blank" rel="noopener noreferrer">GitHub 仓库 ↗</a><a href="#archive">返回项目目录 ↑</a></div></div></footer>
+  <footer class="shell footer"><a href="#top">返回顶部 ↑</a></footer>
   <dialog class="image-viewer" id="image-viewer" aria-labelledby="viewer-title" aria-describedby="viewer-caption">
     <div class="viewer-content"><header class="viewer-header"><h2 id="viewer-title">项目画面</h2><button class="viewer-close" id="viewer-close" type="button" aria-label="关闭截图查看器">关闭</button></header><div class="viewer-image-wrap" id="viewer-image-wrap"><p class="viewer-error" id="viewer-error" hidden>图片未能加载，请通过下方“查看原图”打开。</p></div><p class="viewer-caption" id="viewer-caption"></p><div class="viewer-controls"><div class="viewer-navigation"><button class="viewer-step" id="viewer-prev" type="button" aria-label="查看上一张截图">← 上一张</button><span class="viewer-count" id="viewer-count" aria-live="polite" aria-atomic="true"></span><button class="viewer-step" id="viewer-next" type="button" aria-label="查看下一张截图">下一张 →</button></div><a class="viewer-original" id="viewer-original" href="#" target="_blank" rel="noopener noreferrer">查看原图 ↗</a></div></div>
   </dialog>
   <script>
     (() => {
       'use strict';
+      const picker = document.getElementById('case-picker');
+      const tabs = Array.from(picker.querySelectorAll('[data-panel]'));
+      const panels = tabs.map((tab) => document.getElementById(tab.dataset.panel));
+      const tabStatuses = tabs.map((tab) => tab.querySelector('.tab-status'));
+      picker.setAttribute('role', 'tablist');
+      tabs.forEach((tab, index) => {
+        tab.setAttribute('role', 'tab');
+        tab.setAttribute('aria-controls', panels[index].id);
+        panels[index].setAttribute('role', 'tabpanel');
+        panels[index].setAttribute('aria-labelledby', tab.id);
+        panels[index].tabIndex = 0;
+        tab.addEventListener('click', (event) => {
+          if (event.metaKey || event.ctrlKey || event.shiftKey || event.altKey) return;
+          event.preventDefault();
+          selectCase(index);
+        });
+        tab.addEventListener('keydown', (event) => {
+          let target;
+          if (event.key === 'ArrowRight') target = (index + 1) % tabs.length;
+          if (event.key === 'ArrowLeft') target = (index + tabs.length - 1) % tabs.length;
+          if (event.key === 'Home') target = 0;
+          if (event.key === 'End') target = tabs.length - 1;
+          if (event.key === ' ') target = index;
+          if (target === undefined) return;
+          event.preventDefault();
+          selectCase(target);
+          tabs[target].focus();
+        });
+      });
+      function selectCase(index) {
+        tabs.forEach((tab, position) => {
+          const selected = position === index;
+          tab.setAttribute('aria-selected', String(selected));
+          tabStatuses[position].textContent = selected ? '✓ 已选' : '切换 →';
+          tab.tabIndex = selected ? 0 : -1;
+          panels[position].hidden = !selected;
+        });
+      }
+      function selectLinkedCase() {
+        const index = tabs.findIndex((tab) => tab.hash === window.location.hash);
+        if (index !== -1) selectCase(index);
+      }
+      selectCase(0);
+      selectLinkedCase();
+      window.addEventListener('hashchange', selectLinkedCase);
+
+      const morePrototypes = document.getElementById('more-prototypes');
+      function revealLinkedPrototype() {
+        const fragment = window.location.hash;
+        if (fragment !== '#case-twin' && fragment !== '#case-dashboard') return;
+        if (morePrototypes.open) return;
+        morePrototypes.open = true;
+        document.getElementById(fragment.slice(1)).scrollIntoView({ behavior: 'instant' });
+      }
+      revealLinkedPrototype();
+      window.addEventListener('hashchange', revealLinkedPrototype);
+
       const triggers = Array.from(document.querySelectorAll('button[data-image]'));
-      const gallery = [];
-      const indexes = new Map();
-      triggers.forEach((trigger) => {
-        const source = trigger.dataset.image;
-        if (!indexes.has(source)) {
-          indexes.set(source, gallery.length);
-          gallery.push({ source, title: trigger.dataset.title, caption: trigger.dataset.caption, alt: trigger.querySelector('img').alt });
-        }
+      const gallery = triggers.map((trigger) => {
+        const image = document.getElementById(trigger.dataset.image);
+        return {
+          source: image.getAttribute('src'),
+          title: trigger.dataset.title,
+          caption: trigger.dataset.caption,
+          alt: image.alt
+        };
       });
       const dialog = document.getElementById('image-viewer');
       const imageWrap = document.getElementById('viewer-image-wrap');
@@ -130,7 +534,7 @@
       }
       function openViewer(trigger) {
         lastTrigger = trigger;
-        activeIndex = indexes.get(trigger.dataset.image);
+        activeIndex = triggers.indexOf(trigger);
         renderImage();
         savedOverflow = document.body.style.overflow;
         savedPadding = document.body.style.paddingRight;
